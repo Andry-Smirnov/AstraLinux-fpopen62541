@@ -60,7 +60,10 @@ unit open62541;
 {$DEFINE ENABLE_SERVER}
 
 // Use open62541 v1.3
-{$DEFINE UA_VER1_3}
+{ $DEFINE UA_VER1_3}
+{$IFNDEF UA_VER1_3}
+  {$DEFINE UA_VER1_2}
+{$ENDIF}
 
 interface
 
@@ -81,7 +84,11 @@ const
                                      //  they can be downloaded from packages at http://win-builds.org/1.5.0/packages/windows_32/
 {$ENDIF}
 
-  UA_VER = {$IFDEF UA_VER1_3}1.3{$ELSE}1.2{$ENDIF};
+{$IFDEF UA_VER1_3}
+  UA_VER = 1.3;
+{$ELSE}
+  UA_VER = 1.2;
+{$ENDIF}
 
 type
   {$IFNDEF FPC}
@@ -552,17 +559,24 @@ type
        members: ^UA_DataTypeMember;
    end;
    {$ELSE}
-   UA_DataType = bitpacked record
+//   UA_DataType = bitpacked record
+   UA_DataType = record
        typeId: UA_NodeId;               (* The nodeid of the type *)
        binaryEncodingId: UA_NodeId;     (* NodeId of datatype when encoded as binary *)
        memSize: UA_UInt16;              (* Size of the struct in memory *)
        typeIndex: UA_UInt16;            (* Index of the type in the datatypetable *)
-       typeKind : 0..63;                (* Dispatch index for the handling routines *)
-       pointerFree : 0..1;              (* The type (and its members) contains no
+//       typeKind : 0..63;                (* Dispatch index for the handling routines *)
+//       pointerFree : 0..1;              (* The type (and its members) contains no
+       flags: UA_Int32;
+       {UA_UInt32 typeKind        : 6;} (* Dispatch index for the handling routines *)
+       {UA_UInt32 pointerFree     : 1;} (* The type (and its members) contains no
                                          * pointers that need to be freed *)
-       overlayable : 0..1;              (* The type has the identical memory layout
+//       overlayable : 0..1;              (* The type has the identical memory layout
+       {UA_UInt32 overlayable     : 1;} (* The type has the identical memory layout
                                          * in memory and on the binary stream. *)
-       membersSize : UA_Byte;           (* How many members does the type have? *)
+//       membersSize : UA_Byte;           (* How many members does the type have? *)
+       {UA_UInt32 membersSize     : 8;} (* How many members does the type have? *)
+       //UA_UInt16  xmlEncodingId;      (* NodeId of datatype when encoded as XML *)
        members: ^UA_DataTypeMember;
      {$ifdef UA_ENABLE_TYPEDESCRIPTION}
        typeName: PAnsiChar;
@@ -1723,7 +1737,9 @@ begin
     @UA_Client_getConfig := GetProcedureAddress(open62541LibHandle,'UA_Client_getConfig');
     @UA_ClientConfig_setDefault := GetProcedureAddress(open62541LibHandle,'UA_ClientConfig_setDefault');
     @UA_ClientConfig_setDefaultEncryption := GetProcedureAddress(open62541LibHandle,'UA_ClientConfig_setDefaultEncryption');
+    {$IFDEF UA_VER1_3}
     @UA_CertificateVerification_AcceptAll := GetProcedureAddress(open62541LibHandle,'UA_CertificateVerification_AcceptAll');
+    {$ENDIF}
     @UA_Client_delete := GetProcedureAddress(open62541LibHandle,'UA_Client_delete');
     @UA_StatusCode_name := GetProcedureAddress(open62541LibHandle,'UA_StatusCode_name');
     @UA_Client_connect := GetProcedureAddress(open62541LibHandle,'UA_Client_connect');
@@ -2059,30 +2075,37 @@ function UA_Variant_getFloat(var v: UA_Variant): single;
 begin
   Result := PUA_Float(v.data)^;
 end;
+
 function UA_Variant_getDouble(var v: UA_Variant): double;
 begin
   Result := PUA_Double(v.data)^;
 end;
+
 function UA_Variant_getByte(var v: UA_Variant): Byte;
 begin
   Result := PUA_Byte(v.data)^;
 end;
+
 function UA_Variant_getSmallint(var v: UA_Variant): Smallint;
 begin
   Result := PUA_Int16(v.data)^;
 end;
+
 function UA_Variant_getInteger(var v: UA_Variant): Integer;
 begin
   Result := PUA_Int32(v.data)^;
 end;
+
 function UA_Variant_getInt64(var v: UA_Variant): Int64;
 begin
   Result := PUA_Int64(v.data)^;
 end;
+
 function UA_Variant_getString(var v: UA_Variant): AnsiString;
 begin
   SetString(Result, PAnsiChar(PUA_String(v.data)^.data), PUA_String(v.data)^.length);
 end;
+
 function UA_Variant_getString(var v: UA_Variant; arrayIndex: DWord): AnsiString;
 begin
   if arrayIndex < v.arrayLength then
@@ -2095,44 +2118,55 @@ procedure UA_Variant_setBoolean(out v: UA_Variant; b: bytebool);
 begin
   UA_Variant_setScalarCopy(@v, @b, @UA_TYPES[UA_TYPES_BOOLEAN]);
 end;
+
 procedure UA_Variant_setFloat(out v: UA_Variant; f: single);
 begin
   UA_Variant_setScalarCopy(@v, @f, @UA_TYPES[UA_TYPES_FLOAT]);
 end;
+
 procedure UA_Variant_setDouble(out v: UA_Variant; d: double);
 begin
   UA_Variant_setScalarCopy(@v, @d, @UA_TYPES[UA_TYPES_DOUBLE]);
 end;
+
 procedure UA_Variant_setByte(out v: UA_Variant; i: Byte);
 begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_BYTE]);
 end;
+
 procedure UA_Variant_setSmallint(out v: UA_Variant; i: Smallint);
 begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_INT16]);
 end;
+
 procedure UA_Variant_setUInt16(out v: UA_Variant; i: UInt16);
 begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_UINT16]);
 end;
+
 procedure UA_Variant_setInteger(out v: UA_Variant; i: Integer);
 begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_INT32]);
 end;
+
 procedure UA_Variant_setUInt32(out v: UA_Variant; i: UInt32);
 begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_UINT32]);
 end;
+
 procedure UA_Variant_setInt64(out v: UA_Variant; i: Int64);
 begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_INT64]);
 end;
+
 procedure UA_Variant_setUInt64(out v: UA_Variant; i: UInt64);
 begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_UINT64]);
 end;
+
 procedure UA_Variant_setString(out v: UA_Variant; const s: AnsiString);
-var uas: UA_STRING;
+var 
+  uas: UA_STRING;
 begin
   uas := _UA_STRING_ALLOC(s);
   UA_Variant_setScalarCopy(@v, @uas, @UA_TYPES[UA_TYPES_STRING]);
