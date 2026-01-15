@@ -21,24 +21,26 @@ unit open62541;
 (*
  * Example:
  *   var
- *     client: PUA_Client;
- *     config: PUA_ClientConfig;
- *     nodeId: UA_NodeId;
- *     value: UA_Variant;
+ *     Client: PUA_Client;
+ *     Config: PUA_ClientConfig;
+ *     NodeId: UA_NodeId;
+ *     Value: UA_Variant;
  *   begin
- *     client := UA_Client_new();
- *     config := UA_Client_getConfig(client);
- *     UA_ClientConfig_setDefault(config);
- *     if UA_Client_connect(client, 'opc.tcp://localhost...') = UA_STATUSCODE_GOOD then begin
- *       nodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
+ *     Client := UA_Client_new();
+ *     Config := UA_Client_getConfig(Client);
+ *     UA_ClientConfig_setDefault(Config);
+ *     if UA_Client_connect(Client, 'opc.tcp://localhost...') = UA_STATUSCODE_GOOD then 
+       begin
+ *       NodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
  *       UA_Variant_init(value);
- *       if (UA_Client_readValueAttribute(client, nodeId, value) = UA_STATUSCODE_GOOD) and
- *          (UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_DATETIME])) then begin
+ *       if (UA_Client_readValueAttribute(Client, NodeId, Value) = UA_STATUSCODE_GOOD) and
+ *          (UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_DATETIME])) then
+         begin
  *          ...
  *       end;
- *       UA_Variant_clear(value);
+ *       UA_Variant_clear(Value);
  *     end;
- *     UA_Client_delete(client);
+ *     UA_Client_delete(Client);
  *   end;
  *)
 
@@ -64,7 +66,6 @@ unit open62541;
 {$IFNDEF UA_VER1_3}
   {$DEFINE UA_VER1_2}
 {$ENDIF}
-
 interface
 
 { ---------------- }
@@ -94,10 +95,10 @@ type
   {$IFNDEF FPC}
   // Delphi XE compatibility
   DWord = LongWord; // FixedUInt 32-bit
-  size_t = NativeUInt; // DWord on 32-bit platforms, QWord on 64-bit platforms
+  Size_T = NativeUInt; // DWord on 32-bit platforms, QWord on 64-bit platforms
   {$ENDIF}
-  {$IF NOT DECLARED(size_t)}
-  size_t = NativeUInt;
+  {$IF NOT DECLARED(Size_T)}
+  Size_T = NativeUInt;
   {$IFEND}
 
   UA_Client = record end;
@@ -107,16 +108,35 @@ type
   { --- types.h --- }
   { --------------- }
 
-  UA_Boolean = bytebool;PUA_Boolean = ^UA_Boolean;
-  UA_Byte = Byte;       PUA_Byte = ^UA_Byte;
-  UA_Int16 = Smallint;  PUA_Int16 = ^UA_Int16;
-  UA_UInt16 = Word;     PUA_UInt16 = ^UA_UInt16;
-  UA_Int32 = integer;   PUA_Int32 = ^UA_Int32;
-  UA_UInt32 = DWord;    PUA_UInt32 = ^UA_UInt32;
-  UA_Int64 = Int64;     PUA_Int64 = ^UA_Int64;
-  UA_UInt64 = UInt64;   PUA_UInt64 = ^UA_UInt64;
-  UA_Float = single;    PUA_Float = ^UA_Float;
-  UA_Double = double;   PUA_Double = ^UA_Double;
+  UA_Boolean = bytebool;
+  PUA_Boolean = ^UA_Boolean;
+
+  UA_Byte = Byte;
+  PUA_Byte = ^UA_Byte;
+
+  UA_Int16 = Smallint;
+  PUA_Int16 = ^UA_Int16;
+
+  UA_UInt16 = Word;
+  PUA_UInt16 = ^UA_UInt16;
+
+  UA_Int32 = integer;
+  PUA_Int32 = ^UA_Int32;
+
+  UA_UInt32 = DWord;
+  PUA_UInt32 = ^UA_UInt32;
+
+  UA_Int64 = Int64;
+  PUA_Int64 = ^UA_Int64;
+
+  UA_UInt64 = UInt64;
+  PUA_UInt64 = ^UA_UInt64;
+
+  UA_Float = single;
+  PUA_Float = ^UA_Float;
+
+  UA_Double = double;
+  PUA_Double = ^UA_Double;
 
   (**
    * .. _statuscode:
@@ -134,8 +154,8 @@ type
    * ^^^^^^
    * A sequence of Unicode characters. Strings are just an array of UA_Byte. *)
   UA_String = record
-      length: size_t; (* The length of the string *)
-      data: PUA_Byte; (* The content (not null-terminated) *)
+    Length: Size_T; (* The length of the string *)
+    Data: PUA_Byte; (* The content (not null-terminated) *)
   end;
   PUA_String = ^UA_String;
 
@@ -158,15 +178,15 @@ type
   PUA_DateTime = ^UA_DateTime;
 
   UA_DateTimeStruct = record
-      nanoSec : UA_UInt16;
-      microSec : UA_UInt16;
-      milliSec : UA_UInt16;
-      sec : UA_UInt16;
-      min : UA_UInt16;
-      hour : UA_UInt16;
-      day : UA_UInt16;
-      month : UA_UInt16;
-      year : UA_UInt16;
+    NanoSec: UA_UInt16;
+    MicroSec: UA_UInt16;
+    MilliSec: UA_UInt16;
+    Sec: UA_UInt16;
+    Min: UA_UInt16;
+    Hour: UA_UInt16;
+    Day: UA_UInt16;
+    Month: UA_UInt16;
+    Year: UA_UInt16;
   end;
 
   (**
@@ -181,41 +201,39 @@ type
    * ^^^^
    * A 16 byte value that can be used as a globally unique identifier. *)
   UA_Guid = record
-      data1: UA_UInt32;
-      data2: UA_UInt16;
-      data3: UA_UInt16 ;
-      data4: array[0..7] of UA_Byte;
+    Data1: UA_UInt32;
+    Data2: UA_UInt16;
+    Data3: UA_UInt16 ;
+    Data4: array[0..7] of UA_Byte;
   end;
 
   UA_LogLevel = (
-      UA_LOGLEVEL_TRACE,
-      UA_LOGLEVEL_DEBUG,
-      UA_LOGLEVEL_INFO,
-      UA_LOGLEVEL_WARNING,
-      UA_LOGLEVEL_ERROR,
-      UA_LOGLEVEL_FATAL
+    UA_LOGLEVEL_TRACE,
+    UA_LOGLEVEL_DEBUG,
+    UA_LOGLEVEL_INFO,
+    UA_LOGLEVEL_WARNING,
+    UA_LOGLEVEL_ERROR,
+    UA_LOGLEVEL_FATAL
   );
 
   UA_LogCategory = (
-      UA_LOGCATEGORY_NETWORK,
-      UA_LOGCATEGORY_SECURECHANNEL,
-      UA_LOGCATEGORY_SESSION,
-      UA_LOGCATEGORY_SERVER,
-      UA_LOGCATEGORY_CLIENT,
-      UA_LOGCATEGORY_USERLAND,
-      UA_LOGCATEGORY_SECURITYPOLICY
+    UA_LOGCATEGORY_NETWORK,
+    UA_LOGCATEGORY_SECURECHANNEL,
+    UA_LOGCATEGORY_SESSION,
+    UA_LOGCATEGORY_SERVER,
+    UA_LOGCATEGORY_CLIENT,
+    UA_LOGCATEGORY_USERLAND,
+    UA_LOGCATEGORY_SECURITYPOLICY
   );
 
   UA_Logger = record
-      (* Log a message. The message string and following varargs are formatted
-       * according to the rules of the printf command. Use the convenience macros
-       * below that take the minimum log-level defined in ua_config.h into
-       * account. *)
-      log: procedure(logContext: Pointer; level:UA_LogLevel; category:UA_LogCategory; msg: PAnsiChar; args: {va_list}array of const); cdecl;
-
-      context: Pointer; (* Logger state *)
-
-      clear: procedure(context: Pointer); cdecl; (* Clean up the logger plugin *)
+    (* Log a message. The message string and following varargs are formatted
+     * according to the rules of the printf command. Use the convenience macros
+     * below that take the minimum log-level defined in ua_config.h into
+     * account. *)
+    Log: procedure(LogContext: Pointer; Level: UA_LogLevel; Category: UA_LogCategory; Msg: PAnsiChar; Args: {va_list}array of const); cdecl;
+    Context: Pointer; (* Logger state *)
+    Clear: procedure(Context: Pointer); cdecl; (* Clean up the logger plugin *)
   end;
   PUA_Logger  = ^UA_Logger;
 
@@ -226,24 +244,24 @@ type
    * ^^^^^^
    * An identifier for a node in the address space of an OPC UA Server. *)
   UA_NodeIdType = (
-      UA_NODEIDTYPE_NUMERIC    = 0, (* In the binary encoding, this can also
-                                     * become 1 or 2 (two-byte and four-byte
-                                     * encoding of small numeric nodeids) *)
-      UA_NODEIDTYPE_STRING     = 3,
-      UA_NODEIDTYPE_GUID       = 4,
-      UA_NODEIDTYPE_BYTESTRING = 5
+    UA_NODEIDTYPE_NUMERIC    = 0, (* In the binary encoding, this can also
+                                   * become 1 or 2 (two-byte and four-byte
+                                   * encoding of small numeric nodeids) *)
+    UA_NODEIDTYPE_STRING     = 3,
+    UA_NODEIDTYPE_GUID       = 4,
+    UA_NODEIDTYPE_BYTESTRING = 5
   );
 
   UA_NodeId = record
-      namespaceIndex : UA_UInt16;
-      identifierType : UA_NodeIdType;
-      identifier : record
-          case longint of
-            0 : ( numeric : UA_UInt32 );
-            1 : ( _string : UA_String );
-            2 : ( guid : UA_Guid );
-            3 : ( byteString : UA_ByteString );
-          end;
+    NamespaceIndex: UA_UInt16;
+    IdentifierType: UA_NodeIdType;
+    Identifier: record
+      case longint of
+        0: (Numeric: UA_UInt32 );
+        1: (_String: UA_String );
+        2: (GUID: UA_Guid );
+        3: (ByteString: UA_ByteString );
+      end;
   end;
   PUA_NodeId = ^UA_NodeId;
 
@@ -252,9 +270,9 @@ type
    * ^^^^^^^^^^^^^^
    * A NodeId that allows the namespace URI to be specified instead of an index. *)
   UA_ExpandedNodeId = record
-      nodeId: UA_NodeId;
-      namespaceUri: UA_String;
-      serverIndex: UA_UInt32;
+    NodeId: UA_NodeId;
+    NamespaceUri: UA_String;
+    ServerIndex: UA_UInt32;
   end;
   PUA_ExpandedNodeId = ^UA_ExpandedNodeId;
 
@@ -265,8 +283,8 @@ type
    * ^^^^^^^^^^^^^
    * A name qualified by a namespace. *)
   UA_QualifiedName = record
-      namespaceIndex: UA_UInt16;
-      name: UA_String;
+    NamespaceIndex: UA_UInt16;
+    Name: UA_String;
   end;
   PUA_QualifiedName = ^UA_QualifiedName;
 
@@ -275,8 +293,8 @@ type
    * ^^^^^^^^^^^^^
    * Human readable text with an optional locale identifier. *)
   UA_LocalizedText = record
-      locale: UA_String;
-      text: UA_String;
+    Locale: UA_String;
+    Text: UA_String;
   end;
   PUA_LocalizedText = ^UA_LocalizedText;
 
@@ -289,13 +307,13 @@ type
    * index and the comma separates dimensions. A single value indicates a range
    * with a single element (min==max). *)
   UA_NumericRangeDimension = record
-      min,
-      max: UA_UInt32;
+    Min: UA_UInt32;
+    Max: UA_UInt32;
   end;
 
   UA_NumericRange = record
-      dimensionsSize: size_t;
-      dimensions: ^UA_NumericRangeDimension;
+    DimensionsSize: Size_T;
+    Dimensions: ^UA_NumericRangeDimension;
   end;
   PUA_NumericRange = ^UA_NumericRange;
 
@@ -334,20 +352,20 @@ type
    * - ``arrayLength == 0 && data > UA_EMPTY_ARRAY_SENTINEL``: scalar value
    * - ``arrayLength > 0``: array of the given length
    *
-   * Variants can also be *empty*. Then, the pointer to the type description is
+   * Variants can also be *empty*. Then, the Pointer to the type description is
    * ``NULL``. *)
   UA_VariantStorageType = (
-      UA_VARIANT_DATA,         (* The data has the same lifecycle as the variant *)
-      UA_VARIANT_DATA_NODELETE (* The data is "borrowed" by the variant and shall not be deleted at the end of the variant's lifecycle.*)
+    UA_VARIANT_DATA,         (* The data has the same lifecycle as the variant *)
+    UA_VARIANT_DATA_NODELETE (* The data is "borrowed" by the variant and shall not be deleted at the end of the variant's lifecycle.*)
   );
 
   UA_Variant = record
-      _type : PUA_DataType;    (* The data type description *)
-      storageType : UA_VariantStorageType;
-      arrayLength : size_t;
-      data : pointer;          (* Points to the scalar or array data *)
-      arrayDimensionsSize : size_t; (* The number of dimensions *)
-      arrayDimensions : ^UA_UInt32; (* The length of each dimension *)
+    _Type : PUA_DataType;    (* The data type description *)
+    StorageType: UA_VariantStorageType;
+    ArrayLength: Size_T;
+    Data: Pointer;          (* Points to the scalar or array data *)
+    ArrayDimensionsSize: Size_T; (* The number of dimensions *)
+    ArrayDimensions: ^UA_UInt32; (* The length of each dimension *)
   end;
   PUA_Variant = ^UA_Variant;
 
@@ -362,27 +380,27 @@ type
    * are described. If the received data type is unknown, the encoded string and
    * target NodeId is stored instead of the decoded value. *)
   UA_ExtensionObjectEncoding = (
-      UA_EXTENSIONOBJECT_ENCODED_NOBODY     = 0,
-      UA_EXTENSIONOBJECT_ENCODED_BYTESTRING = 1,
-      UA_EXTENSIONOBJECT_ENCODED_XML        = 2,
-      UA_EXTENSIONOBJECT_DECODED            = 3,
-      UA_EXTENSIONOBJECT_DECODED_NODELETE   = 4 (* Don't delete the content
-                                                   together with the ExtensionObject *)
+    UA_EXTENSIONOBJECT_ENCODED_NOBODY     = 0,
+    UA_EXTENSIONOBJECT_ENCODED_BYTESTRING = 1,
+    UA_EXTENSIONOBJECT_ENCODED_XML        = 2,
+    UA_EXTENSIONOBJECT_DECODED            = 3,
+    UA_EXTENSIONOBJECT_DECODED_NODELETE   = 4 (* Don't delete the content
+                                                 together with the ExtensionObject *)
   );
 
   UA_ExtensionObject = record
-      encoding : UA_ExtensionObjectEncoding;
-      content : record
-          case longint of
-            0 : ( encoded : record
-                typeId : UA_NodeId;   (* The nodeid of the datatype *)
-                body : UA_ByteString; (* The bytestring of the encoded data *)
-              end );
-            1 : ( decoded : record
-                _type : PUA_DataType;
-                data : pointer;
-              end );
-          end;
+    encoding: UA_ExtensionObjectEncoding;
+    content:  record
+                case LongInt of
+                  0: ( Encoded: record
+                        TypeId: UA_NodeId;   (* The nodeid of the datatype *)
+                        Body: UA_ByteString; (* The bytestring of the Encoded data *)
+                      end );
+                  1: ( Decoded: record
+                        _Type: PUA_DataType;
+                        Data: Pointer;
+                      end );
+                end;
   end;
   PUA_ExtensionObject = ^UA_ExtensionObject;
 
@@ -391,19 +409,19 @@ type
    * ^^^^^^^^^
    * A data value with an associated status code and timestamps. *)
   UA_DataValue = record
-      value: UA_Variant;
-      sourceTimestamp: UA_DateTime;
-      serverTimestamp: UA_DateTime;
-      sourcePicoseconds: UA_UInt16;
-      serverPicoseconds: UA_UInt16;
-      status: UA_StatusCode;
-      flag: UA_Byte;
-{     UA_Boolean    hasValue             : 1;
-      UA_Boolean    hasStatus            : 1;
-      UA_Boolean    hasSourceTimestamp   : 1;
-      UA_Boolean    hasServerTimestamp   : 1;
-      UA_Boolean    hasSourcePicoseconds : 1;
-      UA_Boolean    hasServerPicoseconds : 1;}
+    Value: UA_Variant;
+    SourceTimestamp: UA_DateTime;
+    ServerTimestamp: UA_DateTime;
+    SourcePicoseconds: UA_UInt16;
+    ServerPicoseconds: UA_UInt16;
+    Status: UA_StatusCode;
+    Flag: UA_Byte;
+{    UA_Boolean    hasValue             : 1;
+    UA_Boolean    hasStatus            : 1;
+    UA_Boolean    hasSourceTimestamp   : 1;
+    UA_Boolean    hasServerTimestamp   : 1;
+    UA_Boolean    hasSourcePicoseconds : 1;
+    UA_Boolean    hasServerPicoseconds : 1;}
   end;
   PUA_DataValue = ^UA_DataValue;
 
@@ -414,173 +432,172 @@ type
    * associated with a StatusCode. *)
   PUA_DiagnosticInfo = ^UA_DiagnosticInfo;
   UA_DiagnosticInfo = record
-      flag: UA_Boolean;
-{     UA_Boolean    hasSymbolicId          : 1;
-      UA_Boolean    hasNamespaceUri        : 1;
-      UA_Boolean    hasLocalizedText       : 1;
-      UA_Boolean    hasLocale              : 1;
-      UA_Boolean    hasAdditionalInfo      : 1;
-      UA_Boolean    hasInnerStatusCode     : 1;
-      UA_Boolean    hasInnerDiagnosticInfo : 1;}
-      symbolicId: UA_Int32;
-      namespaceUri: UA_Int32;
-      localizedText: UA_Int32;
-      locale: UA_Int32;
-      additionalInfo: UA_String;
-      innerStatusCode: UA_StatusCode;
-      innerDiagnosticInfo: PUA_DiagnosticInfo;
+    Flag: UA_Boolean;
+{   UA_Boolean    hasSymbolicId          : 1;
+    UA_Boolean    hasNamespaceUri        : 1;
+    UA_Boolean    hasLocalizedText       : 1;
+    UA_Boolean    hasLocale              : 1;
+    UA_Boolean    hasAdditionalInfo      : 1;
+    UA_Boolean    hasInnerStatusCode     : 1;
+    UA_Boolean    hasInnerDiagnosticInfo : 1;}
+    SymbolicId: UA_Int32;
+    NamespaceUri: UA_Int32;
+    LocalizedText: UA_Int32;
+    Locale: UA_Int32;
+    AdditionalInfo: UA_String;
+    InnerStatusCode: UA_StatusCode;
+    InnerDiagnosticInfo: PUA_DiagnosticInfo;
   end;
 
   (**
-   * .. _generic-types:
-   *
-   * Generic Type Handling
-   * ---------------------
-   *
-   * All information about a (builtin/structured) data type is stored in a
-   * ``UA_DataType``. The array ``UA_TYPES`` contains the description of all
-   * standard-defined types. This type description is used for the following
-   * generic operations that work on all types:
-   *
-   * - ``void T_init(T *ptr)``: Initialize the data type. This is synonymous with
-   *   zeroing out the memory, i.e. ``memset(ptr, 0, sizeof(T))``.
-   * - ``T* T_new()``: Allocate and return the memory for the data type. The
-   *   value is already initialized.
-   * - ``UA_StatusCode T_copy(const T *src, T *dst)``: Copy the content of the
-   *   data type. Returns ``UA_STATUSCODE_GOOD`` or
-   *   ``UA_STATUSCODE_BADOUTOFMEMORY``.
-   * - ``void T_clear(T *ptr)``: Delete the dynamically allocated content
-   *   of the data type and perform a ``T_init`` to reset the type.
-   * - ``void T_delete(T *ptr)``: Delete the content of the data type and the
-   *   memory for the data type itself.
-   *
-   * Specializations, such as ``UA_Int32_new()`` are derived from the generic
-   * type operations as static inline functions. *)
+  * .. _generic-types:
+  *
+  * Generic Type Handling
+  * ---------------------
+  *
+  * All information about a (builtin/structured) data type is stored in a
+  * ``UA_DataType``. The array ``UA_TYPES`` contains the description of all
+  * standard-defined types. This type description is used for the following
+  * generic operations that work on all types:
+  *
+  * - ``void T_init(T *ptr)``: Initialize the data type. This is synonymous with
+  *   zeroing out the memory, i.e. ``memset(ptr, 0, sizeof(T))``.
+  * - ``T* T_new()``: Allocate and return the memory for the data type. The
+  *   value is already initialized.
+  * - ``UA_StatusCode T_copy(const T *src, T *dst)``: Copy the content of the
+  *   data type. Returns ``UA_STATUSCODE_GOOD`` or
+  *   ``UA_STATUSCODE_BADOUTOFMEMORY``.
+  * - ``void T_clear(T *ptr)``: Delete the dynamically allocated content
+  *   of the data type and perform a ``T_init`` to reset the type.
+  * - ``void T_delete(T *ptr)``: Delete the content of the data type and the
+  *   memory for the data type itself.
+  *
+  * Specializations, such as ``UA_Int32_new()`` are derived from the generic
+  * type operations as static inline functions. *)
 
-   {$IFDEF UA_VER1_3}
-   UA_DataTypeMember = bitpacked record
-      {$ifdef UA_ENABLE_TYPEDESCRIPTION}
-       memberName: PAnsiChar;
-      {$endif}
-      memberType : PUA_DataType;
-      padding : 0..63;               (* How much padding is there before this
-                                        member element? For arrays this is the
-                                        padding before the size_t length member.
-                                        (No padding between size_t and the
-                                        following ptr.) *)
-      isArray : 0..1;
-      isOptional : 0..1;
-      fill : UA_Byte;
-      fill1 : UA_Byte;
-      fill2 : UA_Byte;
+  {$IFDEF UA_VER1_3}
+  UA_DataTypeMember = bitpacked record
+    {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
+    MemberName: PAnsiChar;
+    {$ENDIF}
+    MemberType: PUA_DataType;
+    Padding: 0..63;               (* How much padding is there before this
+                                     member element? For arrays this is the
+                                     padding before the Size_T length member.
+                                     (No padding between Size_T and the
+                                     following ptr.) *)
+    IsArray : 0..1;
+    IsOptional : 0..1;
+    Fill : UA_Byte;
+    Fill1 : UA_Byte;
+    Fill2 : UA_Byte;
 
-       {namespaceZero: UA_Boolean:1;}  (* The type of the member is defined in
-                                        namespace zero. In this implementation,
-                                        types from custom namespace may contain
-                                        members from the same namespace or
-                                        namespace zero only.*)
-       {isArray: UA_Boolean:1;}        (* The member is an array *)
-       {isOptional: UA_Boolean:1;}     (* The member is an optional field *)
-   end;
-   {$ELSE}
-   UA_DataTypeMember = record
-       memberTypeIndex: UA_UInt16;   (* Index of the member in the array of data
-                                        types *)
-       padding: UA_Byte;             (* How much padding is there before this
-                                        member element? For arrays this is the
-                                        padding before the size_t length member.
-                                        (No padding between size_t and the
-                                        following ptr.) *)
-       flag: Byte;
-       {namespaceZero: UA_Boolean:1;}  (* The type of the member is defined in
-                                        namespace zero. In this implementation,
-                                        types from custom namespace may contain
-                                        members from the same namespace or
-                                        namespace zero only.*)
-       {isArray: UA_Boolean:1;}        (* The member is an array *)
-       {isOptional: UA_Boolean:1;}     (* The member is an optional field *)
-     {$ifdef UA_ENABLE_TYPEDESCRIPTION}
-       memberName: PAnsiChar;
-     {$endif}
-   end;
+    {NamespaceZero: UA_Boolean:1;}  (* The type of the member is defined in
+                                      namespace zero. In this implementation,
+                                      types from custom namespace may contain
+                                      members from the same namespace or
+                                      namespace zero only.*)
+    {IsArray: UA_Boolean:1;}        (* The member is an array *)
+    {IsOptional: UA_Boolean:1;}     (* The member is an optional field *)
+  end;
+  {$ELSE}
+  UA_DataTypeMember = record
+   MemberTypeIndex: UA_UInt16;   (* Index of the member in the array of data types *)
+   Padding: UA_Byte;             (* How much padding is there before this
+                                  member element? For arrays this is the
+                                  padding before the Size_T length member.
+                                  (No padding between Size_T and the
+                                  following ptr.) *)
+   Flag: Byte;
+   {NamespaceZero: UA_Boolean:1;}  (* The type of the member is defined in
+                                    namespace zero. In this implementation,
+                                    types from custom namespace may contain
+                                    members from the same namespace or
+                                    namespace zero only.*)
+   //IsArray: UA_Boolean:1;        (* The member is an array *)
+   //IsOptional: UA_Boolean:1;     (* The member is an optional field *)
+   {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
+   MemberName: PAnsiChar;
    {$ENDIF}
+  end;
+  {$ENDIF}
 
    (* The DataType "kind" is an internal type classification. It is used to
     * dispatch handling to the correct routines. *)
    UA_DataTypeKind = (
-       UA_DATATYPEKIND_BOOLEAN = 0,
-       UA_DATATYPEKIND_SBYTE = 1,
-       UA_DATATYPEKIND_BYTE = 2,
-       UA_DATATYPEKIND_INT16 = 3,
-       UA_DATATYPEKIND_UINT16 = 4,
-       UA_DATATYPEKIND_INT32 = 5,
-       UA_DATATYPEKIND_UINT32 = 6,
-       UA_DATATYPEKIND_INT64 = 7,
-       UA_DATATYPEKIND_UINT64 = 8,
-       UA_DATATYPEKIND_FLOAT = 9,
-       UA_DATATYPEKIND_DOUBLE = 10,
-       UA_DATATYPEKIND_STRING = 11,
-       UA_DATATYPEKIND_DATETIME = 12,
-       UA_DATATYPEKIND_GUID = 13,
-       UA_DATATYPEKIND_BYTESTRING = 14,
-       UA_DATATYPEKIND_XMLELEMENT = 15,
-       UA_DATATYPEKIND_NODEID = 16,
-       UA_DATATYPEKIND_EXPANDEDNODEID = 17,
-       UA_DATATYPEKIND_STATUSCODE = 18,
-       UA_DATATYPEKIND_QUALIFIEDNAME = 19,
-       UA_DATATYPEKIND_LOCALIZEDTEXT = 20,
-       UA_DATATYPEKIND_EXTENSIONOBJECT = 21,
-       UA_DATATYPEKIND_DATAVALUE = 22,
-       UA_DATATYPEKIND_VARIANT = 23,
-       UA_DATATYPEKIND_DIAGNOSTICINFO = 24,
-       UA_DATATYPEKIND_DECIMAL = 25,
-       UA_DATATYPEKIND_ENUM = 26,
-       UA_DATATYPEKIND_STRUCTURE = 27,
-       UA_DATATYPEKIND_OPTSTRUCT = 28,      (* struct with optional fields *)
-       UA_DATATYPEKIND_UNION = 29,
-       UA_DATATYPEKIND_BITFIELDCLUSTER = 30 (* bitfields + padding *)
+     UA_DATATYPEKIND_BOOLEAN = 0,
+     UA_DATATYPEKIND_SBYTE = 1,
+     UA_DATATYPEKIND_BYTE = 2,
+     UA_DATATYPEKIND_INT16 = 3,
+     UA_DATATYPEKIND_UINT16 = 4,
+     UA_DATATYPEKIND_INT32 = 5,
+     UA_DATATYPEKIND_UINT32 = 6,
+     UA_DATATYPEKIND_INT64 = 7,
+     UA_DATATYPEKIND_UINT64 = 8,
+     UA_DATATYPEKIND_FLOAT = 9,
+     UA_DATATYPEKIND_DOUBLE = 10,
+     UA_DATATYPEKIND_STRING = 11,
+     UA_DATATYPEKIND_DATETIME = 12,
+     UA_DATATYPEKIND_GUID = 13,
+     UA_DATATYPEKIND_BYTESTRING = 14,
+     UA_DATATYPEKIND_XMLELEMENT = 15,
+     UA_DATATYPEKIND_NODEID = 16,
+     UA_DATATYPEKIND_EXPANDEDNODEID = 17,
+     UA_DATATYPEKIND_STATUSCODE = 18,
+     UA_DATATYPEKIND_QUALIFIEDNAME = 19,
+     UA_DATATYPEKIND_LOCALIZEDTEXT = 20,
+     UA_DATATYPEKIND_EXTENSIONOBJECT = 21,
+     UA_DATATYPEKIND_DATAVALUE = 22,
+     UA_DATATYPEKIND_VARIANT = 23,
+     UA_DATATYPEKIND_DIAGNOSTICINFO = 24,
+     UA_DATATYPEKIND_DECIMAL = 25,
+     UA_DATATYPEKIND_ENUM = 26,
+     UA_DATATYPEKIND_STRUCTURE = 27,
+     UA_DATATYPEKIND_OPTSTRUCT = 28,      (* struct with optional fields *)
+     UA_DATATYPEKIND_UNION = 29,
+     UA_DATATYPEKIND_BITFIELDCLUSTER = 30 (* bitfields + padding *)
    );
 
    {$IFDEF UA_VER1_3}
    UA_DataType = bitpacked record
-     {$ifdef UA_ENABLE_TYPEDESCRIPTION}
-       typeName: PAnsiChar;
-     {$endif}
-       typeId: UA_NodeId;               (* The nodeid of the type *)
-       binaryEncodingId: UA_NodeId;     (* NodeId of datatype when encoded as binary *)
-       //xmlEncodingId: UA_NodeId;      (* NodeId of datatype when encoded as XML *)
-       memSize: UA_UInt16;              (* Size of the struct in memory *)
-       typeKind : 0..63;                (* Dispatch index for the handling routines *)
-       pointerFree : 0..1;              (* The type (and its members) contains no
-                                         * pointers that need to be freed *)
-       overlayable : 0..1;              (* The type has the identical memory layout
-                                         * in memory and on the binary stream. *)
-       membersSize : UA_Byte;           (* How many members does the type have? *)
-       members: ^UA_DataTypeMember;
+     {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
+     TypeName: PAnsiChar;
+     {$ENDIF}
+     TypeId: UA_NodeId;               (* The nodeid of the type *)
+     BinaryEncodingId: UA_NodeId;     (* NodeId of datatype when encoded as binary *)
+     //xmlEncodingId: UA_NodeId;      (* NodeId of datatype when encoded as XML *)
+     MemSize: UA_UInt16;              (* Size of the struct in memory *)
+     TypeKind: 0..63;                 (* Dispatch index for the handling routines *)
+     PointerFree: 0..1;               (* The type (and its members) contains no
+                                      * pointers that need to be freed *)
+     Overlayable: 0..1;               (* The type has the identical memory layout
+                                      * in memory and on the binary stream. *)
+     MembersSize: UA_Byte;            (* How many members does the type have? *)
+     Members: ^UA_DataTypeMember;
    end;
    {$ELSE}
 //   UA_DataType = bitpacked record
    UA_DataType = record
-       typeId: UA_NodeId;               (* The nodeid of the type *)
-       binaryEncodingId: UA_NodeId;     (* NodeId of datatype when encoded as binary *)
-       memSize: UA_UInt16;              (* Size of the struct in memory *)
-       typeIndex: UA_UInt16;            (* Index of the type in the datatypetable *)
-//       typeKind : 0..63;                (* Dispatch index for the handling routines *)
-//       pointerFree : 0..1;              (* The type (and its members) contains no
-       flags: UA_Int32;
-       {UA_UInt32 typeKind        : 6;} (* Dispatch index for the handling routines *)
-       {UA_UInt32 pointerFree     : 1;} (* The type (and its members) contains no
-                                         * pointers that need to be freed *)
-//       overlayable : 0..1;              (* The type has the identical memory layout
+     TypeId: UA_NodeId;               (* The nodeid of the type *)
+     BinaryEncodingId: UA_NodeId;     (* NodeId of datatype when encoded as binary *)
+     MemSize: UA_UInt16;              (* Size of the struct in memory *)
+     TypeIndex: UA_UInt16;            (* Index of the type in the datatypetable *)
+//     TypeKind : 0..63;                (* Dispatch index for the handling routines *)
+//     PointerFree : 0..1;              (* The type (and its members) contains no
+     Flags: UA_Int32;
+     {UA_UInt32 typeKind        : 6;} (* Dispatch index for the handling routines *)
+     {UA_UInt32 pointerFree     : 1;} (* The type (and its members) contains no
+                                       * pointers that need to be freed *)
+//       Overlayable : 0..1;              (* The type has the identical memory layout
        {UA_UInt32 overlayable     : 1;} (* The type has the identical memory layout
                                          * in memory and on the binary stream. *)
-//       membersSize : UA_Byte;           (* How many members does the type have? *)
-       {UA_UInt32 membersSize     : 8;} (* How many members does the type have? *)
-       //UA_UInt16  xmlEncodingId;      (* NodeId of datatype when encoded as XML *)
-       members: ^UA_DataTypeMember;
-     {$ifdef UA_ENABLE_TYPEDESCRIPTION}
-       typeName: PAnsiChar;
-     {$endif}
+//       MembersSize : UA_Byte;           (* How many members does the type have? *)
+     {UA_UInt32 membersSize     : 8;} (* How many members does the type have? *)
+     //UA_UInt16  xmlEncodingId;      (* NodeId of datatype when encoded as XML *)
+     Members: ^UA_DataTypeMember;
+     {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
+     TypeName: PAnsiChar;
+     {$ENDIF}
    end;
    {$ENDIF}
 
@@ -591,20 +608,20 @@ type
    * instead. *)
   PUA_DataTypeArray = ^UA_DataTypeArray;
   UA_DataTypeArray = record
-      next : PUA_DataTypeArray;
-      typesSize : size_t;
-      types : ^UA_DataType;
+    Next: PUA_DataTypeArray;
+    TypesSize: Size_T;
+    Types: ^UA_DataType;
   end;
 
 
   { ------------------------- }
   { --- types_generated.h --- }
   { ------------------------- }
-  {$IFDEF UA_VER1_3}
+{$IFDEF UA_VER1_3}
   {$I types_generated_1_3.inc}
-  {$ELSE}
+{$ELSE}
   {$I types_generated.inc}
-  {$ENDIF}
+{$ENDIF}
 
   { ---------------- }
   { --- common.h --- }
@@ -626,29 +643,29 @@ type
    * the node type. Possible attributes are as follows: *)
 
   UA_AttributeId = (
-      UA_ATTRIBUTEID_NODEID                  = 1,
-      UA_ATTRIBUTEID_NODECLASS               = 2,
-      UA_ATTRIBUTEID_BROWSENAME              = 3,
-      UA_ATTRIBUTEID_DISPLAYNAME             = 4,
-      UA_ATTRIBUTEID_DESCRIPTION             = 5,
-      UA_ATTRIBUTEID_WRITEMASK               = 6,
-      UA_ATTRIBUTEID_USERWRITEMASK           = 7,
-      UA_ATTRIBUTEID_ISABSTRACT              = 8,
-      UA_ATTRIBUTEID_SYMMETRIC               = 9,
-      UA_ATTRIBUTEID_INVERSENAME             = 10,
-      UA_ATTRIBUTEID_CONTAINSNOLOOPS         = 11,
-      UA_ATTRIBUTEID_EVENTNOTIFIER           = 12,
-      UA_ATTRIBUTEID_VALUE                   = 13,
-      UA_ATTRIBUTEID_DATATYPE                = 14,
-      UA_ATTRIBUTEID_VALUERANK               = 15,
-      UA_ATTRIBUTEID_ARRAYDIMENSIONS         = 16,
-      UA_ATTRIBUTEID_ACCESSLEVEL             = 17,
-      UA_ATTRIBUTEID_USERACCESSLEVEL         = 18,
-      UA_ATTRIBUTEID_MINIMUMSAMPLINGINTERVAL = 19,
-      UA_ATTRIBUTEID_HISTORIZING             = 20,
-      UA_ATTRIBUTEID_EXECUTABLE              = 21,
-      UA_ATTRIBUTEID_USEREXECUTABLE          = 22,
-      UA_ATTRIBUTEID_DATATYPEDEFINITION      = 23
+    UA_ATTRIBUTEID_NODEID                  = 1,
+    UA_ATTRIBUTEID_NODECLASS               = 2,
+    UA_ATTRIBUTEID_BROWSENAME              = 3,
+    UA_ATTRIBUTEID_DISPLAYNAME             = 4,
+    UA_ATTRIBUTEID_DESCRIPTION             = 5,
+    UA_ATTRIBUTEID_WRITEMASK               = 6,
+    UA_ATTRIBUTEID_USERWRITEMASK           = 7,
+    UA_ATTRIBUTEID_ISABSTRACT              = 8,
+    UA_ATTRIBUTEID_SYMMETRIC               = 9,
+    UA_ATTRIBUTEID_INVERSENAME             = 10,
+    UA_ATTRIBUTEID_CONTAINSNOLOOPS         = 11,
+    UA_ATTRIBUTEID_EVENTNOTIFIER           = 12,
+    UA_ATTRIBUTEID_VALUE                   = 13,
+    UA_ATTRIBUTEID_DATATYPE                = 14,
+    UA_ATTRIBUTEID_VALUERANK               = 15,
+    UA_ATTRIBUTEID_ARRAYDIMENSIONS         = 16,
+    UA_ATTRIBUTEID_ACCESSLEVEL             = 17,
+    UA_ATTRIBUTEID_USERACCESSLEVEL         = 18,
+    UA_ATTRIBUTEID_MINIMUMSAMPLINGINTERVAL = 19,
+    UA_ATTRIBUTEID_HISTORIZING             = 20,
+    UA_ATTRIBUTEID_EXECUTABLE              = 21,
+    UA_ATTRIBUTEID_USEREXECUTABLE          = 22,
+    UA_ATTRIBUTEID_DATATYPEDEFINITION      = 23
   );
 
   (**
@@ -660,36 +677,36 @@ type
    * e.g. to workaround misbehaving implementations or to mitigate the impact of
    * additional rules that are introduced in later versions of the OPC UA
    * specification. *)
-   UA_RuleHandling = (
+  UA_RuleHandling = (
     UA_RULEHANDLING_DEFAULT = 0,
     UA_RULEHANDLING_ABORT,  (* Abort the operation and return an error code *)
     UA_RULEHANDLING_WARN,   (* Print a message in the logs and continue *)
     UA_RULEHANDLING_ACCEPT  (* Continue and disregard the broken rule *)
-    );
+  );
 
 
   (**
    * Connection State
    * ---------------- *)
   UA_SecureChannelState = (
-      UA_SECURECHANNELSTATE_CLOSED,
-      UA_SECURECHANNELSTATE_HEL_SENT,
-      UA_SECURECHANNELSTATE_HEL_RECEIVED,
-      UA_SECURECHANNELSTATE_ACK_SENT,
-      UA_SECURECHANNELSTATE_ACK_RECEIVED,
-      UA_SECURECHANNELSTATE_OPN_SENT,
-      UA_SECURECHANNELSTATE_OPEN,
-      UA_SECURECHANNELSTATE_CLOSING
+    UA_SECURECHANNELSTATE_CLOSED,
+    UA_SECURECHANNELSTATE_HEL_SENT,
+    UA_SECURECHANNELSTATE_HEL_RECEIVED,
+    UA_SECURECHANNELSTATE_ACK_SENT,
+    UA_SECURECHANNELSTATE_ACK_RECEIVED,
+    UA_SECURECHANNELSTATE_OPN_SENT,
+    UA_SECURECHANNELSTATE_OPEN,
+    UA_SECURECHANNELSTATE_CLOSING
   );
   PUA_SecureChannelState = ^UA_SecureChannelState;
 
   UA_SessionState = (
-      UA_SESSIONSTATE_CLOSED,
-      UA_SESSIONSTATE_CREATE_REQUESTED,
-      UA_SESSIONSTATE_CREATED,
-      UA_SESSIONSTATE_ACTIVATE_REQUESTED,
-      UA_SESSIONSTATE_ACTIVATED,
-      UA_SESSIONSTATE_CLOSING
+    UA_SESSIONSTATE_CLOSED,
+    UA_SESSIONSTATE_CREATE_REQUESTED,
+    UA_SESSIONSTATE_CREATED,
+    UA_SESSIONSTATE_ACTIVATE_REQUESTED,
+    UA_SESSIONSTATE_ACTIVATED,
+    UA_SESSIONSTATE_CLOSING
   );
   PUA_SessionState = ^UA_SessionState;
 
@@ -709,31 +726,31 @@ type
    * are harmonized with the session layer counters if possible. *)
 
   UA_NetworkStatistics = record
-      currentConnectionCount:size_t;
-      cumulatedConnectionCount:size_t;
-      rejectedConnectionCount:size_t;
-      connectionTimeoutCount:size_t;
-      connectionAbortCount:size_t;
+    CurrentConnectionCount: Size_T;
+    CumulatedConnectionCount: Size_T;
+    RejectedConnectionCount: Size_T;
+    ConnectionTimeoutCount: Size_T;
+    ConnectionAbortCount: Size_T;
   end;
   PUA_NetworkStatistics = ^UA_NetworkStatistics;
 
   UA_SecureChannelStatistics = record
-      currentChannelCount:size_t;
-      cumulatedChannelCount:size_t;
-      rejectedChannelCount:size_t;
-      channelTimeoutCount:size_t; (* only used by servers *)
-      channelAbortCount:size_t;
-      channelPurgeCount:size_t;   (* only used by servers *)
+    CurrentChannelCount: Size_T;
+    CumulatedChannelCount: Size_T;
+    RejectedChannelCount: Size_T;
+    ChannelTimeoutCount: Size_T; (* only used by servers *)
+    ChannelAbortCount: Size_T;
+    ChannelPurgeCount: Size_T;   (* only used by servers *)
   end;
   PUA_SecureChannelStatistics = ^UA_SecureChannelStatistics;
 
   UA_SessionStatistics = record
-      currentSessionCount:size_t;
-      cumulatedSessionCount:size_t;
-      securityRejectedSessionCount:size_t; (* only used by servers *)
-      rejectedSessionCount:size_t;
-      sessionTimeoutCount:size_t;          (* only used by servers *)
-      sessionAbortCount:size_t;            (* only used by servers *)
+    CurrentSessionCount: Size_T;
+    CumulatedSessionCount: Size_T;
+    SecurityRejectedSessionCount: Size_T; (* only used by servers *)
+    RejectedSessionCount: Size_T;
+    SessionTimeoutCount: Size_T;          (* only used by servers *)
+    SessionAbortCount: Size_T;            (* only used by servers *)
   end;
   PUA_SessionStatistics = ^UA_SessionStatistics;
 
@@ -758,13 +775,13 @@ type
    * networking plugins with a clear interface to the main open62541 library. *)
 
   UA_ConnectionConfig = record
-      protocolVersion: UA_UInt32;
-      recvBufferSize: UA_UInt32;
-      sendBufferSize: UA_UInt32;
-      localMaxMessageSize: UA_UInt32;   (*  (0 = unbounded) *)
-      remoteMaxMessageSize: UA_UInt32;  (*  (0 = unbounded) *)
-      localMaxChunkCount: UA_UInt32;    (*  (0 = unbounded) *)
-      remoteMaxChunkCount: UA_UInt32;   (*  (0 = unbounded) *)
+    protocolVersion: UA_UInt32;
+    recvBufferSize: UA_UInt32;
+    sendBufferSize: UA_UInt32;
+    localMaxMessageSize: UA_UInt32;   (*  (0 = unbounded) *)
+    remoteMaxMessageSize: UA_UInt32;  (*  (0 = unbounded) *)
+    localMaxChunkCount: UA_UInt32;    (*  (0 = unbounded) *)
+    remoteMaxChunkCount: UA_UInt32;   (*  (0 = unbounded) *)
   end;
 
  UA_ConnectionState = (UA_CONNECTION_CLOSED, UA_CONNECTION_OPENING, UA_CONNECTION_ESTABLISHED);
@@ -780,10 +797,10 @@ type
       channel : ^UA_SecureChannel;
       sockfd : UA_SOCKET;
       openingDate : UA_DateTime;
-      handle : pointer;
+      handle : Pointer;
       incompleteChunk : UA_ByteString;
       connectCallbackID : UA_UInt64;
-      getSendBuffer : function (connection:PUA_Connection; length:size_t; buf:PUA_ByteString):UA_StatusCode;cdecl;
+      getSendBuffer : function (connection:PUA_Connection; length:Size_T; buf:PUA_ByteString):UA_StatusCode;cdecl;
       releaseSendBuffer : procedure (connection:PUA_Connection; buf:PUA_ByteString);cdecl;
       send : function (connection:PUA_Connection; buf:PUA_ByteString):UA_StatusCode;cdecl;
       recv : function (connection:PUA_Connection; response:PUA_ByteString; timeout:UA_UInt32):UA_StatusCode;cdecl;
@@ -798,7 +815,7 @@ type
  PUA_ServerNetworkLayer = ^UA_ServerNetworkLayer;
  PUA_Server = ^UA_Server;
  UA_ServerNetworkLayer = record
-     handle:pointer; (* Internal data *)
+     handle:Pointer; (* Internal data *)
 
      (* Points to external memory, i.e. handled by server or client *)
      statistics:PUA_NetworkStatistics;
@@ -882,9 +899,9 @@ type
   { -------------------- }
   PUA_CertificateVerification  = ^UA_CertificateVerification;
   UA_CertificateVerification = record
-      context : pointer;
-      verifyCertificate : function (verificationContext:pointer; certificate:PUA_ByteString):UA_StatusCode; cdecl;
-      verifyApplicationURI : function (verificationContext:pointer; certificate:PUA_ByteString; applicationURI:PUA_String):UA_StatusCode; cdecl;
+      context : Pointer;
+      verifyCertificate : function (verificationContext:Pointer; certificate:PUA_ByteString):UA_StatusCode; cdecl;
+      verifyApplicationURI : function (verificationContext:Pointer; certificate:PUA_ByteString; applicationURI:PUA_String):UA_StatusCode; cdecl;
       deleteMembers : procedure (cv:PUA_CertificateVerification); cdecl;
   end;
 
@@ -943,7 +960,7 @@ type
                                            * to allocate them on ROM. *)
 
       (* Available SecurityPolicies *)
-      securityPoliciesSize: size_t;
+      securityPoliciesSize: Size_T;
       securityPolicies: ^UA_SecurityPolicy;
 
       (* Certificate Verification Plugin *)
@@ -951,34 +968,34 @@ type
 
       (* Callbacks for async connection handshakes *)
       initConnectionFunc: UA_ConnectClientConnection;
-      pollConnectionFunc: function(client:PUA_Client; context:pointer; timeout: UA_UInt32):UA_StatusCode; cdecl;
+      pollConnectionFunc: function(Client: PUA_Client; Context: Pointer; Timeout: UA_UInt32): UA_StatusCode; cdecl;
 
-      (* Callback for state changes. The client state is differentated into the
-       * SecureChannel state and the Session state. The connectStatus is set if
-       * the client connection (including reconnects) has failed and the client
-       * has to "give up". If the connectStatus is not set, the client still has
-       * hope to connect or recover. *)
-      stateCallback : procedure (client:PUA_Client;
-                                 channelState: UA_SecureChannelState;
-                                 sessionState: UA_SessionState;
-                                 connectStatus: UA_StatusCode); cdecl;
+      // Callback for state changes. The client state is differentated into the
+      // SecureChannel state and the Session state. The connectStatus is set if
+      // the client connection (including reconnects) has failed and the client
+      // has to "give up". If the connectStatus is not set, the client still has
+      // hope to connect or recover.
+      stateCallback : procedure (Client: PUA_Client;
+        ChannelState: UA_SecureChannelState;
+        SessionState: UA_SessionState;
+        ConnectStatus: UA_StatusCode); cdecl;
 
       (* When connectivityCheckInterval is greater than 0, every
        * connectivityCheckInterval (in ms), a async read request is performed on
        * the server. inactivityCallback is called when the client receive no
        * response for this read request The connection can be closed, this in an
        * attempt to recreate a healthy connection. *)
-       inactivityCallback : procedure (client:PUA_Client);cdecl;
+       inactivityCallback : procedure (Client: PUA_Client); cdecl;
 
     {$IFDEF UA_ENABLE_SUBSCRIPTIONS}
-      (* Number of PublishResponse queued up in the server *)
+      // Number of PublishResponse queued up in the server
       outStandingPublishRequests : UA_UInt16;
 
       (* If the client does not receive a PublishResponse after the defined delay
        * of ``(sub->publishingInterval * sub->maxKeepAliveCount) +
        * client->config.timeout)``, then subscriptionInactivityCallback is called
        * for the subscription.. *)
-       subscriptionInactivityCallback : procedure (client:PUA_Client; subscriptionId:UA_UInt32; subContext:pointer);cdecl;
+       subscriptionInactivityCallback : procedure (Client: PUA_Client; SubscriptionId: UA_UInt32; SubContext: Pointer);cdecl;
     {$ENDIF}
   end;
   PUA_ClientConfig = ^UA_ClientConfig;
@@ -987,15 +1004,15 @@ type
   { ------------------------------ }
   { --- client_subscriptions.h --- }
   { ------------------------------ }
-  (* Callbacks defined for Subscriptions *)
-  UA_Client_DeleteSubscriptionCallback = procedure(client: PUA_Client; subId: UA_UInt32; subContext: Pointer); cdecl;
-  UA_Client_StatusChangeNotificationCallback = procedure(client: PUA_Client; subId: UA_UInt32; subContext: Pointer; notification: PUA_StatusChangeNotification); cdecl;
-  (* Callback for the deletion of a MonitoredItem *)
-  UA_Client_DeleteMonitoredItemCallback = procedure(client: PUA_Client; subId: UA_UInt32; subContext: Pointer; monId: UA_UInt32; monContext: Pointer); cdecl;
-  (* Callback for DataChange notifications *)
-  UA_Client_DataChangeNotificationCallback = procedure(client: PUA_Client; subId: UA_UInt32; subContext: Pointer; monId: UA_UInt32; monContext: Pointer; value: PUA_DataValue); cdecl;
-  (* Callback for Event notifications *)
-  UA_Client_EventNotificationCallback = procedure(client: PUA_Client; subId: UA_UInt32; subContext: Pointer; monId: UA_UInt32; monContext: Pointer; nEventFields: size_t; eventFields: PUA_Variant); cdecl;
+  // Callbacks defined for Subscriptions
+  UA_Client_DeleteSubscriptionCallback = procedure(Client: PUA_Client; SubId: UA_UInt32; SubContext: Pointer); cdecl;
+  UA_Client_StatusChangeNotificationCallback = procedure(Client: PUA_Client; SubId: UA_UInt32; SubContext: Pointer; Notification: PUA_StatusChangeNotification); cdecl;
+  // Callback for the deletion of a MonitoredItem
+  UA_Client_DeleteMonitoredItemCallback = procedure(Client: PUA_Client; SubId: UA_UInt32; SubContext: Pointer; MonId: UA_UInt32; MonContext: Pointer); cdecl;
+  // Callback for DataChange notifications
+  UA_Client_DataChangeNotificationCallback = procedure(Client: PUA_Client; SubId: UA_UInt32; SubContext: Pointer; MonId: UA_UInt32; MonContext: Pointer; value: PUA_DataValue); cdecl;
+  // Callback for Event notifications
+  UA_Client_EventNotificationCallback = procedure(Client: PUA_Client; SubId: UA_UInt32; SubContext: Pointer; MonId: UA_UInt32; MonContext: Pointer; NEventFields: Size_T; EventFields: PUA_Variant); cdecl;
   {$ENDIF}
 
   {$IFDEF ENABLE_SERVER}
@@ -1003,58 +1020,56 @@ type
   { --- server.h --- }
   { ---------------- }
   UA_Server = record end;
-  UA_MethodCallback = function (server: PUA_Server;
-                               const sessionId: PUA_NodeId; sessionContext:pointer;
-                               const methodId: PUA_NodeId; methodContext:pointer;
-                               const objectId: PUA_NodeId; objectContext:pointer;
-                               inputSize: SIZE_T; const input:PUA_Variant;
-                               outputSize: SIZE_T; output:PUA_Variant): UA_StatusCode; cdecl;
+  UA_MethodCallback = function (Server: PUA_Server;
+    const SessionId: PUA_NodeId; SessionContext: Pointer;
+    const MethodId: PUA_NodeId; MethodContext: Pointer;
+    const ObjectId: PUA_NodeId; ObjectContext: Pointer;
+    InputSize: SIZE_T; const Input: PUA_Variant;
+    OutputSize: SIZE_T; Output: PUA_Variant): UA_StatusCode; cdecl;
 
   { ----------------------- }
   { --- server_config.h --- }
   { ----------------------- }
   UA_ServerConfig = record
-      logger:UA_Logger;
-      (* Server Description:
-       * The description must be internally consistent.
-       * - The ApplicationUri set in the ApplicationDescription must match the
-       *   URI set in the server certificate *)
-      buildInfo:UA_BuildInfo;
-      applicationDescription:UA_ApplicationDescription;
-      serverCertificate:UA_ByteString;
+    Logger: UA_Logger;
+    (* Server Description:
+     * The description must be internally consistent.
+     * - The ApplicationUri set in the ApplicationDescription must match the
+     *   URI set in the server certificate *)
+    BuildInfo: UA_BuildInfo;
+    ApplicationDescription: UA_ApplicationDescription;
+    ServerCertificate: UA_ByteString;
 
-      shutdownDelay:UA_Double; (* Delay in ms from the shutdown signal (ctrl-c)
-                                  until the actual shutdown. Clients need to be
-                                  able to get a notification ahead of time. *)
+    ShutdownDelay: UA_Double; (* Delay in ms from the shutdown signal (ctrl-c)
+                                 until the actual shutdown. Clients need to be
+                                 able to get a notification ahead of time. *)
 
-      (* Rule Handling *)
-      verifyRequestTimestamp:UA_RuleHandling; (* Verify that the server sends a
-                                               * timestamp in the request header *)
-      allowEmptyVariables:UA_RuleHandling; (* Variables (that don't have a
-                                            * DataType of BaseDataType) must not
-                                            * have an empty variant value. The
-                                            * default behaviour is to auto-create
-                                            * a matching zeroed-out value for
-                                            * empty VariableNodes when they are
-                                            * added. *)
+    (* Rule Handling *)
+    VerifyRequestTimestamp: UA_RuleHandling; (* Verify that the server sends a
+                                              * timestamp in the request header *)
+    AllowEmptyVariables: UA_RuleHandling; (* Variables (that don't have a
+                                           * DataType of BaseDataType) must not
+                                           * have an empty variant value. The
+                                           * default behaviour is to auto-create
+                                           * a matching zeroed-out value for
+                                           * empty VariableNodes when they are
+                                           * added. *)
 
-      (* Custom DataTypes. Attention! Custom datatypes are not cleaned up together
-       * with the configuration. So it is possible to allocate them on ROM. *)
-      customDataTypes:PUA_DataTypeArray;
+    (* Custom DataTypes. Attention! Custom datatypes are not cleaned up together
+     * with the configuration. So it is possible to allocate them on ROM. *)
+    CustomDataTypes: PUA_DataTypeArray;
 
-      (**
-       * .. note:: See the section on :ref:`generic-types`. Examples for working
-       *    with custom data types are provided in
-       *    ``/examples/custom_datatype/``. *)
+    (**
+     * .. note:: See the section on :ref:`generic-types`. Examples for working
+     *    with custom data types are provided in
+     *    ``/examples/custom_datatype/``. *)
 
-      (* Networking *)
-      networkLayersSize:size_t;
-      networkLayers:PUA_ServerNetworkLayer;
-      customHostname:UA_String;
+    (* Networking *)
+    NetworkLayersSize: Size_T;
+    NetworkLayers: PUA_ServerNetworkLayer;
+    CustomHostname: UA_String;
 
-  {
-    FIXME define the remaining fields
-  }
+    // FIXME: define the remaining fields
   end;
   PUA_ServerConfig = ^UA_ServerConfig;
   {$ENDIF ENABLE_SERVER}
@@ -1092,10 +1107,10 @@ const
   { ------------------ }
   { --- ua_types.c --- }
   { ------------------ }
-  UA_STRING_NULL: UA_String = (length:0; data:nil);
-  UA_BYTESTRING_NULL: UA_ByteString = (length:0; data:nil);
-  UA_GUID_NULL: UA_Guid = (data1:0; data2:0; data3:0; data4:(0,0,0,0,0,0,0,0));
-  UA_NODEID_NULL: UA_NodeId = (namespaceIndex:0; identifierType:UA_NODEIDTYPE_NUMERIC; identifier:(numeric:0));
+  UA_STRING_NULL: UA_String = (length: 0; data: nil);
+  UA_BYTESTRING_NULL: UA_ByteString = (length: 0; data: nil);
+  UA_GUID_NULL: UA_Guid = (data1: 0; data2: 0; data3: 0; data4: (0, 0, 0, 0, 0, 0, 0, 0));
+  UA_NODEID_NULL: UA_NodeId = (namespaceIndex: 0; identifierType: UA_NODEIDTYPE_NUMERIC; identifier: (numeric: 0));
 
   { --------------- }
   { --- types.h --- }
@@ -1117,7 +1132,7 @@ var
   UA_Client_getState: procedure(client: PUA_Client; channelState: PUA_SecureChannelState; sessionState: PUA_SessionState; connectStatus: PUA_StatusCode); cdecl;
   UA_Client_getConfig: function(client: PUA_Client): PUA_ClientConfig; cdecl;
   UA_ClientConfig_setDefault: function(config: PUA_ClientConfig): UA_StatusCode; cdecl;
-  UA_ClientConfig_setDefaultEncryption: function(config: PUA_ClientConfig; localCertificate, privateKey: UA_ByteString; trustList: PUA_ByteString; trustListSize: size_t; revocationList: PUA_ByteString; revocationListSize: size_t): UA_StatusCode; cdecl;
+  UA_ClientConfig_setDefaultEncryption: function(config: PUA_ClientConfig; localCertificate, privateKey: UA_ByteString; trustList: PUA_ByteString; trustListSize: Size_T; revocationList: PUA_ByteString; revocationListSize: Size_T): UA_StatusCode; cdecl;
   UA_CertificateVerification_AcceptAll: procedure(cv : PUA_CertificateVerification); cdecl;
   UA_Client_delete: procedure(client: PUA_Client); cdecl;
   UA_Client_connect: function(client: PUA_Client; const endpointUrl: AnsiString): UA_StatusCode; cdecl;
@@ -1133,8 +1148,8 @@ var
   UA_NumericRange_parse: function(range: PUA_NumericRange; const str: UA_String): UA_StatusCode; cdecl;
   UA_Variant_setScalar: procedure(v: PUA_Variant; p: Pointer; _type: PUA_DataType); cdecl;
   UA_Variant_setScalarCopy: function(v: PUA_Variant; p: Pointer; _type: PUA_DataType): UA_StatusCode; cdecl;
-  UA_Variant_setArray: procedure(v: PUA_Variant; arrayData: Pointer; arraySize: size_t; _type: PUA_DataType); cdecl;
-  UA_Variant_setArrayCopy: function(v: PUA_Variant; arrayData: Pointer; arraySize: size_t; _type: PUA_DataType): UA_StatusCode; cdecl;
+  UA_Variant_setArray: procedure(v: PUA_Variant; arrayData: Pointer; arraySize: Size_T; _type: PUA_DataType); cdecl;
+  UA_Variant_setArrayCopy: function(v: PUA_Variant; arrayData: Pointer; arraySize: Size_T; _type: PUA_DataType): UA_StatusCode; cdecl;
   UA_DateTime_toStruct: function(t: UA_DateTime): UA_DateTimeStruct; cdecl;
   UA_DateTime_fromStruct: function(ts: UA_DateTimeStruct): UA_DateTime; cdecl;
   UA_findDataType: function(typeId: PUA_NodeId): PUA_DataType; cdecl;
@@ -1143,15 +1158,15 @@ var
   UA_copy: function(src,dst: Pointer; const _type: PUA_DataType): UA_StatusCode; cdecl;
   UA_clear: procedure(p: Pointer; const _type: PUA_DataType); cdecl;
   UA_delete: procedure(p: Pointer; const _type: PUA_DataType); cdecl;
-  UA_Array_delete: procedure(p: Pointer; size: size_t; const _type: PUA_DataType); cdecl;
+  UA_Array_delete: procedure(p: Pointer; size: Size_T; const _type: PUA_DataType); cdecl;
 
   __UA_Client_readAttribute: function(client: PUA_Client; const nodeId: PUA_NodeId; attributeId: UA_AttributeId; _out: Pointer; outDataType: PUA_DataType): UA_StatusCode; cdecl;
-  UA_Client_readArrayDimensionsAttribute: function(client: PUA_Client; const nodeId: UA_NodeId; out outArrayDimensionsSize: size_t; out outArrayDimensions: PUA_UInt32): UA_StatusCode; cdecl;
+  UA_Client_readArrayDimensionsAttribute: function(client: PUA_Client; const nodeId: UA_NodeId; out outArrayDimensionsSize: Size_T; out outArrayDimensions: PUA_UInt32): UA_StatusCode; cdecl;
 
   __UA_Client_writeAttribute: function(client: PUA_Client; const nodeId: PUA_NodeId; attributeId: UA_AttributeId; _in: Pointer; inDataType: PUA_DataType): UA_StatusCode; cdecl;
-  UA_Client_writeArrayDimensionsAttribute: function(client: PUA_Client; const nodeId: UA_NodeId; newArrayDimensionsSize: size_t; newArrayDimensions: PUA_UInt32): UA_StatusCode;
+  UA_Client_writeArrayDimensionsAttribute: function(client: PUA_Client; const nodeId: UA_NodeId; newArrayDimensionsSize: Size_T; newArrayDimensions: PUA_UInt32): UA_StatusCode;
   {$IFDEF UA_ENABLE_METHODCALLS}
-  UA_Client_call: function(client: PUA_Client; const objectId, methodId: UA_NodeId; inputSize: size_t; input: PUA_Variant; out outputSize: size_t; out output: PUA_Variant): UA_StatusCode; cdecl;
+  UA_Client_call: function(client: PUA_Client; const objectId, methodId: UA_NodeId; inputSize: Size_T; input: PUA_Variant; out outputSize: Size_T; out output: PUA_Variant): UA_StatusCode; cdecl;
   {$ENDIF}
 
   UA_Client_Subscriptions_create: function(client: PUA_Client; const request: UA_CreateSubscriptionRequest; subscriptionContext: Pointer; statusChangeCallback: UA_Client_StatusChangeNotificationCallback; deleteCallback: UA_Client_DeleteSubscriptionCallback): UA_CreateSubscriptionResponse; cdecl;
@@ -1197,7 +1212,7 @@ var
                             outputArgumentsSize:SIZE_T; const outputArguments:PUA_Argument;
                             const outputArgumentsRequestedNewNodeId:UA_NodeId;
                             outputArgumentsOutNewNodeId:PUA_NodeId;
-                            nodeContext: pointer; outNewNodeId:PUA_NodeId): UA_StatusCode; cdecl;
+                            nodeContext: Pointer; outNewNodeId:PUA_NodeId): UA_StatusCode; cdecl;
   UA_MethodAttributes_default:UA_MethodAttributes;
   {$ENDIF}
 
@@ -1255,7 +1270,7 @@ function UA_Client_getConfig(client: PUA_Client): PUA_ClientConfig; cdecl; exter
 
 function UA_ClientConfig_setDefault(config: PUA_ClientConfig): UA_StatusCode; cdecl; external libopen62541;
 {$IFDEF UA_ENABLE_ENCRYPTION}
-function UA_ClientConfig_setDefaultEncryption(config: PUA_ClientConfig; localCertificate, privateKey: UA_ByteString; trustList: PUA_ByteString; trustListSize: size_t; revocationList: PUA_ByteString; revocationListSize: size_t): UA_StatusCode; cdecl; external libopen62541;
+function UA_ClientConfig_setDefaultEncryption(config: PUA_ClientConfig; localCertificate, privateKey: UA_ByteString; trustList: PUA_ByteString; trustListSize: Size_T; revocationList: PUA_ByteString; revocationListSize: Size_T): UA_StatusCode; cdecl; external libopen62541;
 {$ENDIF}
 
 (* Delete a client *)
@@ -1319,14 +1334,14 @@ procedure UA_Variant_setScalar(v: PUA_Variant; p: Pointer; _type: PUA_DataType);
 (* Set the variant to a scalar value that is copied from an existing variable. *)
 function UA_Variant_setScalarCopy(v: PUA_Variant; p: Pointer; _type: PUA_DataType): UA_StatusCode; cdecl; external libopen62541;
 (* Set the variant to an array that already resides in memory. The array takes on the lifecycle of the variant and is deleted with it. *)
-procedure UA_Variant_setArray(v: PUA_Variant; arrayData: Pointer; arraySize: size_t; _type: PUA_DataType); cdecl; external libopen62541;
+procedure UA_Variant_setArray(v: PUA_Variant; arrayData: Pointer; arraySize: Size_T; _type: PUA_DataType); cdecl; external libopen62541;
 (* Set the variant to an array that is copied from an existing array. *)
-function UA_Variant_setArrayCopy(v: PUA_Variant; arrayData: Pointer; arraySize: size_t; _type: PUA_DataType): UA_StatusCode; cdecl; external libopen62541;
+function UA_Variant_setArrayCopy(v: PUA_Variant; arrayData: Pointer; arraySize: Size_T; _type: PUA_DataType): UA_StatusCode; cdecl; external libopen62541;
 (* Insert a range of data into an existing variant. The data array can't be reused afterwards if it contains types without a fixed size (e.g. strings)
  * since the members are moved into the variant and take on its lifecycle. *)
-function UA_Variant_setRange(v: PUA_Variant; arrayData: Pointer; arraySize: size_t; const range: UA_NumericRange): UA_StatusCode; cdecl; external libopen62541;
+function UA_Variant_setRange(v: PUA_Variant; arrayData: Pointer; arraySize: Size_T; const range: UA_NumericRange): UA_StatusCode; cdecl; external libopen62541;
 (* Deep-copy a range of data into an existing variant. *)
-function UA_Variant_setRangeCopy(v: PUA_Variant; arrayData: Pointer; arraySize: size_t; const range: UA_NumericRange): UA_StatusCode; cdecl; external libopen62541;
+function UA_Variant_setRangeCopy(v: PUA_Variant; arrayData: Pointer; arraySize: Size_T; const range: UA_NumericRange): UA_StatusCode; cdecl; external libopen62541;
 
 function UA_DateTime_toStruct(t: UA_DateTime): UA_DateTimeStruct; cdecl; external libopen62541;
 function UA_DateTime_fromStruct(ts: UA_DateTimeStruct): UA_DateTime; cdecl; external libopen62541;
@@ -1346,18 +1361,18 @@ procedure UA_clear(p: Pointer; const _type: PUA_DataType); cdecl; external libop
 (* Frees a variable and all of its content. *)
 procedure UA_delete(p: Pointer; const _type: PUA_DataType); cdecl; external libopen62541;
 (* Deletes an array. *)
-procedure UA_Array_delete(p: Pointer; size: size_t; const _type: PUA_DataType); cdecl; external libopen62541;
+procedure UA_Array_delete(p: Pointer; size: Size_T; const _type: PUA_DataType); cdecl; external libopen62541;
 
 { -------------------------- }
 { --- client_highlevel.h --- }
 { -------------------------- }
 function __UA_Client_readAttribute(client: PUA_Client; const nodeId: PUA_NodeId; attributeId: UA_AttributeId; _out: Pointer; outDataType: PUA_DataType): UA_StatusCode; cdecl; external libopen62541;
-function UA_Client_readArrayDimensionsAttribute(client: PUA_Client; const nodeId: UA_NodeId; out outArrayDimensionsSize: size_t; out outArrayDimensions: PUA_UInt32): UA_StatusCode; cdecl; external libopen62541;
+function UA_Client_readArrayDimensionsAttribute(client: PUA_Client; const nodeId: UA_NodeId; out outArrayDimensionsSize: Size_T; out outArrayDimensions: PUA_UInt32): UA_StatusCode; cdecl; external libopen62541;
 
 function __UA_Client_writeAttribute(client: PUA_Client; const nodeId: PUA_NodeId; attributeId: UA_AttributeId; _in: Pointer; inDataType: PUA_DataType): UA_StatusCode; cdecl; external libopen62541;
-function UA_Client_writeArrayDimensionsAttribute(client: PUA_Client; const nodeId: UA_NodeId; newArrayDimensionsSize: size_t; newArrayDimensions: PUA_UInt32): UA_StatusCode; cdecl; external libopen62541;
+function UA_Client_writeArrayDimensionsAttribute(client: PUA_Client; const nodeId: UA_NodeId; newArrayDimensionsSize: Size_T; newArrayDimensions: PUA_UInt32): UA_StatusCode; cdecl; external libopen62541;
 {$IFDEF UA_ENABLE_METHODCALLS}
-function UA_Client_call(client: PUA_Client; const objectId, methodId: UA_NodeId; inputSize: size_t; input: PUA_Variant; out outputSize: size_t; out output: PUA_Variant): UA_StatusCode; cdecl; external libopen62541;
+function UA_Client_call(client: PUA_Client; const objectId, methodId: UA_NodeId; inputSize: Size_T; input: PUA_Variant; out outputSize: Size_T; out output: PUA_Variant): UA_StatusCode; cdecl; external libopen62541;
 {$ENDIF}
 
 { ------------------------------- }
@@ -1478,7 +1493,7 @@ function UA_Server_addMethodNodeEx: function(server: PUA_Server; const requested
                           outputArgumentsSize:SIZE_T; const outputArguments:PUA_Argument;
                           const outputArgumentsRequestedNewNodeId:PUA_NodeId;
                           outputArgumentsOutNewNodeId:PUA_NodeId;
-                          nodeContext: pointer; outNewNodeId:PUA_NodeId): UA_StatusCode; cdecl;  external libopen62541;
+                          nodeContext: Pointer; outNewNodeId:PUA_NodeId): UA_StatusCode; cdecl;  external libopen62541;
 {$ENDIF}
 {$ENDIF}
 
@@ -1616,7 +1631,7 @@ function UA_Client_writeValueRankAttribute(client: PUA_Client; const nodeId: UA_
 
 {$IFDEF UA_ENABLE_SUBSCRIPTIONS}
 function UA_CreateSubscriptionRequest_default(): UA_CreateSubscriptionRequest;
-function UA_MonitoredItemCreateRequest_default(nodeId: UA_NodeId): UA_MonitoredItemCreateRequest;
+function UA_MonitoredItemCreateRequest_default(NodeId: UA_NodeId): UA_MonitoredItemCreateRequest;
 {$ENDIF}
 
 {$IFDEF ENABLE_SERVER}
@@ -1640,14 +1655,14 @@ function UA_Server_addObjectTypeNode(server:PUA_Server; const requestedNewNodeId
                             const referenceTypeId:UA_NodeId;
                             const browseName: UA_QualifiedName;
                             const attr:UA_ObjectTypeAttributes;
-                            nodeContext:pointer; outNewNodeId: PUA_NodeId):UA_StatusCode;
+                            nodeContext:Pointer; outNewNodeId: PUA_NodeId):UA_StatusCode;
 function UA_Server_addObjectNode(server:PUA_Server; const requestedNewNodeId:UA_NodeId;
                         const parentNodeId:UA_NodeId;
                         const referenceTypeId:UA_NodeId;
                         const browseName: UA_QualifiedName;
                         const typeDefinition: UA_NodeId;
                         const attr:UA_ObjectAttributes;
-                        nodeContext:pointer; outNewNodeId: PUA_NodeId):UA_StatusCode;
+                        nodeContext:Pointer; outNewNodeId: PUA_NodeId):UA_StatusCode;
 function UA_Server_addVariableTypeNode(server:PUA_Server;
                               const requestedNewNodeId:UA_NodeId;
                               const parentNodeId:UA_NodeId;
@@ -1655,36 +1670,36 @@ function UA_Server_addVariableTypeNode(server:PUA_Server;
                               const browseName:UA_QualifiedName;
                               const typeDefinition:UA_NodeId;
                               const attr:UA_VariableTypeAttributes;
-                              nodeContext:pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
+                              nodeContext:Pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
 function UA_Server_addViewNode(server:PUA_Server; const requestedNewNodeId:UA_NodeId;
                       const parentNodeId:UA_NodeId;
                       const referenceTypeId:UA_NodeId;
                       const browseName:UA_QualifiedName;
                       const attr:UA_ViewAttributes;
-                      nodeContext:pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
+                      nodeContext:Pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
 function UA_Server_addReferenceTypeNode(server:PUA_Server;
                                const requestedNewNodeId:UA_NodeId;
                                const parentNodeId:UA_NodeId;
                                const referenceTypeId:UA_NodeId;
                                const browseName:UA_QualifiedName;
                                const attr:UA_ReferenceTypeAttributes;
-                               nodeContext:pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
-function UA_Server_addDataTypeNode(server:PUA_Server;
-                          const requestedNewNodeId:UA_NodeId;
-                          const parentNodeId:UA_NodeId;
-                          const referenceTypeId:UA_NodeId;
-                          const browseName:UA_QualifiedName;
-                          const attr:UA_DataTypeAttributes;
-                          nodeContext:pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
-function UA_Server_writeValue(server: PUA_Server; const nodeId: UA_NodeId; const value: UA_Variant): UA_StatusCode;
-function UA_Server_addMethodNode(server: PUA_Server; const requestedNewNodeId:UA_NodeId;
+                               nodeContext:Pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
+function UA_Server_addDataTypeNode(Server:PUA_Server;
+                          const RequestedNewNodeId:UA_NodeId;
+                          const ParentNodeId:UA_NodeId;
+                          const ReferenceTypeId:UA_NodeId;
+                          const BrowseName:UA_QualifiedName;
+                          const Attr:UA_DataTypeAttributes;
+                          NodeContext:Pointer; OutNewNodeId:PUA_NodeId):UA_StatusCode;
+function UA_Server_writeValue(server: PUA_Server; const nodeId: UA_NodeId; const Value: UA_Variant): UA_StatusCode;
+function UA_Server_addMethodNode(Server: PUA_Server; const requestedNewNodeId:UA_NodeId;
                             const parentNodeId:UA_NodeId;
                             const referenceTypeId:UA_NodeId;
                             const browseName:UA_QualifiedName ;
                             const attr:UA_MethodAttributes; method:UA_MethodCallback;
                             inputArgumentsSize:SIZE_T; const inputArguments: PUA_Argument;
                             outputArgumentsSize:SIZE_T; const outputArguments:PUA_Argument;
-                            nodeContext: pointer; outNewNodeId:PUA_NodeId): UA_StatusCode;
+                            nodeContext: Pointer; outNewNodeId:PUA_NodeId): UA_StatusCode;
 {$ENDIF}
 
 implementation
@@ -1723,7 +1738,7 @@ begin
                                   [libopen62541, GetLoadErrorStr()]);
     end;
 
-    pointer(UA_TYPES) := GetProcedureAddress(open62541LibHandle,'UA_TYPES'); // external variable name
+    Pointer(UA_TYPES) := GetProcedureAddress(open62541LibHandle,'UA_TYPES'); // external variable name
     UA_VariableAttributes_default := PUA_VariableAttributes(GetProcedureAddress(open62541LibHandle,'UA_VariableAttributes_default'))^;
     UA_MethodAttributes_default := PUA_MethodAttributes(GetProcedureAddress(open62541LibHandle,'UA_MethodAttributes_default'))^;
     UA_ObjectAttributes_default := PUA_ObjectAttributes(GetProcedureAddress(open62541LibHandle,'UA_ObjectAttributes_default'))^;
@@ -1823,12 +1838,12 @@ end;
 function _UA_STRING(var chars: AnsiString): UA_String; inline;
 begin
   if chars='' then begin
-    Result.length := 0;
-    Result.data := nil;
+    Result.Length := 0;
+    Result.Data := nil;
   end
   else begin
-    Result.length := Length(chars);
-    Result.data := @chars[1];
+    Result.Length := Length(chars);
+    Result.Data := @chars[1];
   end;
 end;
 
@@ -1837,14 +1852,14 @@ var bs:UA_BYTESTRING;
 begin
   if chars='' then
 begin
-    result.length:=0;
-    result.data:=Nil;
+    result.Length:=0;
+    result.Data:=Nil;
   end else
   begin
     //this contortion is necessary in order to let the library allocate the memory
     //(the C and pascal alloc/free cannot be mixed)
-    bs.length:=length(chars);
-    bs.data:=@chars[1];
+    bs.Length:=length(chars);
+    bs.Data:=@chars[1];
     UA_copy(@bs, @result, @UA_TYPES[UA_TYPES_BYTESTRING]);
   end;
 end;
@@ -1861,26 +1876,26 @@ end;
 
 function _UA_QUALIFIEDNAME(nsIndex: UA_UInt16; var chars: AnsiString): UA_QualifiedName;
 begin
-  Result.namespaceIndex := nsIndex;
-  Result.name := _UA_STRING(chars);
+  Result.NamespaceIndex := nsIndex;
+  Result.Name := _UA_STRING(chars);
 end;
 
 function _UA_QUALIFIEDNAME_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_QualifiedName;
 begin
-  Result.namespaceIndex := nsIndex;
-  Result.name := _UA_STRING_ALLOC(chars);
+  Result.NamespaceIndex := nsIndex;
+  Result.Name := _UA_STRING_ALLOC(chars);
 end;
 
 function _UA_LOCALIZEDTEXT(var locale, text: AnsiString): UA_LocalizedText;
 begin
-  Result.locale := _UA_STRING(locale);
-  Result.text := _UA_STRING(text);
+  Result.Locale := _UA_STRING(locale);
+  Result.Text := _UA_STRING(text);
 end;
 
 function _UA_LOCALIZEDTEXT_ALLOC(const locale, text: AnsiString): UA_LocalizedText;
 begin
-  Result.locale := _UA_STRING_ALLOC(locale);
-  Result.text := _UA_STRING_ALLOC(text)
+  Result.Locale := _UA_STRING_ALLOC(locale);
+  Result.Text := _UA_STRING_ALLOC(text)
 end;
 
 function _UA_NUMERICRANGE(const s: AnsiString): UA_NumericRange;
@@ -1904,12 +1919,12 @@ end;
 
 function UA_StringToStr(const s: UA_String): AnsiString;
 begin
-  SetString(Result, PAnsiChar(s.data), s.length);
+  SetString(Result, PAnsiChar(s.Data), s.Length);
 end;
 
 function UA_LocalizedTextToStr(const t: UA_LocalizedText): AnsiString;
 begin
-  SetString(Result, PAnsiChar(t.text.data), t.text.length);
+  SetString(Result, PAnsiChar(t.Text.Data), t.Text.Length);
 end;
 
 function UA_NodeIdToStr(const id: UA_NodeId): AnsiString;
@@ -1917,7 +1932,7 @@ var output: UA_String;
 begin
   output := UA_STRING_NULL;
   UA_NodeId_print(@id, @output);
-  SetString(Result, PAnsiChar(output.data), output.length);
+  SetString(Result, PAnsiChar(output.Data), output.Length);
   UA_String_Clear(output);
 end;
 
@@ -1925,13 +1940,15 @@ function UA_DataTypeToStr(typeId: UA_NodeId): AnsiString;
 var pDataType: PUA_DataType;
 begin
   pDataType := UA_findDataType(@typeId);
-  if pDataType = nil then Result:='Unknown' else Result:=pDataType^.typeName;
+  if pDataType = nil then Result:='Unknown' else Result:=pDataType^.TypeName;
 end;
 
+{$WARN 5058 off : Variable "$1" does not seem to be initialized}
 procedure UA_Variant_init(out p: UA_Variant);
 begin
   FillChar(p, SizeOf(UA_Variant), #0);
 end;
+{$WARN 5058 on : Variable "$1" does not seem to be initialized}
 
 procedure UA_Variant_clear(var p: UA_Variant);
 begin
@@ -1948,6 +1965,7 @@ begin
   UA_clear(@p, @UA_TYPES[UA_TYPES_NODEID]);
 end;
 
+{$WARN 5058 off : Variable "$1" does not seem to be initialized}
 procedure UA_CreateSubscriptionRequest_init(out p: UA_CreateSubscriptionRequest);
 begin
   FillChar(p, SizeOf(p), #0);
@@ -1962,16 +1980,17 @@ procedure UA_BrowseRequest_init(out p: UA_BrowseRequest);
 begin
   FillChar(p, SizeOf(p), #0);
 end;
+{$WARN 5058 on : Variable "$1" does not seem to be initialized}
 
 function UA_BrowseRequest_new: PUA_BrowseRequest;
 begin
-  result:= UA_new(@UA_TYPES[UA_TYPES_BROWSEREQUEST]);
+  Result := UA_new(@UA_TYPES[UA_TYPES_BROWSEREQUEST]);
 end;
 
 function UA_BrowseRequest_copy(const src: UA_BrowseRequest; out
   dst: UA_BrowseRequest): UA_StatusCode;
 begin
-  result:=UA_copy(@src, @dst, @UA_TYPES[UA_TYPES_BROWSEREQUEST]);
+  Result := UA_copy(@src, @dst, @UA_TYPES[UA_TYPES_BROWSEREQUEST]);
 end;
 
 procedure UA_BrowseRequest_deleteMembers(var p: UA_BrowseRequest);
@@ -1989,20 +2008,22 @@ begin
   UA_delete(p, @UA_TYPES[UA_TYPES_BROWSEREQUEST]);
 end;
 
+{$WARN 5058 off : Variable "$1" does not seem to be initialized}
 procedure UA_BrowseResponse_init(out p: UA_BrowseResponse);
 begin
   FillChar(p, SizeOf(p), #0);
 end;
+{$WARN 5058 on : Variable "$1" does not seem to be initialized}
 
 function UA_BrowseResponse_new: PUA_BrowseResponse;
 begin
-  result:= UA_new(@UA_TYPES[UA_TYPES_BROWSERESPONSE]);
+  Result := UA_new(@UA_TYPES[UA_TYPES_BROWSERESPONSE]);
 end;
 
 function UA_BrowseResponse_copy(const src: UA_BrowseResponse; out
   dst: UA_BrowseResponse): UA_StatusCode;
 begin
-  result:=UA_copy(@src, @dst, @UA_TYPES[UA_TYPES_BROWSERESPONSE]);
+  Result := UA_copy(@src, @dst, @UA_TYPES[UA_TYPES_BROWSERESPONSE]);
 end;
 
 procedure UA_BrowseResponse_deleteMembers(var p: UA_BrowseResponse);
@@ -2020,20 +2041,22 @@ begin
   UA_delete(p, @UA_TYPES[UA_TYPES_BROWSERESPONSE]);
 end;
 
+{$WARN 5058 off : Variable "$1" does not seem to be initialized}
 procedure UA_BrowseDescription_init(out p: UA_BrowseDescription);
 begin
   FillChar(p, SizeOf(p), #0);
 end;
+{$WARN 5058 on : Variable "$1" does not seem to be initialized}
 
 function UA_BrowseDescription_new: PUA_BrowseDescription;
 begin
-  result:= UA_new(@UA_TYPES[UA_TYPES_BROWSEDESCRIPTION]);
+  Result := UA_new(@UA_TYPES[UA_TYPES_BROWSEDESCRIPTION]);
 end;
 
 function UA_BrowseDescription_copy(const src: UA_BrowseDescription; out
   dst: UA_BrowseDescription): UA_StatusCode;
 begin
-  result:=UA_copy(@src, @dst, @UA_TYPES[UA_TYPES_BROWSEDESCRIPTION]);
+  Result := UA_copy(@src, @dst, @UA_TYPES[UA_TYPES_BROWSEDESCRIPTION]);
 end;
 
 procedure UA_BrowseDescription_deleteMembers(var p: UA_BrowseDescription);
@@ -2053,63 +2076,63 @@ end;
 
 function UA_Variant_isEmpty(const v: PUA_Variant): Boolean;
 begin
-  Result := v^._type = nil;
+  Result := v^._Type = nil;
 end;
 
 function UA_Variant_isScalar(const v: PUA_Variant): Boolean;
 begin
-  Result := (v^.arrayLength = 0) and (PByte(v^.data) > PByte(UA_EMPTY_ARRAY_SENTINEL));
+  Result := (v^.ArrayLength = 0) and (PByte(v^.Data) > PByte(UA_EMPTY_ARRAY_SENTINEL));
 end;
 
 function UA_Variant_hasScalarType(const v: PUA_Variant; const _type: PUA_DataType): Boolean;
 begin
-  Result := UA_Variant_isScalar(v) and (_type = v^._type);
+  Result := UA_Variant_isScalar(v) and (_type = v^._Type);
 end;
 
 function UA_Variant_hasArrayType(const v: PUA_Variant; const _type: PUA_DataType): Boolean;
 begin
-  Result := (not UA_Variant_isScalar(v)) and (_type = v^._type);
+  Result := (not UA_Variant_isScalar(v)) and (_type = v^._Type);
 end;
 
 function UA_Variant_getFloat(var v: UA_Variant): single;
 begin
-  Result := PUA_Float(v.data)^;
+  Result := PUA_Float(v.Data)^;
 end;
 
 function UA_Variant_getDouble(var v: UA_Variant): double;
 begin
-  Result := PUA_Double(v.data)^;
+  Result := PUA_Double(v.Data)^;
 end;
 
 function UA_Variant_getByte(var v: UA_Variant): Byte;
 begin
-  Result := PUA_Byte(v.data)^;
+  Result := PUA_Byte(v.Data)^;
 end;
 
 function UA_Variant_getSmallint(var v: UA_Variant): Smallint;
 begin
-  Result := PUA_Int16(v.data)^;
+  Result := PUA_Int16(v.Data)^;
 end;
 
 function UA_Variant_getInteger(var v: UA_Variant): Integer;
 begin
-  Result := PUA_Int32(v.data)^;
+  Result := PUA_Int32(v.Data)^;
 end;
 
 function UA_Variant_getInt64(var v: UA_Variant): Int64;
 begin
-  Result := PUA_Int64(v.data)^;
+  Result := PUA_Int64(v.Data)^;
 end;
 
 function UA_Variant_getString(var v: UA_Variant): AnsiString;
 begin
-  SetString(Result, PAnsiChar(PUA_String(v.data)^.data), PUA_String(v.data)^.length);
+  SetString(Result, PAnsiChar(PUA_String(v.Data)^.Data), PUA_String(v.Data)^.Length);
 end;
 
 function UA_Variant_getString(var v: UA_Variant; arrayIndex: DWord): AnsiString;
 begin
-  if arrayIndex < v.arrayLength then
-    SetString(Result, PAnsiChar(PUA_String(v.data)[arrayIndex].data), PUA_String(v.data)[arrayIndex].length)
+  if arrayIndex < v.ArrayLength then
+    SetString(Result, PAnsiChar(PUA_String(v.Data)[arrayIndex].Data), PUA_String(v.Data)[arrayIndex].Length)
   else
     Result := '';
 end;
@@ -2175,60 +2198,62 @@ end;
 
 function UA_NODEID_NUMERIC(nsIndex: UA_UInt16; identifier: UA_UInt32): UA_NodeId;
 begin
-  Result.namespaceIndex := nsIndex;
-  Result.identifierType := UA_NODEIDTYPE_NUMERIC;
-  Result.identifier.numeric := identifier;
+  Result.NamespaceIndex := nsIndex;
+  Result.IdentifierType := UA_NODEIDTYPE_NUMERIC;
+  Result.Identifier.Numeric := identifier;
 end;
 
 function UA_NODEID_STRING(nsIndex: UA_UInt16; var chars: AnsiString): UA_NodeId;
 begin
-  Result.namespaceIndex := nsIndex;
-  Result.identifierType := UA_NODEIDTYPE_STRING;
-  Result.identifier._string := _UA_STRING(chars);
+  Result.NamespaceIndex := nsIndex;
+  Result.IdentifierType := UA_NODEIDTYPE_STRING;
+  Result.Identifier._String := _UA_STRING(chars);
 end;
+
 function UA_NODEID_STRING_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_NodeId;
 begin
-  Result.namespaceIndex := nsIndex;
-  Result.identifierType := UA_NODEIDTYPE_STRING;
-  Result.identifier._string := _UA_STRING_ALLOC(chars);
+  Result.NamespaceIndex := nsIndex;
+  Result.IdentifierType := UA_NODEIDTYPE_STRING;
+  Result.Identifier._String := _UA_STRING_ALLOC(chars);
 end;
 
 function UA_NODEID_GUID(nsIndex: UA_UInt16; guid: UA_Guid): UA_NodeId;
 begin
-  Result.namespaceIndex := nsIndex;
-  Result.identifierType := UA_NODEIDTYPE_GUID;
-  Result.identifier.guid := guid;
+  Result.NamespaceIndex := nsIndex;
+  Result.IdentifierType := UA_NODEIDTYPE_GUID;
+  Result.Identifier.GUID := guid;
 end;
 
 function UA_NODEID_BYTESTRING(nsIndex: UA_UInt16; var chars: AnsiString): UA_NodeId;
 begin
-  Result.namespaceIndex := nsIndex;
-  Result.identifierType := UA_NODEIDTYPE_BYTESTRING;
-  Result.identifier.byteString := _UA_BYTESTRING(chars);
+  Result.NamespaceIndex := nsIndex;
+  Result.IdentifierType := UA_NODEIDTYPE_BYTESTRING;
+  Result.Identifier.ByteString := _UA_BYTESTRING(chars);
 end;
 function UA_NODEID_BYTESTRING_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_NodeId;
 begin
-  Result.namespaceIndex := nsIndex;
-  Result.identifierType := UA_NODEIDTYPE_BYTESTRING;
-  Result.identifier.byteString := _UA_BYTESTRING_ALLOC(chars);
+  Result.NamespaceIndex := nsIndex;
+  Result.IdentifierType := UA_NODEIDTYPE_BYTESTRING;
+  Result.Identifier.ByteString := _UA_BYTESTRING_ALLOC(chars);
 end;
 
 function UA_EXPANDEDNODEID_NUMERIC(nsIndex: UA_UInt16; identifier: UA_Uint32): UA_ExpandedNodeId;
 begin
-  result.nodeId:=UA_NODEID_NUMERIC(nsIndex, identifier);
-  result.serverIndex:=0;
-  result.namespaceUri:=UA_STRING_NULL;
+  result.NodeId:=UA_NODEID_NUMERIC(nsIndex, identifier);
+  result.ServerIndex:=0;
+  result.NamespaceUri:=UA_STRING_NULL;
 end;
 
 procedure UA_init(p: Pointer; const _type: PUA_DataType);
 begin
-  FillChar(p^, _type^.memSize, #0);
+  FillChar(p^, _type^.MemSize, #0);
 end;
 
 function UA_Client_connect_username(client: PUA_Client; const endpointUrl, username, password: AnsiString): UA_StatusCode;
 begin
   Result := UA_Client_connectUsername(client, endpointUrl, username, password);
 end;
+
 (* Connect to the server and create+activate a Session with the given username
  * and password. This first set the UserIdentityToken in the client config and
  * then calls the regular connect method. *)
@@ -2246,8 +2271,8 @@ begin
     cc := UA_Client_getConfig(client);
     UA_clear(@cc^.userIdentityToken, @UA_TYPES[UA_TYPES_EXTENSIONOBJECT]); //UA_ExtensionObject_clear()
     cc^.userIdentityToken.encoding := UA_EXTENSIONOBJECT_DECODED;
-    cc^.userIdentityToken.content.decoded._type := @UA_TYPES[UA_TYPES_USERNAMEIDENTITYTOKEN];
-    cc^.userIdentityToken.content.decoded.data := identityToken;
+    cc^.userIdentityToken.content.Decoded._Type := @UA_TYPES[UA_TYPES_USERNAMEIDENTITYTOKEN];
+    cc^.userIdentityToken.content.Decoded.Data := identityToken;
     Result := UA_Client_connect(client, endpointUrl);
   end;
 end;
@@ -2267,6 +2292,7 @@ begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE, @outValue, @UA_TYPES[UA_TYPES_VARIANT]);
 end;
 
+{$WARN 5058 off : Variable "$1" does not seem to be initialized}
 // taken from ua_client_highlevel.c: __UA_Client_readAttribute()
 // (use to read subrange of array variable)
 function UA_Client_readValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; const indexRange: AnsiString; out outValue: UA_Variant): UA_StatusCode; overload;
@@ -2286,21 +2312,21 @@ begin
   Result := response.responseHeader.serviceResult;
   if Result = UA_STATUSCODE_GOOD then begin
     if response.resultsSize = 1 then
-      Result := response.results[0].status
+      Result := response.results[0].Status
     else
       Result := UA_STATUSCODE_BADUNEXPECTEDERROR;
   end;
 
   if Result = UA_STATUSCODE_GOOD then begin
     (* Set the StatusCode *)
-    if response.results^.flag and 2 <> 0 then
-      Result :=  response.results^.status;
+    if response.results^.Flag and 2 <> 0 then
+      Result :=  response.results^.Status;
 
     (* Return early of no value is given *)
-    if response.results^.flag and 1 <> 0 then begin
+    if response.results^.Flag and 1 <> 0 then begin
       (* Copy value into out *)
-       outValue := response.results^.value;
-       UA_Variant_init(response.results^.value);
+       outValue := response.results^.Value;
+       UA_Variant_init(response.results^.Value);
     end
     else
       Result := UA_STATUSCODE_BADUNEXPECTEDERROR;
@@ -2309,14 +2335,16 @@ begin
   UA_clear(@response, @UA_TYPES[UA_TYPES_READRESPONSE]);
   UA_String_clear(item.indexRange);
 end;
+{$WARN 5058 on : Variable "$1" does not seem to be initialized}
 
 function UA_Client_readValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; out outValue: Byte): UA_StatusCode;
-var value: UA_Variant;
+var
+  value: UA_Variant;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE, @value, @UA_TYPES[UA_TYPES_VARIANT]);
   if Result = UA_STATUSCODE_GOOD then begin
     if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_BYTE]) then
-      outValue:= PUA_Byte(value.data)^
+      outValue:= PUA_Byte(value.Data)^
     else
       Result := UA_STATUSCODE_BADTYPEMISMATCH;
   end;
@@ -2329,7 +2357,7 @@ begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE, @value, @UA_TYPES[UA_TYPES_VARIANT]);
   if Result = UA_STATUSCODE_GOOD then begin
     if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_INT16]) then
-      outValue:= PUA_Int16(value.data)^
+      outValue:= PUA_Int16(value.Data)^
     else
       Result := UA_STATUSCODE_BADTYPEMISMATCH;
   end;
@@ -2337,13 +2365,15 @@ begin
 end;
 
 function UA_Client_readValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; out outValue: Longint): UA_StatusCode; overload;
-var value: UA_Variant;
+var
+  value: UA_Variant;
 begin
   UA_Variant_init(value);
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE, @value, @UA_TYPES[UA_TYPES_VARIANT]);
-  if Result = UA_STATUSCODE_GOOD then begin
+  if Result = UA_STATUSCODE_GOOD then
+  begin
     if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_INT32]) then
-      outValue:= PUA_Int32(value.data)^
+      outValue:= PUA_Int32(value.Data)^
     else
       Result := UA_STATUSCODE_BADTYPEMISMATCH;
   end;
@@ -2351,12 +2381,14 @@ begin
 end;
 
 function UA_Client_readValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; out outValue: AnsiString): UA_StatusCode; overload;
-var value: UA_Variant;
+var
+  value: UA_Variant;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE, @value, @UA_TYPES[UA_TYPES_VARIANT]);
-  if Result = UA_STATUSCODE_GOOD then begin
+  if Result = UA_STATUSCODE_GOOD then
+  begin
     if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_STRING]) then
-      SetString(outValue, PAnsiChar(PUA_String(value.data)^.data), PUA_String(value.data)^.length)
+      SetString(outValue, PAnsiChar(PUA_String(value.Data)^.Data), PUA_String(value.Data)^.Length)
     else
       Result := UA_STATUSCODE_BADTYPEMISMATCH;
   end;
@@ -2395,26 +2427,33 @@ begin
 end;
 
 function UA_Client_writeValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; const newValue: Byte): UA_StatusCode;
-var uav: UA_Variant;
+var
+  uav: UA_Variant;
 begin
   UA_Variant_setScalar(@uav, @newValue, @UA_TYPES[UA_TYPES_BYTE]);
   Result := UA_Client_writeValueAttribute(client, nodeId, uav);
 end;
 
 function UA_Client_writeValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; const newValue: Smallint): UA_StatusCode;
-var uav: UA_Variant;
+var
+  uav: UA_Variant;
 begin
   UA_Variant_setScalar(@uav, @newValue, @UA_TYPES[UA_TYPES_INT16]);
   Result := UA_Client_writeValueAttribute(client, nodeId, uav);
 end;
+
 function UA_Client_writeValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; const newValue: Longint): UA_StatusCode;
-var uav: UA_Variant;
+var
+  uav: UA_Variant;
 begin
   UA_Variant_setScalar(@uav, @newValue, @UA_TYPES[UA_TYPES_INT32]);
   Result := UA_Client_writeValueAttribute(client, nodeId, uav);
 end;
+
 function UA_Client_writeValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; const newValue: AnsiString): UA_StatusCode;
-var uav: UA_Variant; uas: UA_String;
+var
+  uav: UA_Variant;
+  uas: UA_String;
 begin
   uas := _UA_STRING_ALLOC(newValue);
   UA_Variant_setScalar(@uav, @uas, @UA_TYPES[UA_TYPES_STRING]);
@@ -2422,8 +2461,12 @@ begin
   UA_String_clear(uas);
 end;
 
+{$WARN 5058 off : Variable "$1" does not seem to be initialized}
 function UA_Client_writeValueAttribute(client: PUA_Client; const nodeId: UA_NodeId; const newValues: array of AnsiString): UA_StatusCode;
-var uav: UA_Variant; uas: array of UA_String; i: integer;
+var
+  uav: UA_Variant;
+  uas: array of UA_String;
+  i: integer;
 begin
   SetLength(uas, Length(newValues));
   for i:=Low(newValues) to High(newValues) do
@@ -2433,6 +2476,7 @@ begin
   for i:=Low(newValues) to High(newValues) do
     UA_String_clear(uas[i]);
 end;
+{$WARN 5058 on : Variable "$1" does not seem to be initialized}
 
 function UA_Client_writeDescriptionAttribute(client: PUA_Client; const nodeId: UA_NodeId; {$IFDEF FPC}constref{$ELSE}const{$ENDIF} newDescription: UA_LocalizedText): UA_StatusCode;
 begin
@@ -2454,24 +2498,24 @@ function UA_CreateSubscriptionRequest_default(): UA_CreateSubscriptionRequest;
 begin
   UA_CreateSubscriptionRequest_init(Result);
 
-  Result.requestedPublishingInterval := 500.0; // [ms]
-  Result.requestedLifetimeCount := 10000; // the number of PublishingIntervals to wait for a new PublishRequest, before realizing that the client is no longer active
-  Result.requestedMaxKeepAliveCount := 10; // how many intervals may be skipped, before an empty notification is sent
-  Result.maxNotificationsPerPublish := 0; // unlimited
-  Result.publishingEnabled := True;
-  Result.priority := 0;
+  Result.RequestedPublishingInterval := 500.0; // [ms]
+  Result.RequestedLifetimeCount := 10000; // the number of PublishingIntervals to wait for a new PublishRequest, before realizing that the client is no longer active
+  Result.RequestedMaxKeepAliveCount := 10; // how many intervals may be skipped, before an empty notification is sent
+  Result.MaxNotificationsPerPublish := 0; // unlimited
+  Result.PublishingEnabled := True;
+  Result.Priority := 0;
 end;
 
-function UA_MonitoredItemCreateRequest_default(nodeId: UA_NodeId): UA_MonitoredItemCreateRequest;
+function UA_MonitoredItemCreateRequest_default(NodeId: UA_NodeId): UA_MonitoredItemCreateRequest;
 begin
   UA_MonitoredItemCreateRequest_init(Result);
 
-  Result.itemToMonitor.nodeId := nodeId;
-  Result.itemToMonitor.attributeId := Ord(UA_ATTRIBUTEID_VALUE);
-  Result.monitoringMode := UA_MONITORINGMODE_REPORTING;
-  Result.requestedParameters.samplingInterval := 250;
-  Result.requestedParameters.discardOldest := true;
-  Result.requestedParameters.queueSize := 1;
+  Result.ItemToMonitor.nodeId := NodeId;
+  Result.ItemToMonitor.attributeId := Ord(UA_ATTRIBUTEID_VALUE);
+  Result.MonitoringMode := UA_MONITORINGMODE_REPORTING;
+  Result.RequestedParameters.SamplingInterval := 250;
+  Result.RequestedParameters.DiscardOldest := true;
+  Result.RequestedParameters.QueueSize := 1;
 end;
 {$ENDIF}
 
@@ -2513,7 +2557,7 @@ function UA_Server_addObjectTypeNode(server:PUA_Server; const requestedNewNodeId
                             const referenceTypeId:UA_NodeId;
                             const browseName: UA_QualifiedName;
                             const attr:UA_ObjectTypeAttributes;
-                            nodeContext:pointer; outNewNodeId: PUA_NodeId):UA_StatusCode;
+                            nodeContext:Pointer; outNewNodeId: PUA_NodeId):UA_StatusCode;
 begin
     result:= __UA_Server_addNode(server, UA_NODECLASS_OBJECTTYPE, @requestedNewNodeId,
                                @parentNodeId, @referenceTypeId, browseName,
@@ -2529,7 +2573,7 @@ function UA_Server_addObjectNode(server:PUA_Server; const requestedNewNodeId:UA_
                         const browseName: UA_QualifiedName;
                         const typeDefinition: UA_NodeId;
                         const attr:UA_ObjectAttributes;
-                        nodeContext:pointer; outNewNodeId: PUA_NodeId):UA_StatusCode;
+                        nodeContext:Pointer; outNewNodeId: PUA_NodeId):UA_StatusCode;
 begin
     result:= __UA_Server_addNode(server, UA_NODECLASS_OBJECT, @requestedNewNodeId,
                                @parentNodeId, @referenceTypeId, browseName,
@@ -2545,83 +2589,89 @@ function UA_Server_addVariableTypeNode(server:PUA_Server;
                               const browseName:UA_QualifiedName;
                               const typeDefinition:UA_NodeId;
                               const attr:UA_VariableTypeAttributes;
-                              nodeContext:pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
+                              nodeContext:Pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
 begin
-    result:= __UA_Server_addNode(server, UA_NODECLASS_VARIABLETYPE,
-                               @requestedNewNodeId, @parentNodeId, @referenceTypeId,
-                               browseName, @typeDefinition,
-                               @attr,
-                               @UA_TYPES[UA_TYPES_VARIABLETYPEATTRIBUTES],
-                               nodeContext, outNewNodeId);
+  Result:= __UA_Server_addNode(server, UA_NODECLASS_VARIABLETYPE,
+    @requestedNewNodeId, @parentNodeId, @referenceTypeId,
+    browseName, @typeDefinition,
+    @attr,
+    @UA_TYPES[UA_TYPES_VARIABLETYPEATTRIBUTES],
+    nodeContext, outNewNodeId);
 end;
 
-function UA_Server_addViewNode(server:PUA_Server; const requestedNewNodeId:UA_NodeId;
-                      const parentNodeId:UA_NodeId;
-                      const referenceTypeId:UA_NodeId;
-                      const browseName:UA_QualifiedName;
-                      const attr:UA_ViewAttributes;
-                      nodeContext:pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
+function UA_Server_addViewNode(server: PUA_Server; const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const attr: UA_ViewAttributes;
+  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
-    result:= __UA_Server_addNode(server, UA_NODECLASS_VIEW, @requestedNewNodeId,
-                               @parentNodeId, @referenceTypeId, browseName,
-                               @UA_NODEID_NULL, @attr,
-                               @UA_TYPES[UA_TYPES_VIEWATTRIBUTES],
-                               nodeContext, outNewNodeId);
+  Result:= __UA_Server_addNode(server, UA_NODECLASS_VIEW, @requestedNewNodeId,
+    @parentNodeId, @referenceTypeId, browseName,
+    @UA_NODEID_NULL, @attr,
+    @UA_TYPES[UA_TYPES_VIEWATTRIBUTES],
+    nodeContext, outNewNodeId);
 end;
 
-function UA_Server_addReferenceTypeNode(server:PUA_Server;
-                               const requestedNewNodeId:UA_NodeId;
-                               const parentNodeId:UA_NodeId;
-                               const referenceTypeId:UA_NodeId;
-                               const browseName:UA_QualifiedName;
-                               const attr:UA_ReferenceTypeAttributes;
-                               nodeContext:pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
+function UA_Server_addReferenceTypeNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const attr: UA_ReferenceTypeAttributes;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
-    result:= __UA_Server_addNode(server, UA_NODECLASS_REFERENCETYPE,
-                               @requestedNewNodeId, @parentNodeId, @referenceTypeId,
-                               browseName, @UA_NODEID_NULL,
-                               @attr,
-                               @UA_TYPES[UA_TYPES_REFERENCETYPEATTRIBUTES],
-                               nodeContext, outNewNodeId);
+  Result:= __UA_Server_addNode(server, UA_NODECLASS_REFERENCETYPE,
+    @requestedNewNodeId, @parentNodeId, @referenceTypeId,
+    browseName, @UA_NODEID_NULL,
+    @attr,
+    @UA_TYPES[UA_TYPES_REFERENCETYPEATTRIBUTES],
+    nodeContext, outNewNodeId);
 end;
 
-function UA_Server_addDataTypeNode(server:PUA_Server;
-                          const requestedNewNodeId:UA_NodeId;
-                          const parentNodeId:UA_NodeId;
-                          const referenceTypeId:UA_NodeId;
-                          const browseName:UA_QualifiedName;
-                          const attr:UA_DataTypeAttributes;
-                          nodeContext:pointer; outNewNodeId:PUA_NodeId):UA_StatusCode;
+function UA_Server_addDataTypeNode(Server: PUA_Server;
+  const RequestedNewNodeId: UA_NodeId;
+  const ParentNodeId: UA_NodeId;
+  const ReferenceTypeId: UA_NodeId;
+  const BrowseName: UA_QualifiedName;
+  const Attr: UA_DataTypeAttributes;
+  NodeContext: Pointer; OutNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
-    result:= __UA_Server_addNode(server, UA_NODECLASS_DATATYPE, @requestedNewNodeId,
-                               @parentNodeId, @referenceTypeId, browseName,
-                               @UA_NODEID_NULL, @attr,
-                               @UA_TYPES[UA_TYPES_DATATYPEATTRIBUTES],
-                               nodeContext, outNewNodeId);
+  Result:= __UA_Server_addNode(Server, UA_NODECLASS_DATATYPE, @RequestedNewNodeId,
+    @ParentNodeId, @ReferenceTypeId, BrowseName,
+    @UA_NODEID_NULL, @Attr,
+    @UA_TYPES[UA_TYPES_DATATYPEATTRIBUTES],
+    NodeContext, OutNewNodeId);
 end;
 
-function UA_Server_writeValue(server: PUA_Server; const nodeId: UA_NodeId; const value: UA_Variant): UA_StatusCode;
+function UA_Server_writeValue(server: PUA_Server; const nodeId: UA_NodeId;
+  const Value: UA_Variant): UA_StatusCode;
 begin
-  Result := __UA_Server_write(server, @nodeId, UA_ATTRIBUTEID_VALUE, @UA_TYPES[UA_TYPES_VARIANT], @value);
+  Result := __UA_Server_write(server, @nodeId, UA_ATTRIBUTEID_VALUE,
+    @UA_TYPES[UA_TYPES_VARIANT], @Value);
 end;
 
-function UA_Server_addMethodNode(server: PUA_Server; const requestedNewNodeId:UA_NodeId;
-                            const parentNodeId:UA_NodeId;
-                            const referenceTypeId:UA_NodeId;
-                            const browseName:UA_QualifiedName ;
-                            const attr:UA_MethodAttributes; method:UA_MethodCallback;
-                            inputArgumentsSize:SIZE_T; const inputArguments: PUA_Argument;
-                            outputArgumentsSize:SIZE_T; const outputArguments:PUA_Argument;
-                            nodeContext: pointer; outNewNodeId:PUA_NodeId): UA_StatusCode;
+function UA_Server_addMethodNode(Server: PUA_Server; const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName ;
+  const attr: UA_MethodAttributes;
+  method: UA_MethodCallback;
+  inputArgumentsSize: SIZE_T;
+  const inputArguments: PUA_Argument;
+  outputArgumentsSize: SIZE_T;
+  const outputArguments: PUA_Argument;
+  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
-  result := UA_Server_addMethodNodeEx(server, requestedNewNodeId, parentNodeId,
-                                      referenceTypeId, browseName, attr, method,
-                                      inputArgumentsSize, inputArguments, UA_NODEID_NULL, nil,
-                                      outputArgumentsSize, outputArguments, UA_NODEID_NULL, nil,
-                                      nodeContext, outNewNodeId);
+  Result := UA_Server_addMethodNodeEx(Server, requestedNewNodeId, parentNodeId,
+    referenceTypeId, browseName, attr, method,
+    inputArgumentsSize, inputArguments, UA_NODEID_NULL, nil,
+    outputArgumentsSize, outputArguments, UA_NODEID_NULL, nil,
+    nodeContext, outNewNodeId);
 end;
-
-
 {$ENDIF}
+
+
 end.
 
