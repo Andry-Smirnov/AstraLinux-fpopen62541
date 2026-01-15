@@ -9,7 +9,7 @@ unit TestOpcUa1;
 interface
 
 uses
-  Classes, 
+  Classes,
   SysUtils,
   Forms,
   Controls,
@@ -30,12 +30,12 @@ type
   { TServerThread }
 
   TServerThread = class(TThread)
-    running:UA_Boolean;
-    server:PUA_Server;
-    FOwner:TTestOpcUaForm;
-    constructor create(owner:TTestOpcUaForm);
-    destructor destroy;override;
-    procedure execute;override;
+    running: UA_Boolean;
+    server: PUA_Server;
+    FOwner: TTestOpcUaForm;
+    constructor Create(owner: TTestOpcUaForm);
+    destructor Destroy; override;
+    procedure Execute; override;
   private
     procedure Log(const msg: string);
   end;
@@ -85,8 +85,8 @@ type
     FServer: TServerThread;
     procedure CheckConnection;
     procedure SubscriptionCallback(Data: PtrInt);
-    procedure LogClient(const msg:string);
-    procedure LogServer(data:ptrint);
+    procedure LogClient(const msg: string);
+    procedure LogServer(Data: ptrint);
   public
 
   end;
@@ -99,96 +99,96 @@ implementation
 {$R *.lfm}
 
 type
-  TLogFunction =
-   procedure (logContext: Pointer; level: UA_LogLevel;
-     category: UA_LogCategory; msg: PAnsiChar);cdecl;
+  TLogFunction = procedure(logContext: Pointer; level: UA_LogLevel;
+    category: UA_LogCategory; msg: pansichar); cdecl;
 
 const
-{$IFDEF WINDOWS}
+  {$IFDEF WINDOWS}
   libpascallog='ua_pascallog.dll';
-{$ELSE}
-  libpascallog='libua_pascallog.so';
-{$ENDIF}
+  {$ELSE}
+  libpascallog = 'libua_pascallog.so';
+  {$ENDIF}
 
 
-var UA_Pascal_logger:  function(context: pointer; func:TLogFunction):UA_logger;cdecl=nil;
-    LoggerLibHandle: TLibHandle;
+var
+  UA_Pascal_logger: function(context: pointer; func: TLogFunction): UA_logger; cdecl = nil;
+  LoggerLibHandle: TLibHandle;
 
 procedure LoadLogLibrary;
 begin
   LoggerLibHandle := LoadLibrary(libpascallog);
-  if LoggerLibHandle=NilHandle then
+  if LoggerLibHandle = NilHandle then
   begin
     exit;
   end;
-  pointer(UA_Pascal_logger) := GetProcedureAddress(LoggerLibHandle,'UA_Pascal_logger');
+  pointer(UA_Pascal_logger) := GetProcedureAddress(LoggerLibHandle, 'UA_Pascal_logger');
 end;
 
 procedure UnloadLogLibrary;
 begin
-  if LoggerLibHandle<>NilHandle then
+  if LoggerLibHandle <> NilHandle then
     UnloadLibrary(LoggerLibHandle);
 end;
 
 var
-  client: PUA_Client;
+  Client: PUA_Client;
 
-{ TServerThread }
+  { TServerThread }
 
 procedure client_log_cb(logContext: Pointer; level: UA_LogLevel;
-  category: UA_LogCategory; msg: PAnsiChar); cdecl;
+  category: UA_LogCategory; msg: pansichar); cdecl;
 begin
   TTestOpcUaForm(logContext).LogClient(msg);
 end;
 
 procedure server_log_cb(logContext: Pointer; level: UA_LogLevel;
-  category: UA_LogCategory; msg: PAnsiChar); cdecl;
+  category: UA_LogCategory; msg: pansichar); cdecl;
 begin
   TServerThread(logContext).Log(msg);
 end;
 
-constructor TServerThread.create(owner:TTestOpcUaForm);
+constructor TServerThread.Create(owner: TTestOpcUaForm);
 begin
   LoadOpen62541();
-  FOwner:=Owner;
-  inherited create(false);
+  FOwner := Owner;
+  inherited Create(False);
 end;
 
-destructor TServerThread.destroy;
+destructor TServerThread.Destroy;
 begin
-  running:=false;
-  inherited destroy;
+  running := False;
+  inherited Destroy;
   UnloadOpen62541();
 end;
 
-procedure TServerThread.Log(const msg:string);
+procedure TServerThread.Log(const msg: string);
 var
   s: PString;
 begin
   new(s);
-  s^:=msg;
-  Application.QueueAsyncCall(@FOwner.LogServer,ptrint(s));
+  s^ := msg;
+  Application.QueueAsyncCall(@FOwner.LogServer, ptrint(s));
 end;
 
-procedure TServerThread.execute;
+procedure TServerThread.Execute;
 var
   res: UA_StatusCode;
   conf: PUA_ServerConfig;
 begin
-  server:=UA_Server_new();
-  conf:=UA_Server_getConfig(server);
-  if UA_Pascal_logger<>nil then
-    conf^.logger:=UA_Pascal_logger(self, @server_log_cb);
-  res:=UA_ServerConfig_setDefault(conf);
-  running:=true;
-  res:=UA_Server_run(server, @running);
+  server := UA_Server_new();
+  conf := UA_Server_getConfig(server);
+  if UA_Pascal_logger <> nil then
+    conf^.logger := UA_Pascal_logger(self, @server_log_cb);
+  res := UA_ServerConfig_setDefault(conf);
+  running := True;
+  res := UA_Server_run(server, @running);
 end;
 
 procedure TTestOpcUaForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  if client <> nil then
-    UA_Client_delete(client); // Disconnects the client internally
-                              //  UA_Client_delete() -> UA_ClientConfig_clear() -> UA_ApplicationDescription_clear() -> UA_clear() ... -> UA_Array_delete() -> UA_free
+  if Client <> nil then
+    UA_Client_delete(Client); // Disconnects the Client internally
+  //  UA_Client_delete() -> UA_ClientConfig_clear() -> UA_ApplicationDescription_clear() -> UA_clear() ... -> UA_Array_delete() -> UA_free
   FreeAndNil(FServer);
   UnloadOpen62541();
 end;
@@ -205,37 +205,41 @@ end;
 
 procedure TTestOpcUaForm.CheckConnection;
 begin
-  if client = nil then raise Exception.Create('Application is not connected to OPC UA Server!');
+  if Client = nil then raise Exception.Create(
+      'Application is not connected to OPC UA Server!');
 end;
 
 procedure TTestOpcUaForm.SubscriptionCallback(Data: PtrInt);
 begin
-  Memo1.Lines.Append(Format('Main thread Subscription Callback: %d',[Data]));
+  Memo1.Lines.Append(Format('Main thread Subscription Callback: %d', [Data]));
 end;
 
 procedure TTestOpcUaForm.LogClient(const msg: string);
 begin
-  Memo1.Lines.Add('(client) '+msg);
+  Memo1.Lines.Add('(client) ' + msg);
 end;
 
-procedure TTestOpcUaForm.LogServer(data:ptrint);
+procedure TTestOpcUaForm.LogServer(Data: ptrint);
 begin
-  Memo1.Lines.Add('(server) '+PString(data)^);
-  Dispose(PString(data));
+  Memo1.Lines.Add('(server) ' + PString(Data)^);
+  Dispose(PString(Data));
 end;
 
 // callback
-procedure handler_TheAnswerChanged(client:PUA_Client; subId: UA_UInt32; subContext: Pointer; monId: UA_UInt32; monContext: Pointer; value: PUA_DataValue); cdecl;
-var i: PtrInt;
+procedure handler_TheAnswerChanged(client: PUA_Client; subId: UA_UInt32;
+  subContext: Pointer; monId: UA_UInt32; monContext: Pointer;
+  Value: PUA_DataValue); cdecl;
+var
+  i: PtrInt;
 begin
-  if UA_Variant_hasScalarType(@(value^.value), @UA_TYPES[UA_TYPES_INT32]) then
-    i := UA_Variant_getInteger(value^.value)
+  if UA_Variant_hasScalarType(@(Value^.Value), @UA_TYPES[UA_TYPES_INT32]) then
+    i := UA_Variant_getInteger(Value^.Value)
   else
     i := 0;
-  TestOpcUaForm.Memo2.Lines.Append(Format('Subscription Callback: %d',[i]));
-{$IFDEF FPC}
+  TestOpcUaForm.Memo2.Lines.Append(Format('Subscription Callback: %d', [i]));
+  {$IFDEF FPC}
   Application.QueueAsyncCall(@TestOpcUaForm.SubscriptionCallback, i);
-{$ENDIF}
+  {$ENDIF}
 end;
 
 
@@ -249,31 +253,38 @@ type
 
 const
   MyStructMembers: array[0..2] of UA_DataTypeMember = (
-    (memberTypeIndex: UA_TYPES_UINT32;       padding:0; flag:1{namespaceZero=1}; memberName: 'x'),
-    (memberTypeIndex: UA_TYPES_UINT32;       padding:4; flag:1{namespaceZero=1}; memberName: 'y'),
-    (memberTypeIndex: {ns=3;i=}3014{STRING}; padding:8; flag:0{namespaceZero=0}; memberName: 'z')
-  );
+    (memberTypeIndex: UA_TYPES_UINT32; padding: 0; flag: 1{namespaceZero=1};
+    memberName: 'x'),
+    (memberTypeIndex: UA_TYPES_UINT32; padding: 4; flag: 1{namespaceZero=1};
+    memberName: 'y'),
+    (memberTypeIndex: {ns=3;i=}3014{STRING}; padding: 8; flag: 0{namespaceZero=0};
+    memberName: 'z')
+    );
 
-  MyStructTypeName: array[0..15] of AnsiChar = 'MyStructTypeName';
+  MyStructTypeName: array[0..15] of ansichar = 'MyStructTypeName';
   {$IF UA_VER = 1.2}
   MyStructType: UA_DataType = (
-    typeId: (namespaceIndex:3; identifierType:UA_NODEIDTYPE_STRING; identifier:(_string:(length:Length(MyStructTypeName);data:{$IFDEF FPC}@MyStructTypeName{$ELSE}nil{$ENDIF}))); (* .typeId *) // MUST BE ONLY "UA_NODEIDTYPE_NUMERIC"
-    binaryEncodingId: (namespaceIndex:3; identifierType:UA_NODEIDTYPE_NUMERIC; identifier:(numeric:0));
+    typeId: (namespaceIndex: 3; identifierType: UA_NODEIDTYPE_STRING;
+    identifier: (_string: (length: Length(MyStructTypeName);
+    Data:{$IFDEF FPC}@MyStructTypeName{$ELSE}nil{$ENDIF}))); (* .typeId *) // MUST BE ONLY "UA_NODEIDTYPE_NUMERIC"
+    binaryEncodingId: (namespaceIndex: 3; identifierType: UA_NODEIDTYPE_NUMERIC;
+    identifier: (numeric: 0));
     memSize: SizeOf(MyStruct);
-    typeIndex: 0;                            (* .typeIndex, in the array of custom types *)
-//    typeKind: Ord(UA_DATATYPEKIND_STRUCTURE);
-//    pointerFree: 0;
-//    overlayable: 0;
-//    membersSize: 3;
-    flags: ord(UA_DATATYPEKIND_STRUCTURE) +  (* .typeKind:6 *)
-           0 shl 6 +                         (* .pointerFree:1 *)
-           0 shl 7 +                         (* .overlayable:1 (depends on endianness and
+    typeIndex: 0;
+    (* .typeIndex, in the array of custom types *)
+    //    typeKind: Ord(UA_DATATYPEKIND_STRUCTURE);
+    //    pointerFree: 0;
+    //    overlayable: 0;
+    //    membersSize: 3;
+    flags: Ord(UA_DATATYPEKIND_STRUCTURE) +  (* .typeKind:6 *)
+    0 shl 6 +                         (* .pointerFree:1 *)
+    0 shl 7 +                         (* .overlayable:1 (depends on endianness and
                                                  the absence of padding) *)
-           3 shl 8;                          (* .membersSize:8 *)
+    3 shl 8;                          (* .membersSize:8 *)
     {!!! works only if binaryEncodingId==identifier.numeric !!!}
     members: @MyStructMembers;
     typeName: 'MyStructType';
-  );
+    );
   {$ELSE}
   MyStructType: UA_DataType = (
     typeName: 'MyStructType';
@@ -289,101 +300,123 @@ const
   );
   {$IFEND}
   MyCustomDataTypes: UA_DataTypeArray = (
-    next: nil;
+    Next: nil;
     typesSize: 1;
     types: @MyStructType;
-  );
+    );
 
 
 procedure TTestOpcUaForm.btnConnectClick(Sender: TObject);
 var
-  res: UA_StatusCode;
-  channelState: UA_SecureChannelState;
-  sessionState: UA_SessionState;
-  conf: PUA_ClientConfig;
-  s: AnsiString;
+  Res: UA_StatusCode;
+  ChannelState: UA_SecureChannelState;
+  SessionState: UA_SessionState;
+  Conf: PUA_ClientConfig;
+  s: ansistring;
   i32: longint;
-  value: UA_Variant; (* Variants can hold scalar values and arrays of any type *)
-  nodeId: UA_NodeId;
+  Value: UA_Variant; (* Variants can hold scalar values and arrays of any type *)
+  NodeId: UA_NodeId;
   dts: UA_DateTimeStruct;
   lt: UA_LocalizedText;
   qn: UA_QualifiedName;
-  size: size_t;
-  pdimension: PUA_UInt32;
+  Size: size_t;
+  PDimension: PUA_UInt32;
   // Subscriptions:
-  request: UA_CreateSubscriptionRequest;
-  response: UA_CreateSubscriptionResponse;
-  monRequest: UA_MonitoredItemCreateRequest;
-  monResponse: UA_MonitoredItemCreateResult;
+  Request: UA_CreateSubscriptionRequest;
+  Response: UA_CreateSubscriptionResponse;
+  MonRequest: UA_MonitoredItemCreateRequest;
+  MonResponse: UA_MonitoredItemCreateResult;
 begin
   (*** Load dynamic library ***)
   LoadOpen62541();
 
-  client := nil;
-  client := UA_Client_new();
-  conf := UA_Client_getConfig(client);
+  Client := nil;
+  Client := UA_Client_new();
+  Conf := UA_Client_getConfig(Client);
 
-  conf^.clientDescription.applicationName := _UA_LOCALIZEDTEXT_ALLOC('en-US','My Test Application');
-  UA_ClientConfig_setDefault(conf);
+  Conf^.clientDescription.applicationName :=
+    _UA_LOCALIZEDTEXT_ALLOC('en-US', 'My Test Application');
+  UA_ClientConfig_setDefault(Conf);
 
-  if UA_Pascal_logger<>nil then
-    conf^.logger:=UA_Pascal_logger(self, @client_log_cb);
+  if UA_Pascal_logger <> nil then
+    Conf^.logger := UA_Pascal_logger(self, @client_log_cb);
 
-  conf^.customDataTypes := @MyCustomDataTypes;
+  Conf^.customDataTypes := @MyCustomDataTypes;
 
-  (*** Get the client connection status ***)
-  UA_Client_getState(client,@channelState,@sessionState,nil);
-  {$IFDEF FPC}WriteStr(s, sessionState, '/', channelState);{$ELSE}s:='';{$ENDIF}
-  Memo1.Lines.Append(Format('Before connect state: %d/%d %s', [ord(sessionState), ord(channelState), s]));
+  (*** Get the Client connection status ***)
+  UA_Client_getState(Client, @ChannelState, @SessionState, nil);
+  {$IFDEF FPC}
+  WriteStr(s, SessionState, '/', ChannelState);
+  {$ELSE}
+  s := '';
+  {$ENDIF}
+  Memo1.Lines.Append(Format('Before connect state: %d/%d %s',
+    [Ord(SessionState), Ord(ChannelState), s]));
 
 
   (*** Connection - Anonymous user, Security None ***)
-  res := UA_Client_connect(client, cbServer.Text);
-  //res := UA_Client_connectUsername(client, PAnsiChar(cbServer.Text),'test','test');
-  if res <> UA_STATUSCODE_GOOD then begin
-    Memo1.Lines.Append(Format('Fail status code: %x %s', [res, AnsiString(UA_StatusCode_name(res))]));
-    UA_Client_delete(client);
-    client := nil;
+  Res := UA_Client_connect(Client, cbServer.Text);
+  //Res := UA_Client_connectUsername(Client, PAnsiChar(cbServer.Text),'test','test');
+  if Res <> UA_STATUSCODE_GOOD then
+  begin
+    Memo1.Lines.Append(Format('Fail status code: %x %s',
+      [Res, ansistring(UA_StatusCode_name(Res))]));
+    UA_Client_delete(Client);
+    Client := nil;
     Exit;
   end;
 
-  UA_Client_getState(client,@channelState,@sessionState,nil);
-  {$IFDEF FPC}WriteStr(s, sessionState, '/', channelState);{$ELSE}s:='';{$ENDIF}
-  Memo1.Lines.Append(Format('After connect state: %d/%d %s', [ord(sessionState), ord(channelState), s]));
+  UA_Client_getState(Client, @ChannelState, @SessionState, nil);
+  {$IFDEF FPC}
+WriteStr(s, SessionState, '/', ChannelState);
+  {$ELSE}
+  s := '';
+  {$ENDIF}
+  Memo1.Lines.Append(Format('After connect state: %d/%d %s',
+    [Ord(SessionState), Ord(ChannelState), s]));
 
  (* Read the value attribute of the node. UA_Client_readValueAttribute is a
   * wrapper for the raw read service available as UA_Client_Service_read. *)
-  nodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERARRAY);
-  UA_Variant_init(value);
-  res := UA_Client_readValueAttribute(client, nodeId, value);
-  if (res = UA_STATUSCODE_GOOD) and (UA_Variant_hasArrayType(@value, @UA_TYPES[UA_TYPES_STRING])) then begin
-    UA_Client_readValueRankAttribute(client, nodeId, i32);
-    UA_Client_readArrayDimensionsAttribute(client, nodeId, size, pdimension);
-    Memo1.Lines.Append(Format('ServerArray variable (ValueRank=%d, ArrayDimensions=size:%d,dimensions[0]:%d):', [i32, size, pdimension^]));
-    Memo1.Lines.Append('  '+UA_Variant_getString(value));
+  NodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERARRAY);
+  UA_Variant_init(Value);
+  Res := UA_Client_readValueAttribute(Client, NodeId, Value);
+  if (Res = UA_STATUSCODE_GOOD) and
+    (UA_Variant_hasArrayType(@Value, @UA_TYPES[UA_TYPES_STRING])) then
+  begin
+    UA_Client_readValueRankAttribute(Client, NodeId, i32);
+    UA_Client_readArrayDimensionsAttribute(Client, NodeId, Size, PDimension);
+    Memo1.Lines.Append(Format(
+      'ServerArray variable (ValueRank=%d, ArrayDimensions=size:%d,dimensions[0]:%d):',
+      [i32, Size, PDimension^]));
+    Memo1.Lines.Append('  ' + UA_Variant_getString(Value));
   end;
-  UA_Variant_clear(value);
+  UA_Variant_clear(Value);
 
- (* NodeId of the variable holding the current time *)
-  nodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
-  res := UA_Client_readValueAttribute(client, nodeId, value);
-  if res <> UA_STATUSCODE_GOOD then
-    Memo1.Lines.Append(Format('Fail status code: %x %s', [res, AnsiString(UA_StatusCode_name(res))]));
-  if (res = UA_STATUSCODE_GOOD) and (UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_DATETIME])) then begin
-    UA_Client_readValueRankAttribute(client, nodeId, i32);
-    dts := UA_DateTime_toStruct(PUA_DateTime(value.data)^);
-    Memo1.Lines.Append(Format('Date on server is: %d.%d.%d %d:%d:%d (ValueRank=%d)', [dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, i32]));
+  (* NodeId of the variable holding the current time *)
+  NodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
+  Res := UA_Client_readValueAttribute(Client, NodeId, Value);
+  if Res <> UA_STATUSCODE_GOOD then
+    Memo1.Lines.Append(Format('Fail status code: %x %s',
+      [Res, ansistring(UA_StatusCode_name(Res))]));
+  if (Res = UA_STATUSCODE_GOOD) and
+    (UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_DATETIME])) then
+  begin
+    UA_Client_readValueRankAttribute(Client, NodeId, i32);
+    dts := UA_DateTime_toStruct(PUA_DateTime(Value.Data)^);
+    Memo1.Lines.Append(Format('Date on server is: %d.%d.%d %d:%d:%d (ValueRank=%d)',
+      [dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, i32]));
   end;
-  UA_Variant_clear(value);
+  UA_Variant_clear(Value);
 
-  nodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_BUILDINFO_PRODUCTNAME);
-  if UA_Client_readValueAttribute(client, nodeId, s) = UA_STATUSCODE_GOOD then begin
-    UA_Client_readValueRankAttribute(client, nodeId, i32);
-    Memo1.Lines.Append(Format('Product Name is: %s (ValueRank=%d)', [s,i32]));
+  NodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_BUILDINFO_PRODUCTNAME);
+  if UA_Client_readValueAttribute(Client, NodeId, s) = UA_STATUSCODE_GOOD then
+  begin
+    UA_Client_readValueRankAttribute(Client, NodeId, i32);
+    Memo1.Lines.Append(Format('Product Name is: %s (ValueRank=%d)', [s, i32]));
   end;
 
-{ $DEFINE HAVE_PROSYSSIMULATIONSERVER}
-{$IFDEF HAVE_PROSYSSIMULATIONSERVER}
+  { $DEFINE HAVE_PROSYSSIMULATIONSERVER}
+  {$IFDEF HAVE_PROSYSSIMULATIONSERVER}
   // read variable "Counter"
   nodeId := UA_NODEID_STRING(3, 'Counter');
   res := UA_Client_readBrowseNameAttribute(client, nodeId, qn);
@@ -464,106 +497,135 @@ begin
   Memo1.Lines.Append('Iterate ...');
   UA_Client_run_iterate(client, 500);
   Memo1.Lines.Append('Iterate ...');
-{$ENDIF}
+  {$ENDIF}
 end;
 
 procedure TTestOpcUaForm.btnReadVariableClick(Sender: TObject);
 type
-  TMyCustomType=packed record
+  TMyCustomType = packed record
     x: UA_Int32;
     y: UA_Int32;
-    z: AnsiString;
+    z: ansistring;
   end;
 var
   nodeId, dataType: UA_NodeId;
   res: UA_StatusCode;
-  value: UA_Variant;
+  Value: UA_Variant;
   valueRank: UA_Int32;
   arrayDimensionsSize: size_t;
   arrayDimensions: PUA_UInt32;
   i: integer;
-  s: AnsiString;
-  data: PUA_Byte;
+  s: ansistring;
+  Data: PUA_Byte;
   myCustomType: TMyCustomType;
 begin
   CheckConnection;
 
   case cbNodeType.ItemIndex of
-    0:   NodeId := UA_NODEID_NUMERIC(StrToInt(cbNS.Text), StrToInt(eNodeId.Text));
-    else NodeId := UA_NODEID_STRING_ALLOC(StrToInt(cbNS.Text), eNodeId.Text);
+    0: NodeId := UA_NODEID_NUMERIC(StrToInt(cbNS.Text), StrToInt(eNodeId.Text));
+    else
+      NodeId := UA_NODEID_STRING_ALLOC(StrToInt(cbNS.Text), eNodeId.Text);
   end;
 
   // get data type of requested variable
-  if UA_Client_readDataTypeAttribute(client, nodeId, dataType) = UA_STATUSCODE_GOOD then
-    Memo1.Lines.Append(Format('Node "%s" data type: %s (%s)', [eNodeId.Text, UA_NodeIdToStr(dataType), UA_DataTypeToStr(dataType)]));
+  if UA_Client_readDataTypeAttribute(Client, nodeId, dataType) = UA_STATUSCODE_GOOD then
+    Memo1.Lines.Append(Format('Node "%s" data type: %s (%s)',
+      [eNodeId.Text, UA_NodeIdToStr(dataType), UA_DataTypeToStr(dataType)]));
 
   // get value of requested variable
-  res := UA_Client_readValueAttribute(client, nodeId, value);
+  res := UA_Client_readValueAttribute(Client, nodeId, Value);
   case res of
     UA_STATUSCODE_GOOD:
-      if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_BYTE]) then
-        eNodeValue.Text := IntToStr(UA_Variant_getByte(value))
-      else if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_INT16]) then
-        eNodeValue.Text := IntToStr(UA_Variant_getSmallint(value))
-      else if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_INT32]) then
-        eNodeValue.Text := IntToStr(UA_Variant_getInteger(value))
-      else if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_STRING]) then
-        eNodeValue.Text := UA_Variant_getString(value) // value._type^.memSize == SizeOf(UA_STRING)
-      else if UA_Variant_hasScalarType(@value, @UA_TYPES[UA_TYPES_EXTENSIONOBJECT]) then begin
+      if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_BYTE]) then
+        eNodeValue.Text := IntToStr(UA_Variant_getByte(Value))
+      else if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_INT16]) then
+        eNodeValue.Text := IntToStr(UA_Variant_getSmallint(Value))
+      else if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_INT32]) then
+        eNodeValue.Text := IntToStr(UA_Variant_getInteger(Value))
+      else if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_STRING]) then
+        eNodeValue.Text := UA_Variant_getString(Value)
+      // value._type^.memSize == SizeOf(UA_STRING)
+      else if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_EXTENSIONOBJECT]) then
+      begin
         // The standard mandates that variants contain built-in data types only. If the value is not of a builtin type, it is wrapped into an ExtensionObject.
         //  UA_EXTENSIONOBJECT_ENCODED_BYTESTRING = 1
         //  (ua_types_encoding_binary.c: The binary encoding has a different nodeid from the data type.
         //    UA_findDataTypeByBinaryInternal(): We only store a ***numeric identifier*** for the encoding nodeid of data types)
         //    If the ExtensionObject is decoded then .encoding = UA_EXTENSIONOBJECT_DECODED
-        if PUA_ExtensionObject(value.data)^.encoding = UA_EXTENSIONOBJECT_ENCODED_BYTESTRING then begin
-          data := PUA_ExtensionObject(value.data)^.content.encoded.body.data;
+        if PUA_ExtensionObject(Value.Data)^.encoding =
+          UA_EXTENSIONOBJECT_ENCODED_BYTESTRING then
+        begin
+          Data := PUA_ExtensionObject(Value.Data)^.content.encoded.body.Data;
           // test for one specific custom data type
-          if (dataType.namespaceIndex=3) and (dataType.identifierType=UA_NODEIDTYPE_STRING) and
-             (_UA_String_equal(dataType.identifier._string, 'DT_"GRZ"."POZ"."KNT"')) then begin
+          if (dataType.namespaceIndex = 3) and
+            (dataType.identifierType = UA_NODEIDTYPE_STRING) and
+            (_UA_String_equal(dataType.identifier._string, 'DT_"GRZ"."POZ"."KNT"')) then
+          begin
             // +0
-            myCustomType.x := PUA_Int32(data)^;
+            myCustomType.x := PUA_Int32(Data)^;
             // +4
-            myCustomType.y := PUA_Int32(data+4)^;
+            myCustomType.y := PUA_Int32(Data + 4)^;
             // +8 (4 bytes length followed by chars); on 64-bit also 4 or 8 bytes?
-            SetString(myCustomType.z, PAnsiChar(data+8+SizeOf(NativeInt)), PNativeInt(data+8)^);
-            Memo1.Lines.Append(Format('Node "%s" MyCustomType: %d,%d,%s', [eNodeId.Text, myCustomType.x, myCustomType.y, myCustomType.z]));
+            SetString(myCustomType.z, pansichar(Data + 8 + SizeOf(nativeint)),
+              PNativeInt(Data + 8)^);
+            Memo1.Lines.Append(Format('Node "%s" MyCustomType: %d,%d,%s',
+              [eNodeId.Text, myCustomType.x, myCustomType.y, myCustomType.z]));
           end;
-          SetString(s, PAnsiChar(data), PUA_ExtensionObject(value.data)^.content.encoded.body.length);
-          for i:=1 to Length(s) do if (s[i]<#32) then s[i]:=' ';
+          SetString(s, pansichar(Data), PUA_ExtensionObject(
+            Value.Data)^.content.encoded.body.length);
+          for i := 1 to Length(s) do if (s[i] < #32) then s[i] := ' ';
         end
         else
-          s:='';
-        eNodeValue.Text := Format('<Extension Object; Encoding=%d (encoded.TypeId="%s"), Body=(%d):%s>',[ord(PUA_ExtensionObject(value.data)^.encoding), UA_NodeIdToStr(PUA_ExtensionObject(value.data)^.content.encoded.typeId), PUA_ExtensionObject(value.data)^.content.encoded.body.length, s]);
+          s := '';
+        eNodeValue.Text := Format(
+          '<Extension Object; Encoding=%d (encoded.TypeId="%s"), Body=(%d):%s>',
+          [Ord(PUA_ExtensionObject(Value.Data)^.encoding),
+          UA_NodeIdToStr(PUA_ExtensionObject(Value.Data)^.content.encoded.typeId),
+          PUA_ExtensionObject(Value.Data)^.content.encoded.body.length, s]);
         // value._type^.memSize == SizeOf(UA_EXTENSIONOBJECT)
       end
-      else if not UA_Variant_isScalar(@value) then begin // Is array ?
-        //UA_Client_readValueRankAttribute(client, nodeId, valueRank);
+      else if not UA_Variant_isScalar(@Value) then
+      begin // Is array ?
+        //UA_Client_readValueRankAttribute(Client, nodeId, valueRank);
         // Rank = 0-One or more dimensions; 1-One dimension; -2-Any (The value can be a scalar or an array with any number of dimensions)
-        //UA_Client_readArrayDimensionsAttribute(client, nodeId, arrayDimensionsSize, arrayDimensions);
+        //UA_Client_readArrayDimensionsAttribute(Client, nodeId, arrayDimensionsSize, arrayDimensions);
 
         // check UA_Variant for array properties
-        arrayDimensionsSize := value.arrayDimensionsSize;
-        s:='';
-        for i:=0 to arrayDimensionsSize-1 do s:=Format('%s[%d]',[s, value.arrayDimensions[i]]);
-        eNodeValue.Text := Format('<Array Length=%d, Dimensions=%d:%s>', [value.arrayLength, arrayDimensionsSize, s]);
+        arrayDimensionsSize := Value.arrayDimensionsSize;
+        s := '';
+        for i := 0 to arrayDimensionsSize - 1 do
+          s := Format('%s[%d]', [s, Value.arrayDimensions[i]]);
+        eNodeValue.Text := Format('<Array Length=%d, Dimensions=%d:%s>',
+          [Value.arrayLength, arrayDimensionsSize, s]);
 
-        if UA_Variant_hasArrayType(@value, @UA_TYPES[UA_TYPES_EXTENSIONOBJECT]) then begin
-          for i:=0 to value.arrayLength-1 do
-            Memo1.Lines.Append(Format('Node "%s"[%d] <Extension Object; Encoding=%d (encoded.TypeId="%s"), Body length=%d>',[eNodeId.Text, i, ord(PUA_ExtensionObject(value.data)[i].encoding), UA_NodeIdToStr(PUA_ExtensionObject(value.data)[i].content.encoded.typeId), PUA_ExtensionObject(value.data)[i].content.encoded.body.length]));
+        if UA_Variant_hasArrayType(@Value, @UA_TYPES[UA_TYPES_EXTENSIONOBJECT]) then
+        begin
+          for i := 0 to Value.arrayLength - 1 do
+            Memo1.Lines.Append(
+              Format('Node "%s"[%d] <Extension Object; Encoding=%d (encoded.TypeId="%s"), Body length=%d>',
+              [eNodeId.Text, i, Ord(PUA_ExtensionObject(Value.Data)[i].encoding),
+              UA_NodeIdToStr(PUA_ExtensionObject(Value.Data)[i].content.encoded.typeId),
+              PUA_ExtensionObject(Value.Data)[i].content.encoded.body.length]));
         end;
       end
       else
         eNodeValue.Text := '';
     UA_STATUSCODE_BADTYPEMISMATCH:
-      begin
-      res := UA_Client_readDataTypeAttribute(client, nodeId, dataType);
-      raise Exception.CreateFmt('Error reading value of variable "%s"! (expected "String" type, but variable is "%s" type)', [eNodeId.Text, UA_DataTypeToStr(dataType)]);
-      end
+    begin
+      res := UA_Client_readDataTypeAttribute(Client, nodeId, dataType);
+      raise Exception.CreateFmt(
+        'Error reading value of variable "%s"! (expected "String" type, but variable is "%s" type)',
+        [eNodeId.Text, UA_DataTypeToStr(dataType)]);
+    end
     else
-      raise Exception.CreateFmt('Error reading value of variable "%s"! (%s)', [eNodeId.Text, AnsiString(UA_StatusCode_name(res))]);
+      raise Exception.CreateFmt('Error reading value of variable "%s"! (%s)',
+        [eNodeId.Text, ansistring(UA_StatusCode_name(res))]);
   end;
 
-  Memo1.Lines.Append(Format('Node "%s" read value: %s (Size=%d, Type=%s (typeId=%s,typeIndex=%d); Result=%x)', [eNodeId.Text, eNodeValue.Text, value._type^.memSize, value._type^.typeName, UA_NodeIdToStr(value._type^.typeId), value._type^.typeIndex, res]));
+  Memo1.Lines.Append(Format(
+    'Node "%s" read value: %s (Size=%d, Type=%s (typeId=%s,typeIndex=%d); Result=%x)',
+    [eNodeId.Text, eNodeValue.Text, Value._type^.memSize, Value._type^.typeName,
+    UA_NodeIdToStr(Value._type^.typeId), Value._type^.typeIndex, res]));
   //pDataType := value._type;
   //Memo1.Lines.Append(Format('Data Type: typeName=%s, typeId=%s, memSize=%d, typeIndex=%d, flags=%d, binaryEncodingId=%d, members=%p', [pDataType^.typeName, UA_NodeIdToStr(pDataType^.typeId), pDataType^.memSize, pDataType^.typeIndex, pDataType^.flags, pDataType^.binaryEncodingId, pDataType^.members]));
 
@@ -575,43 +637,48 @@ var
   nodeId, dataType: UA_NodeId;
   res: UA_StatusCode;
   pDataType: PUA_DataType;
-  value: UA_Variant;
+  Value: UA_Variant;
 begin
   CheckConnection;
 
   case cbNodeType.ItemIndex of
-    0:   NodeId := UA_NODEID_NUMERIC(StrToInt(cbNS.Text), StrToInt(eNodeId.Text));
-    else NodeId := UA_NODEID_STRING_ALLOC(StrToInt(cbNS.Text), eNodeId.Text);
+    0: NodeId := UA_NODEID_NUMERIC(StrToInt(cbNS.Text), StrToInt(eNodeId.Text));
+    else
+      NodeId := UA_NODEID_STRING_ALLOC(StrToInt(cbNS.Text), eNodeId.Text);
   end;
 
   // check varible Data Type on server
-  if UA_Client_readDataTypeAttribute(client, nodeId, dataType) = UA_STATUSCODE_GOOD then begin
+  if UA_Client_readDataTypeAttribute(Client, nodeId, dataType) = UA_STATUSCODE_GOOD then
+  begin
     pDataType := UA_findDataType(@dataType);
-    if pDataType <> nil then begin
+    if pDataType <> nil then
+    begin
       case pDataType^.typeIndex of
         UA_TYPES_BYTE:
-          UA_Variant_setByte(value, Byte(StrToInt(eNodeValue.Text)));
+          UA_Variant_setByte(Value, byte(StrToInt(eNodeValue.Text)));
         UA_TYPES_INT16:
-          UA_Variant_setSmallint(value, Smallint(StrToInt(eNodeValue.Text)));
+          UA_Variant_setSmallint(Value, smallint(StrToInt(eNodeValue.Text)));
         UA_TYPES_INT32:
-          UA_Variant_setInteger(value, StrToInt(eNodeValue.Text));
+          UA_Variant_setInteger(Value, StrToInt(eNodeValue.Text));
         UA_TYPES_DOUBLE:
-          UA_Variant_setDouble(value, StrToFloat(eNodeValue.Text));
+          UA_Variant_setDouble(Value, StrToFloat(eNodeValue.Text));
         UA_TYPES_STRING:
-          UA_Variant_setString(value, eNodeValue.Text);
+          UA_Variant_setString(Value, eNodeValue.Text);
         //else
         //  raise Exception.CreateFmt('Unimplemented variable data type "%s"!',[pDataType^.typeName]);
       end;
       // write value into server variable
-      res := UA_Client_writeValueAttribute(client, nodeId, value);
-      Memo1.Lines.Append(Format('Node "%s" write value: %s (Result=%x)', [eNodeId.Text, eNodeValue.Text, res]));
-      UA_Variant_clear(value);
+      res := UA_Client_writeValueAttribute(Client, nodeId, Value);
+      Memo1.Lines.Append(Format('Node "%s" write value: %s (Result=%x)',
+        [eNodeId.Text, eNodeValue.Text, res]));
+      UA_Variant_clear(Value);
       // check result of write
       case res of
         UA_STATUSCODE_BADNOTWRITABLE:
           raise Exception.Create('The access level does not allow writing to the Node!');
         UA_STATUSCODE_BADTYPEMISMATCH:
-          raise Exception.Create('The value supplied for the attribute is not of the same type as the attribute''s value!');
+          raise Exception.Create(
+            'The value supplied for the attribute is not of the same type as the attribute''s value!');
       end;
     end;
   end;
@@ -623,13 +690,15 @@ procedure TTestOpcUaForm.btnServerStartClick(Sender: TObject);
 var
   res: UA_StatusCode;
 begin
-  if Assigned(FServer) then begin
+  if Assigned(FServer) then
+  begin
     FreeAndNil(FServer);
     btnServerStart.Checked := False;
     Memo1.Lines.Add('stopped');
-  end else
+  end
+  else
   begin
-    FServer:=TServerThread.create(self);
+    FServer := TServerThread.Create(self);
     Memo1.Lines.Add('started');
   end;
 end;
@@ -641,54 +710,58 @@ var
   intVariableNodeId, parentNodeId, parentReferenceNodeId: UA_NodeId;
   intVariableName: UA_QualifiedName;
   res: UA_StatusCode;
-  varlang:AnsiString;
-  varname:AnsiString;
+  varlang: ansistring;
+  varname: ansistring;
 begin
   if not assigned(FServer) then
   begin
-      Memo1.Lines.Append('server not connected');
-     exit;
+    Memo1.Lines.Append('server not connected');
+    exit;
   end;
-  varlang:='en-US';
-  varname:=eServerVariableName.Text;
+  varlang := 'en-US';
+  varname := eServerVariableName.Text;
   (* Define the attribute of the myInteger variable node *)
   attr := UA_VariableAttributes_default;
   intVariable := StrToInt(eServerVariableValue.Text);
-  UA_Variant_setScalar(@attr.value, @intVariable, @UA_TYPES[UA_TYPES_INT32]);
+  UA_Variant_setScalar(@attr.Value, @intVariable, @UA_TYPES[UA_TYPES_INT32]);
   attr.description := _UA_LOCALIZEDTEXT(varlang, varname);
   attr.displayName := _UA_LOCALIZEDTEXT(varlang, varname);
   attr.dataType := UA_TYPES[UA_TYPES_INT32].typeId;
   attr.accessLevel := UA_ACCESSLEVELMASK_READ or UA_ACCESSLEVELMASK_WRITE;
 
   (* Add the variable node to the information model *)
-  intVariableNodeId := UA_NODEID_STRING(StrToInt(cbServerNS.Text){name space index}, varname);
+  intVariableNodeId := UA_NODEID_STRING(StrToInt(cbServerNS.Text)
+    {name space index}, varname);
   intVariableName := _UA_QUALIFIEDNAME(StrToInt(cbServerNS.Text), varname);
   parentNodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER);
   parentReferenceNodeId := UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES);
-  res := UA_Server_addVariableNode(FServer.server, intVariableNodeId, parentNodeId,
-                             parentReferenceNodeId, intVariableName,
-                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), attr, nil, nil);
-  Memo1.Lines.Append(Format('Server add variable "%s" (Result=%x)', [eServerVariableName.Text, res]));
+  res := UA_Server_addVariableNode(FServer.server, intVariableNodeId,
+    parentNodeId, parentReferenceNodeId,
+    intVariableName, UA_NODEID_NUMERIC(0,
+    UA_NS0ID_BASEDATAVARIABLETYPE), attr, nil, nil);
+  Memo1.Lines.Append(Format('Server add variable "%s" (Result=%x)',
+    [eServerVariableName.Text, res]));
 end;
 
 procedure TTestOpcUaForm.btnServerWriteVariableClick(Sender: TObject);
 var
   intVariableNodeId: UA_NodeId;
-  value: UA_Variant;
+  Value: UA_Variant;
   res: UA_StatusCode;
 begin
   if not assigned(FServer) then
   begin
-      Memo1.Lines.Append('server not connected');
-     exit;
+    Memo1.Lines.Append('server not connected');
+    exit;
   end;
-  intVariableNodeId := UA_NODEID_STRING_ALLOC(StrToInt(cbServerNS.Text){name space index}, eServerVariableName.Text);
-  UA_Variant_init(value);
-  UA_Variant_setInteger(value, StrToInt(eServerVariableValue.Text));
-  res := UA_Server_writeValue(Fserver.server, intVariableNodeId, value);
-  Memo1.Lines.Append(Format('Server write to variable "%s" (Result=%x)', [eServerVariableName.Text, res]));
+  intVariableNodeId := UA_NODEID_STRING_ALLOC(
+    StrToInt(cbServerNS.Text){name space index}, eServerVariableName.Text);
+  UA_Variant_init(Value);
+  UA_Variant_setInteger(Value, StrToInt(eServerVariableValue.Text));
+  res := UA_Server_writeValue(Fserver.server, intVariableNodeId, Value);
+  Memo1.Lines.Append(Format('Server write to variable "%s" (Result=%x)',
+    [eServerVariableName.Text, res]));
   UA_NodeId_clear(intVariableNodeId);
 end;
 
 end.
-
