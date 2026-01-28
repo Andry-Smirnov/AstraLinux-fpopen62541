@@ -109,11 +109,11 @@ const
 
 type
 
-  {$IFNDEF FPC}
+{$IFNDEF FPC}
   // Delphi XE compatibility
   // FixedUInt 32-bit
   DWord = LongWord; 
-  {$ENDIF}
+{$ENDIF}
   // DWord on 32-bit platforms, QWord on 64-bit platforms
   size_t = NativeUInt;
 
@@ -434,7 +434,7 @@ type
   // Specializations, such as ``UA_Int32_new()`` are derived from the generic
   // type operations as static inline functions.
 
-  {$IFDEF UA_VER1_3}
+{$IFDEF UA_VER1_3}
   UA_DataTypeMember = bitpacked record
     {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
     memberName: PAnsiChar;
@@ -455,7 +455,7 @@ type
                                     // members from the same namespace or
                                     // namespace zero only.
   end;
-  {$ELSE}
+{$ELSE}
   UA_DataTypeMember = record
     memberTypeIndex: UA_UInt16;   // Index of the member in the array of data types
     padding: UA_Byte;             (* How much padding is there before this
@@ -475,7 +475,7 @@ type
     memberName: PAnsiChar;
     {$ENDIF}
   end;
-  {$ENDIF}
+{$ENDIF}
 
   // The DataType "kind" is an internal type classification. It is used to
   // dispatch handling to the correct routines.
