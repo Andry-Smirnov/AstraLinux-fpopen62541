@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -73,6 +73,14 @@ parser.add_argument('-i', '--import',
                     default=[],
                     help='combination of TYPE_ARRAY#filepath.bsd with type definitions which should be loaded but not exported/generated')
 
+parser.add_argument('-x', '--type-xml',
+                    metavar="<selectedTypes>",
+                    type=argparse.FileType('r'),
+                    dest="type_xml",
+                    action='append',
+                    default=[],
+                    help='xml files with symbolicNames etc.')
+
 parser.add_argument('outfile',
                     metavar='<outputFile>',
                     help='output file w/o extension')
@@ -91,7 +99,9 @@ for m in args.namespace_map:
 
 
 parser = CSVBSDTypeParser(args.opaque_map, args.selected_types, args.no_builtin, outname, args.import_bsd,
-                          args.type_bsd, args.type_csv, namespaceMap)
+                          args.type_bsd, args.type_csv, args.type_xml, namespaceMap)
+#      def __init__(self, opaque_map,      selected_types,      no_builtin,      outname, existing_bsd, 
+#                         type_bsd,      type_csv, type_xml, namespaceIndexMap):
 parser.create_types()
 
 generator = backend.PasGenerator(parser, inname, args.outfile, args.internal, namespaceMap)
