@@ -691,16 +691,16 @@ var
   res: UA_StatusCode;
 begin
   if Assigned(FServer) then
-  begin
-    FreeAndNil(FServer);
-    btnServerStart.Checked := False;
-    Memo1.Lines.Add('stopped');
-  end
+    begin
+      FreeAndNil(FServer);
+      btnServerStart.Checked := False;
+      Memo1.Lines.Add('stopped');
+    end
   else
-  begin
-    FServer := TServerThread.Create(self);
-    Memo1.Lines.Add('started');
-  end;
+    begin
+      FServer := TServerThread.Create(Self);
+      Memo1.Lines.Add('started');
+    end;
 end;
 
 procedure TTestOpcUaForm.btnServerAddVariableClick(Sender: TObject);
