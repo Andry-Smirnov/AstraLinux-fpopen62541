@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="fpopen62541"/>
     <CompilerOptions>
@@ -10,28 +10,61 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="5">
+    <Files Count="13">
       <Item1>
         <Filename Value="open62541.pas"/>
         <UnitName Value="open62541"/>
       </Item1>
       <Item2>
-        <Filename Value="statuscodes.inc"/>
+        <Filename Value="types_generated_1_2.inc"/>
         <Type Value="Include"/>
       </Item2>
       <Item3>
-        <Filename Value="types_generated.inc"/>
+        <Filename Value="types_generated_1_3.inc"/>
         <Type Value="Include"/>
       </Item3>
       <Item4>
-        <Filename Value="nodeids.inc"/>
+        <Filename Value="types_generated_1_4.inc"/>
         <Type Value="Include"/>
       </Item4>
       <Item5>
-        <Filename Value="types_generated_1_3.inc"/>
+        <Filename Value="types_generated_1_5.inc"/>
         <Type Value="Include"/>
       </Item5>
+      <Item6>
+        <Filename Value="nodeids_1_2.inc"/>
+        <Type Value="Include"/>
+      </Item6>
+      <Item7>
+        <Filename Value="nodeids_1_3.inc"/>
+        <Type Value="Include"/>
+      </Item7>
+      <Item8>
+        <Filename Value="nodeids_1_4.inc"/>
+        <Type Value="Include"/>
+      </Item8>
+      <Item9>
+        <Filename Value="nodeids_1_5.inc"/>
+        <Type Value="Include"/>
+      </Item9>
+      <Item10>
+        <Filename Value="statuscodes_1_2.inc"/>
+        <Type Value="Include"/>
+      </Item10>
+      <Item11>
+        <Filename Value="statuscodes_1_3.inc"/>
+        <Type Value="Include"/>
+      </Item11>
+      <Item12>
+        <Filename Value="statuscodes_1_4.inc"/>
+        <Type Value="Include"/>
+      </Item12>
+      <Item13>
+        <Filename Value="statuscodes_1_5.inc"/>
+        <Type Value="Include"/>
+      </Item13>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="FCL"/>
