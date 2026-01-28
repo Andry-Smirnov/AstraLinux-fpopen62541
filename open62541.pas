@@ -61,13 +61,17 @@ unit open62541;
 
 {$DEFINE ENABLE_SERVER}
 
+// Use open62541 v1.5
+{ $DEFINE UA_VER1_5}
 // Use open62541 v1.4
 { $DEFINE UA_VER1_4}
 // Use open62541 v1.3
 { $DEFINE UA_VER1_3}
-{$IFNDEF UA_VER1_4}
-  {$IFNDEF UA_VER1_3}
-    {$DEFINE UA_VER1_2}
+{$IFNDEF UA_VER1_5}
+  {$IFNDEF UA_VER1_4}
+    {$IFNDEF UA_VER1_3}
+      {$DEFINE UA_VER1_2}
+    {$ENDIF}
   {$ENDIF}
 {$ENDIF}
 
@@ -88,21 +92,37 @@ interface
 const
 
 {$IFDEF UNIX}
-  libopen62541 = 'libopen62541.so';
+  {$IFDEF UA_VER1_5}
+  libopen62541 = 'libopen62541.so.1.5';
+  {$ENDIF}
+  {$IFDEF UA_VER1_4}
+  libopen62541 = 'libopen62541.so.1.4';
+  {$ENDIF}
+  {$IFDEF UA_VER1_3}
+  libopen62541 = 'libopen62541.so.1.3';
+  {$ENDIF}
+  {$IFDEF UA_VER1_2}
+  libopen62541 = 'libopen62541.so.1.2';
+  {$ENDIF}
+//  libopen62541 = 'libopen62541.so';
 {$ELSE}
   // GCC libgcc_s_sjlj-1.dll and libwinpthread-1.dll are also required
   //  they can be downloaded from packages at http://win-builds.org/1.5.0/packages/windows_32/
-  libopen62541 = 'libopen62541.dll'; 
+  libopen62541 = 'open62541.dll';
 {$ENDIF}
 
 // Library version
-{$IFDEF UA_VER1_4}
-  UA_VER = 1.4;
+{$IFDEF UA_VER1_5}
+  UA_VER = 1.5;
 {$ELSE}
-  {$IFDEF UA_VER1_3}
-  UA_VER = 1.3;
+  {$IFDEF UA_VER1_4}
+  UA_VER = 1.4;
   {$ELSE}
+    {$IFDEF UA_VER1_3}
+  UA_VER = 1.3;
+    {$ELSE}
   UA_VER = 1.2;
+    {$ENDIF}
   {$ENDIF}
 {$ENDIF}
 
@@ -434,6 +454,8 @@ type
   // Specializations, such as ``UA_Int32_new()`` are derived from the generic
   // type operations as static inline functions.
 
+
+//TODO: RELEASE 1.5
 {$IFDEF UA_VER1_3}
   UA_DataTypeMember = bitpacked record
     {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
@@ -513,7 +535,8 @@ type
     UA_DATATYPEKIND_BITFIELDCLUSTER = 30 // bitfields + padding
   );
 
-  {$IFDEF UA_VER1_3}
+//TODO: RELEASE 1.5
+{$IFDEF UA_VER1_3}
   UA_DataType = bitpacked record
     {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
     typeName: PAnsiChar;
@@ -528,7 +551,7 @@ type
     membersSize : UA_Byte;           // How many members does the type have?
     members: ^UA_DataTypeMember;
   end;
-  {$ELSE}
+{$ELSE}
 //   UA_DataType = bitpacked record
   UA_DataType = record
     typeId: UA_NodeId;               // The nodeid of the type
@@ -550,7 +573,7 @@ type
     typeName: PAnsiChar;
     {$ENDIF}
   end;
-  {$ENDIF}
+{$ENDIF}
 
   // Datatype arrays with custom type definitions can be added in a linked list to
   // the client or server configuration. Datatype members can point to types in
@@ -567,14 +590,17 @@ type
 
   // --- types_generated.h ---
 
+{$IFDEF UA_VER1_5}
+  {$I types_generated_1_5.inc}
+{$ENDIF}
 {$IFDEF UA_VER1_4}
   {$I types_generated_1_4.inc}
-{$ELSE}
-  {$IFDEF UA_VER1_3}
+{$ENDIF}
+{$IFDEF UA_VER1_3}
   {$I types_generated_1_3.inc}
-  {$ELSE}
-  {$I types_generated.inc}
-  {$ENDIF}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
+  {$I types_generated_1_2.inc}
 {$ENDIF}
 
 
@@ -1060,11 +1086,33 @@ const
 
 
   // --- statuscodes.h ---
-  {$I statuscodes.inc}
+{$IFDEF UA_VER1_5}
+  {$I statuscodes_1_5.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_4}
+  {$I statuscodes_1_4.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_3}
+  {$I statuscodes_1_3.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
+  {$I statuscodes_1_2.inc}
+{$ENDIF}
 
 
   // --- nodeids.h ---
-  {$I nodeids.inc}
+{$IFDEF UA_VER1_5}
+  {$I nodeids_1_5.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_4}
+  {$I nodeids_1_4.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_3}
+  {$I nodeids_1_3.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
+  {$I nodeids_1_2.inc}
+{$ENDIF}
 
 
   // --- ua_types.c ---
