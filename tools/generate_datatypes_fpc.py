@@ -97,11 +97,8 @@ for m in args.namespace_map:
     [idx, ns] = m.split(':', 1)
     namespaceMap[ns] = int(idx)
 
-
 parser = CSVBSDTypeParser(args.opaque_map, args.selected_types, args.no_builtin, outname, args.import_bsd,
                           args.type_bsd, args.type_csv, args.type_xml, namespaceMap)
-#      def __init__(self, opaque_map,      selected_types,      no_builtin,      outname, existing_bsd, 
-#                         type_bsd,      type_csv, type_xml, namespaceIndexMap):
 parser.create_types()
 
 generator = backend.PasGenerator(parser, inname, args.outfile, args.internal, namespaceMap)
