@@ -102,7 +102,8 @@ const
   libopen62541 = 'libopen62541.so.1.3';
   {$ENDIF}
   {$IFDEF UA_VER1_2}
-  libopen62541 = 'libopen62541.so.1.2';
+  //libopen62541 = 'libopen62541.so.1.2';
+  libopen62541 = 'libopen62541.so';
   {$ENDIF}
 //  libopen62541 = 'libopen62541.so';
 {$ELSE}
