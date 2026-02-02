@@ -97,6 +97,10 @@ for m in args.namespace_map:
     [idx, ns] = m.split(':', 1)
     namespaceMap[ns] = int(idx)
 
+# Open62541 1.2 and 1.3
+#parser = CSVBSDTypeParser(args.opaque_map, args.selected_types, args.no_builtin, outname, args.import_bsd,
+#                          args.type_bsd, args.type_csv, namespaceMap)
+# Open62541 1.4+
 parser = CSVBSDTypeParser(args.opaque_map, args.selected_types, args.no_builtin, outname, args.import_bsd,
                           args.type_bsd, args.type_csv, args.type_xml, namespaceMap)
 parser.create_types()

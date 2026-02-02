@@ -1,5 +1,5 @@
 (* Generated from Opc.Ua.Types.bsd with script ./generate_datatypes_fpc.py
-* on host seis by user luca at 2021-11-04 04:52:46 *)
+* on host virus-astra by user virus at 2026-01-30 11:30:44 *)
 
 (**
  * Every type is assigned an index in an array containing the type descriptions.
@@ -176,7 +176,7 @@ type
     __UA_NODECLASS_FORCE32BIT = $7fffffff
   );
   PUA_NodeClass = ^UA_NodeClass;
-  {$IF sizeof(UA_NodeClass) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_NodeClass) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_NODECLASS = 25;
@@ -193,7 +193,7 @@ type
     __UA_STRUCTURETYPE_FORCE32BIT = $7fffffff
   );
   PUA_StructureType = ^UA_StructureType;
-  {$IF sizeof(UA_StructureType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF sizeof(UA_StructureType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_STRUCTURETYPE = 26;
@@ -208,7 +208,7 @@ type
     description: UA_LocalizedText;
     dataType: UA_NodeId;
     valueRank: UA_Int32;
-    arrayDimensionsSize: Size_T;
+    arrayDimensionsSize: size_t;
     arrayDimensions: PUA_UInt32;
     maxStringLength: UA_UInt32;
     isOptional: UA_Boolean;
@@ -227,7 +227,7 @@ type
     defaultEncodingId: UA_NodeId;
     baseDataType: UA_NodeId;
     structureType: UA_StructureType;
-    fieldsSize: Size_T;
+    fieldsSize: size_t;
     fields: PUA_StructureField;
   end;
   PUA_StructureDefinition = ^UA_StructureDefinition;
@@ -244,7 +244,7 @@ type
     name: UA_String;
     dataType: UA_NodeId;
     valueRank: UA_Int32;
-    arrayDimensionsSize: Size_T;
+    arrayDimensionsSize: size_t;
     arrayDimensions: PUA_UInt32;
     description: UA_LocalizedText;
   end;
@@ -327,7 +327,7 @@ type
     __UA_APPLICATIONTYPE_FORCE32BIT = $7fffffff
   );
   PUA_ApplicationType = ^UA_ApplicationType;
-  {$IF sizeof(UA_ApplicationType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_ApplicationType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_APPLICATIONTYPE = 35;
@@ -344,7 +344,7 @@ type
     applicationType: UA_ApplicationType;
     gatewayServerUri: UA_String;
     discoveryProfileUri: UA_String;
-    discoveryUrlsSize: Size_T;
+    discoveryUrlsSize: size_t;
     discoveryUrls: PUA_String;
   end;
   PUA_ApplicationDescription = ^UA_ApplicationDescription;
@@ -381,7 +381,7 @@ type
     requestHandle: UA_UInt32;
     serviceResult: UA_StatusCode;
     serviceDiagnostics: UA_DiagnosticInfo;
-    stringTableSize: Size_T;
+    stringTableSize: size_t;
     stringTable: PUA_String;
     additionalHeader: UA_ExtensionObject;
   end;
@@ -411,9 +411,9 @@ type
   UA_FindServersRequest = record
     requestHeader: UA_RequestHeader;
     endpointUrl: UA_String;
-    localeIdsSize: Size_T;
+    localeIdsSize: size_t;
     localeIds: PUA_String;
-    serverUrisSize: Size_T;
+    serverUrisSize: size_t;
     serverUris: PUA_String;
   end;
   PUA_FindServersRequest = ^UA_FindServersRequest;
@@ -428,7 +428,7 @@ const
 type
   UA_FindServersResponse = record
     responseHeader: UA_ResponseHeader;
-    serversSize: Size_T;
+    serversSize: size_t;
     servers: PUA_ApplicationDescription;
   end;
   PUA_FindServersResponse = ^UA_FindServersResponse;
@@ -449,7 +449,7 @@ type
     __UA_MESSAGESECURITYMODE_FORCE32BIT = $7fffffff
   );
   PUA_MessageSecurityMode = ^UA_MessageSecurityMode;
-  {$IF sizeof(UA_MessageSecurityMode) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_MessageSecurityMode) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_MESSAGESECURITYMODE = 42;
@@ -467,7 +467,7 @@ type
     __UA_USERTOKENTYPE_FORCE32BIT = $7fffffff
   );
   PUA_UserTokenType = ^UA_UserTokenType;
-  {$IF sizeof(UA_UserTokenType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_UserTokenType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_USERTOKENTYPE = 43;
@@ -500,7 +500,7 @@ type
     serverCertificate: UA_ByteString;
     securityMode: UA_MessageSecurityMode;
     securityPolicyUri: UA_String;
-    userIdentityTokensSize: Size_T;
+    userIdentityTokensSize: size_t;
     userIdentityTokens: PUA_UserTokenPolicy;
     transportProfileUri: UA_String;
     securityLevel: UA_Byte;
@@ -518,9 +518,9 @@ type
   UA_GetEndpointsRequest = record
     requestHeader: UA_RequestHeader;
     endpointUrl: UA_String;
-    localeIdsSize: Size_T;
+    localeIdsSize: size_t;
     localeIds: PUA_String;
-    profileUrisSize: Size_T;
+    profileUrisSize: size_t;
     profileUris: PUA_String;
   end;
   PUA_GetEndpointsRequest = ^UA_GetEndpointsRequest;
@@ -535,7 +535,7 @@ const
 type
   UA_GetEndpointsResponse = record
     responseHeader: UA_ResponseHeader;
-    endpointsSize: Size_T;
+    endpointsSize: size_t;
     endpoints: PUA_EndpointDescription;
   end;
   PUA_GetEndpointsResponse = ^UA_GetEndpointsResponse;
@@ -554,7 +554,7 @@ type
     __UA_SECURITYTOKENREQUESTTYPE_FORCE32BIT = $7fffffff
   );
   PUA_SecurityTokenRequestType = ^UA_SecurityTokenRequestType;
-  {$IF sizeof(UA_SecurityTokenRequestType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_SecurityTokenRequestType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_SECURITYTOKENREQUESTTYPE = 48;
@@ -696,9 +696,9 @@ type
     revisedSessionTimeout: UA_Double;
     serverNonce: UA_ByteString;
     serverCertificate: UA_ByteString;
-    serverEndpointsSize: Size_T;
+    serverEndpointsSize: size_t;
     serverEndpoints: PUA_EndpointDescription;
-    serverSoftwareCertificatesSize: Size_T;
+    serverSoftwareCertificatesSize: size_t;
     serverSoftwareCertificates: PUA_SignedSoftwareCertificate;
     serverSignature: UA_SignatureData;
     maxRequestMessageSize: UA_UInt32;
@@ -787,9 +787,9 @@ type
   UA_ActivateSessionRequest = record
     requestHeader: UA_RequestHeader;
     clientSignature: UA_SignatureData;
-    clientSoftwareCertificatesSize: Size_T;
+    clientSoftwareCertificatesSize: size_t;
     clientSoftwareCertificates: PUA_SignedSoftwareCertificate;
-    localeIdsSize: Size_T;
+    localeIdsSize: size_t;
     localeIds: PUA_String;
     userIdentityToken: UA_ExtensionObject;
     userTokenSignature: UA_SignatureData;
@@ -807,9 +807,9 @@ type
   UA_ActivateSessionResponse = record
     responseHeader: UA_ResponseHeader;
     serverNonce: UA_ByteString;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_StatusCode;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_ActivateSessionResponse = ^UA_ActivateSessionResponse;
@@ -888,7 +888,7 @@ type
     __UA_NODEATTRIBUTESMASK_FORCE32BIT = $7fffffff
   );
   PUA_NodeAttributesMask = ^UA_NodeAttributesMask;
-  {$IF sizeof(UA_NodeAttributesMask) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_NodeAttributesMask) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_NODEATTRIBUTESMASK = 67;
@@ -942,7 +942,7 @@ type
     value: UA_Variant;
     dataType: UA_NodeId;
     valueRank: UA_Int32;
-    arrayDimensionsSize: Size_T;
+    arrayDimensionsSize: size_t;
     arrayDimensions: PUA_UInt32;
     accessLevel: UA_Byte;
     userAccessLevel: UA_Byte;
@@ -1005,7 +1005,7 @@ type
     value: UA_Variant;
     dataType: UA_NodeId;
     valueRank: UA_Int32;
-    arrayDimensionsSize: Size_T;
+    arrayDimensionsSize: size_t;
     arrayDimensions: PUA_UInt32;
     isAbstract: UA_Boolean;
   end;
@@ -1111,7 +1111,7 @@ const
 type
   UA_AddNodesRequest = record
     requestHeader: UA_RequestHeader;
-    nodesToAddSize: Size_T;
+    nodesToAddSize: size_t;
     nodesToAdd: PUA_AddNodesItem;
   end;
   PUA_AddNodesRequest = ^UA_AddNodesRequest;
@@ -1126,9 +1126,9 @@ const
 type
   UA_AddNodesResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_AddNodesResult;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_AddNodesResponse = ^UA_AddNodesResponse;
@@ -1161,7 +1161,7 @@ const
 type
   UA_AddReferencesRequest = record
     requestHeader: UA_RequestHeader;
-    referencesToAddSize: Size_T;
+    referencesToAddSize: size_t;
     referencesToAdd: PUA_AddReferencesItem;
   end;
   PUA_AddReferencesRequest = ^UA_AddReferencesRequest;
@@ -1176,9 +1176,9 @@ const
 type
   UA_AddReferencesResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_StatusCode;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_AddReferencesResponse = ^UA_AddReferencesResponse;
@@ -1207,7 +1207,7 @@ const
 type
   UA_DeleteNodesRequest = record
     requestHeader: UA_RequestHeader;
-    nodesToDeleteSize: Size_T;
+    nodesToDeleteSize: size_t;
     nodesToDelete: PUA_DeleteNodesItem;
   end;
   PUA_DeleteNodesRequest = ^UA_DeleteNodesRequest;
@@ -1222,9 +1222,9 @@ const
 type
   UA_DeleteNodesResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_StatusCode;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_DeleteNodesResponse = ^UA_DeleteNodesResponse;
@@ -1256,7 +1256,7 @@ const
 type
   UA_DeleteReferencesRequest = record
     requestHeader: UA_RequestHeader;
-    referencesToDeleteSize: Size_T;
+    referencesToDeleteSize: size_t;
     referencesToDelete: PUA_DeleteReferencesItem;
   end;
   PUA_DeleteReferencesRequest = ^UA_DeleteReferencesRequest;
@@ -1271,9 +1271,9 @@ const
 type
   UA_DeleteReferencesResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_StatusCode;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_DeleteReferencesResponse = ^UA_DeleteReferencesResponse;
@@ -1294,7 +1294,7 @@ type
     __UA_BROWSEDIRECTION_FORCE32BIT = $7fffffff
   );
   PUA_BrowseDirection = ^UA_BrowseDirection;
-  {$IF sizeof(UA_BrowseDirection) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_BrowseDirection) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_BROWSEDIRECTION = 90;
@@ -1351,7 +1351,7 @@ type
     __UA_BROWSERESULTMASK_FORCE32BIT = $7fffffff
   );
   PUA_BrowseResultMask = ^UA_BrowseResultMask;
-  {$IF sizeof(UA_BrowseResultMask) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_BrowseResultMask) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_BROWSERESULTMASK = 93;
@@ -1383,7 +1383,7 @@ type
   UA_BrowseResult = record
     statusCode: UA_StatusCode;
     continuationPoint: UA_ByteString;
-    referencesSize: Size_T;
+    referencesSize: size_t;
     references: PUA_ReferenceDescription;
   end;
   PUA_BrowseResult = ^UA_BrowseResult;
@@ -1400,7 +1400,7 @@ type
     requestHeader: UA_RequestHeader;
     view: UA_ViewDescription;
     requestedMaxReferencesPerNode: UA_UInt32;
-    nodesToBrowseSize: Size_T;
+    nodesToBrowseSize: size_t;
     nodesToBrowse: PUA_BrowseDescription;
   end;
   PUA_BrowseRequest = ^UA_BrowseRequest;
@@ -1415,9 +1415,9 @@ const
 type
   UA_BrowseResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_BrowseResult;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_BrowseResponse = ^UA_BrowseResponse;
@@ -1433,7 +1433,7 @@ type
   UA_BrowseNextRequest = record
     requestHeader: UA_RequestHeader;
     releaseContinuationPoints: UA_Boolean;
-    continuationPointsSize: Size_T;
+    continuationPointsSize: size_t;
     continuationPoints: PUA_ByteString;
   end;
   PUA_BrowseNextRequest = ^UA_BrowseNextRequest;
@@ -1448,9 +1448,9 @@ const
 type
   UA_BrowseNextResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_BrowseResult;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_BrowseNextResponse = ^UA_BrowseNextResponse;
@@ -1480,7 +1480,7 @@ const
  * A relative path constructed from reference types and browse names. *)
 type
   UA_RelativePath = record
-    elementsSize: Size_T;
+    elementsSize: size_t;
     elements: PUA_RelativePathElement;
   end;
   PUA_RelativePath = ^UA_RelativePath;
@@ -1523,7 +1523,7 @@ const
 type
   UA_BrowsePathResult = record
     statusCode: UA_StatusCode;
-    targetsSize: Size_T;
+    targetsSize: size_t;
     targets: PUA_BrowsePathTarget;
   end;
   PUA_BrowsePathResult = ^UA_BrowsePathResult;
@@ -1538,7 +1538,7 @@ const
 type
   UA_TranslateBrowsePathsToNodeIdsRequest = record
     requestHeader: UA_RequestHeader;
-    browsePathsSize: Size_T;
+    browsePathsSize: size_t;
     browsePaths: PUA_BrowsePath;
   end;
   PUA_TranslateBrowsePathsToNodeIdsRequest = ^UA_TranslateBrowsePathsToNodeIdsRequest;
@@ -1553,9 +1553,9 @@ const
 type
   UA_TranslateBrowsePathsToNodeIdsResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_BrowsePathResult;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_TranslateBrowsePathsToNodeIdsResponse = ^UA_TranslateBrowsePathsToNodeIdsResponse;
@@ -1570,7 +1570,7 @@ const
 type
   UA_RegisterNodesRequest = record
     requestHeader: UA_RequestHeader;
-    nodesToRegisterSize: Size_T;
+    nodesToRegisterSize: size_t;
     nodesToRegister: PUA_NodeId;
   end;
   PUA_RegisterNodesRequest = ^UA_RegisterNodesRequest;
@@ -1585,7 +1585,7 @@ const
 type
   UA_RegisterNodesResponse = record
     responseHeader: UA_ResponseHeader;
-    registeredNodeIdsSize: Size_T;
+    registeredNodeIdsSize: size_t;
     registeredNodeIds: PUA_NodeId;
   end;
   PUA_RegisterNodesResponse = ^UA_RegisterNodesResponse;
@@ -1600,7 +1600,7 @@ const
 type
   UA_UnregisterNodesRequest = record
     requestHeader: UA_RequestHeader;
-    nodesToUnregisterSize: Size_T;
+    nodesToUnregisterSize: size_t;
     nodesToUnregister: PUA_NodeId;
   end;
   PUA_UnregisterNodesRequest = ^UA_UnregisterNodesRequest;
@@ -1648,7 +1648,7 @@ type
     __UA_FILTEROPERATOR_FORCE32BIT = $7fffffff
   );
   PUA_FilterOperator = ^UA_FilterOperator;
-  {$IF sizeof(UA_FilterOperator) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_FilterOperator) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_FILTEROPERATOR = 111;
@@ -1660,7 +1660,7 @@ const
 type
   UA_ContentFilterElement = record
     filterOperator: UA_FilterOperator;
-    filterOperandsSize: Size_T;
+    filterOperandsSize: size_t;
     filterOperands: PUA_ExtensionObject;
   end;
   PUA_ContentFilterElement = ^UA_ContentFilterElement;
@@ -1674,7 +1674,7 @@ const
  *)
 type
   UA_ContentFilter = record
-    elementsSize: Size_T;
+    elementsSize: size_t;
     elements: PUA_ContentFilterElement;
   end;
   PUA_ContentFilter = ^UA_ContentFilter;
@@ -1742,7 +1742,7 @@ const
 type
   UA_SimpleAttributeOperand = record
     typeDefinitionId: UA_NodeId;
-    browsePathSize: Size_T;
+    browsePathSize: size_t;
     browsePath: PUA_QualifiedName;
     attributeId: UA_UInt32;
     indexRange: UA_String;
@@ -1759,9 +1759,9 @@ const
 type
   UA_ContentFilterElementResult = record
     statusCode: UA_StatusCode;
-    operandStatusCodesSize: Size_T;
+    operandStatusCodesSize: size_t;
     operandStatusCodes: PUA_StatusCode;
-    operandDiagnosticInfosSize: Size_T;
+    operandDiagnosticInfosSize: size_t;
     operandDiagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_ContentFilterElementResult = ^UA_ContentFilterElementResult;
@@ -1775,9 +1775,9 @@ const
  *)
 type
   UA_ContentFilterResult = record
-    elementResultsSize: Size_T;
+    elementResultsSize: size_t;
     elementResults: PUA_ContentFilterElementResult;
-    elementDiagnosticInfosSize: Size_T;
+    elementDiagnosticInfosSize: size_t;
     elementDiagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_ContentFilterResult = ^UA_ContentFilterResult;
@@ -1799,7 +1799,7 @@ type
     __UA_TIMESTAMPSTORETURN_FORCE32BIT = $7fffffff
   );
   PUA_TimestampsToReturn = ^UA_TimestampsToReturn;
-  {$IF sizeof(UA_TimestampsToReturn) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_TimestampsToReturn) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_TIMESTAMPSTORETURN = 121;
@@ -1829,7 +1829,7 @@ type
     requestHeader: UA_RequestHeader;
     maxAge: UA_Double;
     timestampsToReturn: UA_TimestampsToReturn;
-    nodesToReadSize: Size_T;
+    nodesToReadSize: size_t;
     nodesToRead: PUA_ReadValueId;
   end;
   PUA_ReadRequest = ^UA_ReadRequest;
@@ -1844,9 +1844,9 @@ const
 type
   UA_ReadResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_DataValue;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_ReadResponse = ^UA_ReadResponse;
@@ -1877,7 +1877,7 @@ const
 type
   UA_WriteRequest = record
     requestHeader: UA_RequestHeader;
-    nodesToWriteSize: Size_T;
+    nodesToWriteSize: size_t;
     nodesToWrite: PUA_WriteValue;
   end;
   PUA_WriteRequest = ^UA_WriteRequest;
@@ -1892,9 +1892,9 @@ const
 type
   UA_WriteResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_StatusCode;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_WriteResponse = ^UA_WriteResponse;
@@ -1910,7 +1910,7 @@ type
   UA_CallMethodRequest = record
     objectId: UA_NodeId;
     methodId: UA_NodeId;
-    inputArgumentsSize: Size_T;
+    inputArgumentsSize: size_t;
     inputArguments: PUA_Variant;
   end;
   PUA_CallMethodRequest = ^UA_CallMethodRequest;
@@ -1925,11 +1925,11 @@ const
 type
   UA_CallMethodResult = record
     statusCode: UA_StatusCode;
-    inputArgumentResultsSize: Size_T;
+    inputArgumentResultsSize: size_t;
     inputArgumentResults: PUA_StatusCode;
-    inputArgumentDiagnosticInfosSize: Size_T;
+    inputArgumentDiagnosticInfosSize: size_t;
     inputArgumentDiagnosticInfos: PUA_DiagnosticInfo;
-    outputArgumentsSize: Size_T;
+    outputArgumentsSize: size_t;
     outputArguments: PUA_Variant;
   end;
   PUA_CallMethodResult = ^UA_CallMethodResult;
@@ -1944,7 +1944,7 @@ const
 type
   UA_CallRequest = record
     requestHeader: UA_RequestHeader;
-    methodsToCallSize: Size_T;
+    methodsToCallSize: size_t;
     methodsToCall: PUA_CallMethodRequest;
   end;
   PUA_CallRequest = ^UA_CallRequest;
@@ -1959,9 +1959,9 @@ const
 type
   UA_CallResponse = record
     responseHeader: UA_ResponseHeader;
-    resultsSize: Size_T;
+    resultsSize: size_t;
     results: PUA_CallMethodResult;
-    diagnosticInfosSize: Size_T;
+    diagnosticInfosSize: size_t;
     diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_CallResponse = ^UA_CallResponse;
@@ -1981,9 +1981,7 @@ type
     __UA_MONITORINGMODE_FORCE32BIT = $7fffffff
   );
   PUA_MonitoringMode = ^UA_MonitoringMode;
-  {$IF sizeof(UA_MonitoringMode) <> sizeof(UA_Int32)}
-    {$MESSAGE ERROR 'enum_must_be_32bit'}
-  {$IFEND}
+  {$IF SizeOf(UA_MonitoringMode) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_MONITORINGMODE = 132;
@@ -2000,9 +1998,7 @@ type
     __UA_DATACHANGETRIGGER_FORCE32BIT = $7fffffff
   );
   PUA_DataChangeTrigger = ^UA_DataChangeTrigger;
-  {$IF sizeof(UA_DataChangeTrigger) <> sizeof(UA_Int32)}
-    {$MESSAGE ERROR 'enum_must_be_32bit'}
-  {$IFEND}
+  {$IF SizeOf(UA_DataChangeTrigger) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_DATACHANGETRIGGER = 133;
@@ -2019,9 +2015,7 @@ type
     __UA_DEADBANDTYPE_FORCE32BIT = $7fffffff
   );
   PUA_DeadbandType = ^UA_DeadbandType;
-  {$IF sizeof(UA_DeadbandType) <> sizeof(UA_Int32)}
-    {$MESSAGE ERROR 'enum_must_be_32bit'}
-  {$IFEND}
+  {$IF SizeOf(UA_DeadbandType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_DEADBANDTYPE = 134;
@@ -2032,9 +2026,9 @@ const
  *)
 type
   UA_DataChangeFilter = record
-    Trigger: UA_DataChangeTrigger;
-    DeadbandType: UA_UInt32;
-    DeadbandValue: UA_Double;
+    trigger: UA_DataChangeTrigger;
+    deadbandType: UA_UInt32;
+    deadbandValue: UA_Double;
   end;
   PUA_DataChangeFilter = ^UA_DataChangeFilter;
 
@@ -2047,9 +2041,9 @@ const
  *)
 type
   UA_EventFilter = record
-    SelectClausesSize: Size_T;
-    SelectClauses: PUA_SimpleAttributeOperand;
-    WhereClause: UA_ContentFilter;
+    selectClausesSize: size_t;
+    selectClauses: PUA_SimpleAttributeOperand;
+    whereClause: UA_ContentFilter;
   end;
   PUA_EventFilter = ^UA_EventFilter;
 
@@ -2062,11 +2056,11 @@ const
  *)
 type
   UA_AggregateConfiguration = record
-    UseServerCapabilitiesDefaults: UA_Boolean;
-    TreatUncertainAsBad: UA_Boolean;
-    PercentDataBad: UA_Byte;
-    PercentDataGood: UA_Byte;
-    UseSlopedExtrapolation: UA_Boolean;
+    useServerCapabilitiesDefaults: UA_Boolean;
+    treatUncertainAsBad: UA_Boolean;
+    percentDataBad: UA_Byte;
+    percentDataGood: UA_Byte;
+    useSlopedExtrapolation: UA_Boolean;
   end;
   PUA_AggregateConfiguration = ^UA_AggregateConfiguration;
 
@@ -2079,10 +2073,10 @@ const
  *)
 type
   UA_AggregateFilter = record
-    StartTime: UA_DateTime;
-    AggregateType: UA_NodeId;
-    ProcessingInterval: UA_Double;
-    AggregateConfiguration: UA_AggregateConfiguration;
+    startTime: UA_DateTime;
+    aggregateType: UA_NodeId;
+    processingInterval: UA_Double;
+    aggregateConfiguration: UA_AggregateConfiguration;
   end;
   PUA_AggregateFilter = ^UA_AggregateFilter;
 
@@ -2095,11 +2089,11 @@ const
  *)
 type
   UA_EventFilterResult = record
-    SelectClauseResultsSize: Size_T;
-    SelectClauseResults: PUA_StatusCode;
-    SelectClauseDiagnosticInfosSize: Size_T;
-    SelectClauseDiagnosticInfos: PUA_DiagnosticInfo;
-    WhereClauseResult: UA_ContentFilterResult;
+    selectClauseResultsSize: size_t;
+    selectClauseResults: PUA_StatusCode;
+    selectClauseDiagnosticInfosSize: size_t;
+    selectClauseDiagnosticInfos: PUA_DiagnosticInfo;
+    whereClauseResult: UA_ContentFilterResult;
   end;
   PUA_EventFilterResult = ^UA_EventFilterResult;
 
@@ -2112,11 +2106,11 @@ const
  *)
 type
   UA_MonitoringParameters = record
-    ClientHandle: UA_UInt32;
-    SamplingInterval: UA_Double;
-    Filter: UA_ExtensionObject;
-    QueueSize: UA_UInt32;
-    DiscardOldest: UA_Boolean;
+    clientHandle: UA_UInt32;
+    samplingInterval: UA_Double;
+    filter: UA_ExtensionObject;
+    queueSize: UA_UInt32;
+    discardOldest: UA_Boolean;
   end;
   PUA_MonitoringParameters = ^UA_MonitoringParameters;
 
@@ -2129,9 +2123,9 @@ const
  *)
 type
   UA_MonitoredItemCreateRequest = record
-    ItemToMonitor: UA_ReadValueId;
-    MonitoringMode: UA_MonitoringMode;
-    RequestedParameters: UA_MonitoringParameters;
+    itemToMonitor: UA_ReadValueId;
+    monitoringMode: UA_MonitoringMode;
+    requestedParameters: UA_MonitoringParameters;
   end;
   PUA_MonitoredItemCreateRequest = ^UA_MonitoredItemCreateRequest;
 
@@ -2144,11 +2138,11 @@ const
  *)
 type
   UA_MonitoredItemCreateResult = record
-    StatusCode: UA_StatusCode;
-    MonitoredItemId: UA_UInt32;
-    RevisedSamplingInterval: UA_Double;
-    RevisedQueueSize: UA_UInt32;
-    FilterResult: UA_ExtensionObject;
+    statusCode: UA_StatusCode;
+    monitoredItemId: UA_UInt32;
+    revisedSamplingInterval: UA_Double;
+    revisedQueueSize: UA_UInt32;
+    filterResult: UA_ExtensionObject;
   end;
   PUA_MonitoredItemCreateResult = ^UA_MonitoredItemCreateResult;
 
@@ -2161,11 +2155,11 @@ const
  *)
 type
   UA_CreateMonitoredItemsRequest = record
-    RequestHeader: UA_RequestHeader;
-    SubscriptionId: UA_UInt32;
-    TimestampsToReturn: UA_TimestampsToReturn;
-    ItemsToCreateSize: Size_T;
-    ItemsToCreate: PUA_MonitoredItemCreateRequest;
+    requestHeader: UA_RequestHeader;
+    subscriptionId: UA_UInt32;
+    timestampsToReturn: UA_TimestampsToReturn;
+    itemsToCreateSize: size_t;
+    itemsToCreate: PUA_MonitoredItemCreateRequest;
   end;
   PUA_CreateMonitoredItemsRequest = ^UA_CreateMonitoredItemsRequest;
 
@@ -2178,11 +2172,11 @@ const
  *)
 type
   UA_CreateMonitoredItemsResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    ResultsSize: Size_T;
-    Results: PUA_MonitoredItemCreateResult;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    resultsSize: size_t;
+    results: PUA_MonitoredItemCreateResult;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_CreateMonitoredItemsResponse = ^UA_CreateMonitoredItemsResponse;
 
@@ -2195,8 +2189,8 @@ const
  *)
 type
   UA_MonitoredItemModifyRequest = record
-    MonitoredItemId: UA_UInt32;
-    RequestedParameters: UA_MonitoringParameters;
+    monitoredItemId: UA_UInt32;
+    requestedParameters: UA_MonitoringParameters;
   end;
   PUA_MonitoredItemModifyRequest = ^UA_MonitoredItemModifyRequest;
 
@@ -2209,10 +2203,10 @@ const
  *)
 type
   UA_MonitoredItemModifyResult = record
-    StatusCode: UA_StatusCode;
-    RevisedSamplingInterval: UA_Double;
-    RevisedQueueSize: UA_UInt32;
-    FilterResult: UA_ExtensionObject;
+    statusCode: UA_StatusCode;
+    revisedSamplingInterval: UA_Double;
+    revisedQueueSize: UA_UInt32;
+    filterResult: UA_ExtensionObject;
   end;
   PUA_MonitoredItemModifyResult = ^UA_MonitoredItemModifyResult;
 
@@ -2225,11 +2219,11 @@ const
  *)
 type
   UA_ModifyMonitoredItemsRequest = record
-    RequestHeader: UA_RequestHeader;
-    SubscriptionId: UA_UInt32;
-    TimestampsToReturn: UA_TimestampsToReturn;
-    ItemsToModifySize: Size_T;
-    ItemsToModify: PUA_MonitoredItemModifyRequest;
+    requestHeader: UA_RequestHeader;
+    subscriptionId: UA_UInt32;
+    timestampsToReturn: UA_TimestampsToReturn;
+    itemsToModifySize: size_t;
+    itemsToModify: PUA_MonitoredItemModifyRequest;
   end;
   PUA_ModifyMonitoredItemsRequest = ^UA_ModifyMonitoredItemsRequest;
 
@@ -2242,11 +2236,11 @@ const
  *)
 type
   UA_ModifyMonitoredItemsResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    ResultsSize: Size_T;
-    Results: PUA_MonitoredItemModifyResult;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    resultsSize: size_t;
+    results: PUA_MonitoredItemModifyResult;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_ModifyMonitoredItemsResponse = ^UA_ModifyMonitoredItemsResponse;
 
@@ -2259,11 +2253,11 @@ const
  *)
 type
   UA_SetMonitoringModeRequest = record
-    RequestHeader: UA_RequestHeader;
-    SubscriptionId: UA_UInt32;
-    MonitoringMode: UA_MonitoringMode;
-    MonitoredItemIdsSize: Size_T;
-    MonitoredItemIds: PUA_UInt32;
+    requestHeader: UA_RequestHeader;
+    subscriptionId: UA_UInt32;
+    monitoringMode: UA_MonitoringMode;
+    monitoredItemIdsSize: size_t;
+    monitoredItemIds: PUA_UInt32;
   end;
   PUA_SetMonitoringModeRequest = ^UA_SetMonitoringModeRequest;
 
@@ -2276,11 +2270,11 @@ const
  *)
 type
   UA_SetMonitoringModeResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    ResultsSize: Size_T;
-    Results: PUA_StatusCode;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    resultsSize: size_t;
+    results: PUA_StatusCode;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_SetMonitoringModeResponse = ^UA_SetMonitoringModeResponse;
 
@@ -2293,13 +2287,13 @@ const
  *)
 type
   UA_SetTriggeringRequest = record
-    RequestHeader: UA_RequestHeader;
-    SubscriptionId: UA_UInt32;
-    TriggeringItemId: UA_UInt32;
-    LinksToAddSize: Size_T;
-    LinksToAdd: PUA_UInt32;
-    LinksToRemoveSize: Size_T;
-    LinksToRemove: PUA_UInt32;
+    requestHeader: UA_RequestHeader;
+    subscriptionId: UA_UInt32;
+    triggeringItemId: UA_UInt32;
+    linksToAddSize: size_t;
+    linksToAdd: PUA_UInt32;
+    linksToRemoveSize: size_t;
+    linksToRemove: PUA_UInt32;
   end;
   PUA_SetTriggeringRequest = ^UA_SetTriggeringRequest;
 
@@ -2312,15 +2306,15 @@ const
  *)
 type
   UA_SetTriggeringResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    AddResultsSize: Size_T;
-    AddResults: PUA_StatusCode;
-    AddDiagnosticInfosSize: Size_T;
-    AddDiagnosticInfos: PUA_DiagnosticInfo;
-    RemoveResultsSize: Size_T;
-    RemoveResults: PUA_StatusCode;
-    RemoveDiagnosticInfosSize: Size_T;
-    RemoveDiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    addResultsSize: size_t;
+    addResults: PUA_StatusCode;
+    addDiagnosticInfosSize: size_t;
+    addDiagnosticInfos: PUA_DiagnosticInfo;
+    removeResultsSize: size_t;
+    removeResults: PUA_StatusCode;
+    removeDiagnosticInfosSize: size_t;
+    removeDiagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_SetTriggeringResponse = ^UA_SetTriggeringResponse;
 
@@ -2333,10 +2327,10 @@ const
  *)
 type
   UA_DeleteMonitoredItemsRequest = record
-    RequestHeader: UA_RequestHeader;
-    SubscriptionId: UA_UInt32;
-    MonitoredItemIdsSize: Size_T;
-    MonitoredItemIds: PUA_UInt32;
+    requestHeader: UA_RequestHeader;
+    subscriptionId: UA_UInt32;
+    monitoredItemIdsSize: size_t;
+    monitoredItemIds: PUA_UInt32;
   end;
   PUA_DeleteMonitoredItemsRequest = ^UA_DeleteMonitoredItemsRequest;
 
@@ -2349,11 +2343,11 @@ const
  *)
 type
   UA_DeleteMonitoredItemsResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    ResultsSize: Size_T;
-    Results: PUA_StatusCode;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    resultsSize: size_t;
+    results: PUA_StatusCode;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_DeleteMonitoredItemsResponse = ^UA_DeleteMonitoredItemsResponse;
 
@@ -2366,13 +2360,13 @@ const
  *)
 type
   UA_CreateSubscriptionRequest = record
-    RequestHeader: UA_RequestHeader;
-    RequestedPublishingInterval: UA_Double;
-    RequestedLifetimeCount: UA_UInt32;
-    RequestedMaxKeepAliveCount: UA_UInt32;
-    MaxNotificationsPerPublish: UA_UInt32;
-    PublishingEnabled: UA_Boolean;
-    Priority: UA_Byte;
+    requestHeader: UA_RequestHeader;
+    requestedPublishingInterval: UA_Double;
+    requestedLifetimeCount: UA_UInt32;
+    requestedMaxKeepAliveCount: UA_UInt32;
+    maxNotificationsPerPublish: UA_UInt32;
+    publishingEnabled: UA_Boolean;
+    priority: UA_Byte;
   end;
   PUA_CreateSubscriptionRequest = ^UA_CreateSubscriptionRequest;
 
@@ -2385,11 +2379,11 @@ const
  *)
 type
   UA_CreateSubscriptionResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    SubscriptionId: UA_UInt32;
-    RevisedPublishingInterval: UA_Double;
-    RevisedLifetimeCount: UA_UInt32;
-    RevisedMaxKeepAliveCount: UA_UInt32;
+    responseHeader: UA_ResponseHeader;
+    subscriptionId: UA_UInt32;
+    revisedPublishingInterval: UA_Double;
+    revisedLifetimeCount: UA_UInt32;
+    revisedMaxKeepAliveCount: UA_UInt32;
   end;
   PUA_CreateSubscriptionResponse = ^UA_CreateSubscriptionResponse;
 
@@ -2402,13 +2396,13 @@ const
  *)
 type
   UA_ModifySubscriptionRequest = record
-    RequestHeader: UA_RequestHeader;
-    SubscriptionId: UA_UInt32;
-    RequestedPublishingInterval: UA_Double;
-    RequestedLifetimeCount: UA_UInt32;
-    RequestedMaxKeepAliveCount: UA_UInt32;
-    MaxNotificationsPerPublish: UA_UInt32;
-    Priority: UA_Byte;
+    requestHeader: UA_RequestHeader;
+    subscriptionId: UA_UInt32;
+    requestedPublishingInterval: UA_Double;
+    requestedLifetimeCount: UA_UInt32;
+    requestedMaxKeepAliveCount: UA_UInt32;
+    maxNotificationsPerPublish: UA_UInt32;
+    priority: UA_Byte;
   end;
   PUA_ModifySubscriptionRequest = ^UA_ModifySubscriptionRequest;
 
@@ -2421,10 +2415,10 @@ const
  *)
 type
   UA_ModifySubscriptionResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    RevisedPublishingInterval: UA_Double;
-    RevisedLifetimeCount: UA_UInt32;
-    RevisedMaxKeepAliveCount: UA_UInt32;
+    responseHeader: UA_ResponseHeader;
+    revisedPublishingInterval: UA_Double;
+    revisedLifetimeCount: UA_UInt32;
+    revisedMaxKeepAliveCount: UA_UInt32;
   end;
   PUA_ModifySubscriptionResponse = ^UA_ModifySubscriptionResponse;
 
@@ -2437,10 +2431,10 @@ const
  *)
 type
   UA_SetPublishingModeRequest = record
-    RequestHeader: UA_RequestHeader;
-    PublishingEnabled: UA_Boolean;
-    SubscriptionIdsSize: Size_T;
-    SubscriptionIds: PUA_UInt32;
+    requestHeader: UA_RequestHeader;
+    publishingEnabled: UA_Boolean;
+    subscriptionIdsSize: size_t;
+    subscriptionIds: PUA_UInt32;
   end;
   PUA_SetPublishingModeRequest = ^UA_SetPublishingModeRequest;
 
@@ -2453,11 +2447,11 @@ const
  *)
 type
   UA_SetPublishingModeResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    ResultsSize: Size_T;
-    Results: PUA_StatusCode;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    resultsSize: size_t;
+    results: PUA_StatusCode;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_SetPublishingModeResponse = ^UA_SetPublishingModeResponse;
 
@@ -2470,10 +2464,10 @@ const
  *)
 type
   UA_NotificationMessage = record
-    SequenceNumber: UA_UInt32;
-    PublishTime: UA_DateTime;
-    NotificationDataSize: Size_T;
-    NotificationData: PUA_ExtensionObject;
+    sequenceNumber: UA_UInt32;
+    publishTime: UA_DateTime;
+    notificationDataSize: size_t;
+    notificationData: PUA_ExtensionObject;
   end;
   PUA_NotificationMessage = ^UA_NotificationMessage;
 
@@ -2486,8 +2480,8 @@ const
  *)
 type
   UA_MonitoredItemNotification = record
-    ClientHandle: UA_UInt32;
-    Value: UA_DataValue;
+    clientHandle: UA_UInt32;
+    value: UA_DataValue;
   end;
   PUA_MonitoredItemNotification = ^UA_MonitoredItemNotification;
 
@@ -2500,9 +2494,9 @@ const
  *)
 type
   UA_EventFieldList = record
-    ClientHandle: UA_UInt32;
-    EventFieldsSize: Size_T;
-    EventFields: PUA_Variant;
+    clientHandle: UA_UInt32;
+    eventFieldsSize: size_t;
+    eventFields: PUA_Variant;
   end;
   PUA_EventFieldList = ^UA_EventFieldList;
 
@@ -2515,8 +2509,8 @@ const
  *)
 type
   UA_StatusChangeNotification = record
-    Status: UA_StatusCode;
-    DiagnosticInfo: UA_DiagnosticInfo;
+    status: UA_StatusCode;
+    diagnosticInfo: UA_DiagnosticInfo;
   end;
   PUA_StatusChangeNotification = ^UA_StatusChangeNotification;
 
@@ -2529,8 +2523,8 @@ const
  *)
 type
   UA_SubscriptionAcknowledgement = record
-    SubscriptionId: UA_UInt32;
-    SequenceNumber: UA_UInt32;
+    subscriptionId: UA_UInt32;
+    sequenceNumber: UA_UInt32;
   end;
   PUA_SubscriptionAcknowledgement = ^UA_SubscriptionAcknowledgement;
 
@@ -2543,9 +2537,9 @@ const
  *)
 type
   UA_PublishRequest = record
-    RequestHeader: UA_RequestHeader;
-    SubscriptionAcknowledgementsSize: Size_T;
-    SubscriptionAcknowledgements: PUA_SubscriptionAcknowledgement;
+    requestHeader: UA_RequestHeader;
+    subscriptionAcknowledgementsSize: size_t;
+    subscriptionAcknowledgements: PUA_SubscriptionAcknowledgement;
   end;
   PUA_PublishRequest = ^UA_PublishRequest;
 
@@ -2558,16 +2552,16 @@ const
  *)
 type
   UA_PublishResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    SubscriptionId: UA_UInt32;
-    AvailableSequenceNumbersSize: Size_T;
-    AvailableSequenceNumbers: PUA_UInt32;
-    MoreNotifications: UA_Boolean;
-    NotificationMessage: UA_NotificationMessage;
-    ResultsSize: Size_T;
-    Results: PUA_StatusCode;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    subscriptionId: UA_UInt32;
+    availableSequenceNumbersSize: size_t;
+    availableSequenceNumbers: PUA_UInt32;
+    moreNotifications: UA_Boolean;
+    notificationMessage: UA_NotificationMessage;
+    resultsSize: size_t;
+    results: PUA_StatusCode;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_PublishResponse = ^UA_PublishResponse;
 
@@ -2580,9 +2574,9 @@ const
  *)
 type
   UA_RepublishRequest = record
-    RequestHeader: UA_RequestHeader;
-    RubscriptionId: UA_UInt32;
-    RetransmitSequenceNumber: UA_UInt32;
+    requestHeader: UA_RequestHeader;
+    subscriptionId: UA_UInt32;
+    retransmitSequenceNumber: UA_UInt32;
   end;
   PUA_RepublishRequest = ^UA_RepublishRequest;
 
@@ -2595,8 +2589,8 @@ const
  *)
 type
   UA_RepublishResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    NotificationMessage: UA_NotificationMessage;
+    responseHeader: UA_ResponseHeader;
+    notificationMessage: UA_NotificationMessage;
   end;
   PUA_RepublishResponse = ^UA_RepublishResponse;
 
@@ -2609,9 +2603,9 @@ const
  *)
 type
   UA_TransferResult = record
-    StatusCode: UA_StatusCode;
-    AvailableSequenceNumbersSize: Size_T;
-    AvailableSequenceNumbers: PUA_UInt32;
+    statusCode: UA_StatusCode;
+    availableSequenceNumbersSize: size_t;
+    availableSequenceNumbers: PUA_UInt32;
   end;
   PUA_TransferResult = ^UA_TransferResult;
 
@@ -2624,10 +2618,10 @@ const
  *)
 type
   UA_TransferSubscriptionsRequest = record
-    RequestHeader: UA_RequestHeader;
-    SubscriptionIdsSize: Size_T;
-    SubscriptionIds: PUA_UInt32;
-    SendInitialValues: UA_Boolean;
+    requestHeader: UA_RequestHeader;
+    subscriptionIdsSize: size_t;
+    subscriptionIds: PUA_UInt32;
+    sendInitialValues: UA_Boolean;
   end;
   PUA_TransferSubscriptionsRequest = ^UA_TransferSubscriptionsRequest;
 
@@ -2640,11 +2634,11 @@ const
  *)
 type
   UA_TransferSubscriptionsResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    ResultsSize: Size_T;
-    Results: PUA_TransferResult;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    resultsSize: size_t;
+    results: PUA_TransferResult;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_TransferSubscriptionsResponse = ^UA_TransferSubscriptionsResponse;
 
@@ -2658,7 +2652,7 @@ const
 type
   UA_DeleteSubscriptionsRequest = record
     requestHeader: UA_RequestHeader;
-    subscriptionIdsSize: Size_T;
+    subscriptionIdsSize: size_t;
     subscriptionIds: PUA_UInt32;
   end;
   PUA_DeleteSubscriptionsRequest = ^UA_DeleteSubscriptionsRequest;
@@ -2672,11 +2666,11 @@ const
  *)
 type
   UA_DeleteSubscriptionsResponse = record
-    ResponseHeader: UA_ResponseHeader;
-    ResultsSize: Size_T;
-    Results: PUA_StatusCode;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    responseHeader: UA_ResponseHeader;
+    resultsSize: size_t;
+    results: PUA_StatusCode;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_DeleteSubscriptionsResponse = ^UA_DeleteSubscriptionsResponse;
 
@@ -2689,12 +2683,12 @@ const
  *)
 type
   UA_BuildInfo = record
-    ProductUri: UA_String;
-    ManufacturerName: UA_String;
-    ProductName: UA_String;
-    SoftwareVersion: UA_String;
-    BuildNumber: UA_String;
-    BuildDate: UA_DateTime;
+    productUri: UA_String;
+    manufacturerName: UA_String;
+    productName: UA_String;
+    softwareVersion: UA_String;
+    buildNumber: UA_String;
+    buildDate: UA_DateTime;
   end;
   PUA_BuildInfo = ^UA_BuildInfo;
 
@@ -2716,7 +2710,7 @@ type
     __UA_REDUNDANCYSUPPORT_FORCE32BIT = $7fffffff
   );
   PUA_RedundancySupport = ^UA_RedundancySupport;
-  {$IF sizeof(UA_RedundancySupport) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_RedundancySupport) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_REDUNDANCYSUPPORT = 176;
@@ -2738,7 +2732,7 @@ type
     __UA_SERVERSTATE_FORCE32BIT = $7fffffff
   );
   PUA_ServerState = ^UA_ServerState;
-  {$IF sizeof(UA_ServerState) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_ServerState) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_SERVERSTATE = 177;
@@ -2749,18 +2743,18 @@ const
  *)
 type
   UA_ServerDiagnosticsSummaryDataType = record
-    ServerViewCount: UA_UInt32;
-    CurrentSessionCount: UA_UInt32;
-    CumulatedSessionCount: UA_UInt32;
-    SecurityRejectedSessionCount: UA_UInt32;
-    RejectedSessionCount: UA_UInt32;
-    SessionTimeoutCount: UA_UInt32;
-    SessionAbortCount: UA_UInt32;
-    CurrentSubscriptionCount: UA_UInt32;
-    CumulatedSubscriptionCount: UA_UInt32;
-    PublishingIntervalCount: UA_UInt32;
-    SecurityRejectedRequestsCount: UA_UInt32;
-    RejectedRequestsCount: UA_UInt32;
+    serverViewCount: UA_UInt32;
+    currentSessionCount: UA_UInt32;
+    cumulatedSessionCount: UA_UInt32;
+    securityRejectedSessionCount: UA_UInt32;
+    rejectedSessionCount: UA_UInt32;
+    sessionTimeoutCount: UA_UInt32;
+    sessionAbortCount: UA_UInt32;
+    currentSubscriptionCount: UA_UInt32;
+    cumulatedSubscriptionCount: UA_UInt32;
+    publishingIntervalCount: UA_UInt32;
+    securityRejectedRequestsCount: UA_UInt32;
+    rejectedRequestsCount: UA_UInt32;
   end;
   PUA_ServerDiagnosticsSummaryDataType = ^UA_ServerDiagnosticsSummaryDataType;
 
@@ -2773,12 +2767,12 @@ const
  *)
 type
   UA_ServerStatusDataType = record
-    StartTime: UA_DateTime;
-    CurrentTime: UA_DateTime;
-    State: UA_ServerState;
-    BuildInfo: UA_BuildInfo;
-    SecondsTillShutdown: UA_UInt32;
-    ShutdownReason: UA_LocalizedText;
+    startTime: UA_DateTime;
+    currentTime: UA_DateTime;
+    state: UA_ServerState;
+    buildInfo: UA_BuildInfo;
+    secondsTillShutdown: UA_UInt32;
+    shutdownReason: UA_LocalizedText;
   end;
   PUA_ServerStatusDataType = ^UA_ServerStatusDataType;
 
@@ -2791,8 +2785,8 @@ const
  *)
 type
   UA_Range = record
-    Low: UA_Double;
-    High: UA_Double;
+    low: UA_Double;
+    high: UA_Double;
   end;
   PUA_Range = ^UA_Range;
 
@@ -2805,10 +2799,10 @@ const
  *)
 type
   UA_EUInformation = record
-    NamespaceUri: UA_String;
-    UnitId: UA_Int32;
-    DisplayName: UA_LocalizedText;
-    Description: UA_LocalizedText;
+    namespaceUri: UA_String;
+    unitId: UA_Int32;
+    displayName: UA_LocalizedText;
+    description: UA_LocalizedText;
   end;
   PUA_EUInformation = ^UA_EUInformation;
 
@@ -2827,7 +2821,7 @@ type
     __UA_AXISSCALEENUMERATION_FORCE32BIT = $7fffffff
   );
   PUA_AxisScaleEnumeration = ^UA_AxisScaleEnumeration;
-  {$IF sizeof(UA_AxisScaleEnumeration) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_AxisScaleEnumeration) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
   UA_TYPES_AXISSCALEENUMERATION = 182;
@@ -2838,8 +2832,8 @@ const
  *)
 type
   UA_ComplexNumberType = record
-    Real: UA_Float;
-    Imaginary: UA_Float;
+    real: UA_Float;
+    imaginary: UA_Float;
   end;
   PUA_ComplexNumberType = ^UA_ComplexNumberType;
 
@@ -2852,8 +2846,8 @@ const
  *)
 type
   UA_DoubleComplexNumberType = record
-    Real: UA_Double;
-    Imaginary: UA_Double;
+    real: UA_Double;
+    imaginary: UA_Double;
   end;
   PUA_DoubleComplexNumberType = ^UA_DoubleComplexNumberType;
 
@@ -2866,12 +2860,12 @@ const
  *)
 type
   UA_AxisInformation = record
-    EngineeringUnits: UA_EUInformation;
-    EURange: UA_Range;
-    Title: UA_LocalizedText;
-    AxisScaleType: UA_AxisScaleEnumeration;
-    AxisStepsSize: Size_T;
-    AxisSteps: PUA_Double;
+    engineeringUnits: UA_EUInformation;
+    eURange: UA_Range;
+    title: UA_LocalizedText;
+    axisScaleType: UA_AxisScaleEnumeration;
+    axisStepsSize: size_t;
+    axisSteps: PUA_Double;
   end;
   PUA_AxisInformation = ^UA_AxisInformation;
 
@@ -2884,8 +2878,8 @@ const
  *)
 type
   UA_XVType = record
-    X: UA_Double;
-    Value: UA_Float;
+    x: UA_Double;
+    value: UA_Float;
   end;
   PUA_XVType = ^UA_XVType;
 
@@ -2898,8 +2892,8 @@ const
  *)
 type
   UA_EnumDefinition = record
-    FieldsSize: Size_T;
-    Fields: PUA_EnumField;
+    fieldsSize: size_t;
+    fields: PUA_EnumField;
   end;
   PUA_EnumDefinition = ^UA_EnumDefinition;
 
@@ -2912,10 +2906,10 @@ const
  *)
 type
   UA_DataChangeNotification = record
-    MonitoredItemsSize: Size_T;
-    MonitoredItems: PUA_MonitoredItemNotification;
-    DiagnosticInfosSize: Size_T;
-    DiagnosticInfos: PUA_DiagnosticInfo;
+    monitoredItemsSize: size_t;
+    monitoredItems: PUA_MonitoredItemNotification;
+    diagnosticInfosSize: size_t;
+    diagnosticInfos: PUA_DiagnosticInfo;
   end;
   PUA_DataChangeNotification = ^UA_DataChangeNotification;
 
@@ -2928,8 +2922,8 @@ const
  *)
 type
   UA_EventNotificationList = record
-    EventsSize: Size_T;
-    Events: PUA_EventFieldList;
+    eventsSize: size_t;
+    events: PUA_EventFieldList;
   end;
   PUA_EventNotificationList = ^UA_EventNotificationList;
 

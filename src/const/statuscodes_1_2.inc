@@ -3,7 +3,7 @@
    * Generated from 
    * schema/StatusCode.csv 
    * with script
-   * /home/luca/Datos/lazextra/fpopen62541/tools/generate_statuscode_fpc.py
+   * /home/virus/source/SCADA-EISA-Lazarus-Components/fpopen62541/tools/generate_statuscode_fpc.py
    *-------------------------------------------------------*)
 
   (**
