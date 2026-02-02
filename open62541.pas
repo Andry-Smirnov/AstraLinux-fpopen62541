@@ -89,7 +89,11 @@ const
 
 {$IFDEF UNIX}
   libopen62541 = 'libopen62541.so';
-{$ELSE}
+{$ENDIF}
+{$IFDEF DARWIN}
+  libopen62541 = 'libopen62541.so';
+{$ENDIF}
+{$IFDEF WINDOWS}
   // GCC libgcc_s_sjlj-1.dll and libwinpthread-1.dll are also required
   //  they can be downloaded from packages at http://win-builds.org/1.5.0/packages/windows_32/
   libopen62541 = 'libopen62541.dll'; 
@@ -434,6 +438,36 @@ type
   // Specializations, such as ``UA_Int32_new()`` are derived from the generic
   // type operations as static inline functions.
 
+{$IFDEF UA_VER1_4}
+  UA_DataTypeMember = bitpacked record
+    {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
+    memberName: PAnsiChar;
+    {$ENDIF}
+    memberType: PUA_DataType;
+    padding: 0..63;               // How much padding is there before this member element?
+                                  // For arrays this is the
+                                  // padding before the size_t length member.
+                                  // (No padding between size_t and the following ptr.)
+    isArray: 0..1;                // The member is an array
+    isOptional: 0..1;             // The member is an optional field
+  end;
+typedef struct {
+#ifdef UA_ENABLE_TYPEDESCRIPTION
+    const char *memberName;       /* Human-readable member name */
+#endif
+    const UA_DataType *memberType;/* The member data type description */
+    UA_Byte padding    : 6;       /* How much padding is there before this
+                                     member element? For arrays this is the
+                                     padding before the size_t length member.
+                                     (No padding between size_t and the
+                                     following ptr.) For unions, the padding
+                                     includes the size of the switchfield (the
+                                     offset from the start of the union
+                                     type). */
+    UA_Byte isArray    : 1;       /* The member is an array */
+    UA_Byte isOptional : 1;       /* The member is an optional field */
+} UA_DataTypeMember;
+{$ENDIF}
 {$IFDEF UA_VER1_3}
   UA_DataTypeMember = bitpacked record
     {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
@@ -455,7 +489,8 @@ type
                                     // members from the same namespace or
                                     // namespace zero only.
   end;
-{$ELSE}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
   UA_DataTypeMember = record
     memberTypeIndex: UA_UInt16;   // Index of the member in the array of data types
     padding: UA_Byte;             (* How much padding is there before this
