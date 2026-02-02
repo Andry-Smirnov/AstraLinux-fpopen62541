@@ -1,12 +1,12 @@
 (* Generated from Opc.Ua.Types.bsd with script ./generate_datatypes_fpc.py
-* on host seis by user luca at 2021-11-04 04:52:46 *)
+* on host virus-astra by user virus at 2026-01-30 11:30:44 *)
 
 (**
  * Every type is assigned an index in an array containing the type descriptions.
  * These descriptions are used during type handling (copying, deletion,
  * binary encoding, ...). *)
 const
-  UA_TYPES_COUNT = 191;
+  UA_TYPES_COUNT = 190;
 
 (**
  * Boolean
@@ -159,20 +159,6 @@ const
   UA_TYPES_DIAGNOSTICINFO = 24;
 
 (**
- * KeyValuePair
- * ^^^^^^^^^^^^
- *)
-type
-  UA_KeyValuePair = record
-    key : UA_QualifiedName ;
-    value : UA_Variant;
-  end;
-  PUA_KeyValuePair = ^UA_KeyValuePair;
-
-const
-  UA_TYPES_KEYVALUEPAIR = 25;
-
-(**
  * NodeClass
  * ^^^^^^^^^
  * A mask specifying the class of the node. *)
@@ -190,10 +176,10 @@ type
     __UA_NODECLASS_FORCE32BIT = $7fffffff
   );
   PUA_NodeClass = ^UA_NodeClass;
-  {$IF sizeof(UA_NodeClass) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_NodeClass) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_NODECLASS = 26;
+  UA_TYPES_NODECLASS = 25;
 
 (**
  * StructureType
@@ -207,10 +193,10 @@ type
     __UA_STRUCTURETYPE_FORCE32BIT = $7fffffff
   );
   PUA_StructureType = ^UA_StructureType;
-  {$IF sizeof(UA_StructureType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF sizeof(UA_StructureType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_STRUCTURETYPE = 27;
+  UA_TYPES_STRUCTURETYPE = 26;
 
 (**
  * StructureField
@@ -230,7 +216,7 @@ type
   PUA_StructureField = ^UA_StructureField;
 
 const
-  UA_TYPES_STRUCTUREFIELD = 28;
+  UA_TYPES_STRUCTUREFIELD = 27;
 
 (**
  * StructureDefinition
@@ -247,7 +233,7 @@ type
   PUA_StructureDefinition = ^UA_StructureDefinition;
 
 const
-  UA_TYPES_STRUCTUREDEFINITION = 29;
+  UA_TYPES_STRUCTUREDEFINITION = 28;
 
 (**
  * Argument
@@ -265,7 +251,7 @@ type
   PUA_Argument = ^UA_Argument;
 
 const
-  UA_TYPES_ARGUMENT = 30;
+  UA_TYPES_ARGUMENT = 29;
 
 (**
  * EnumValueType
@@ -280,7 +266,7 @@ type
   PUA_EnumValueType = ^UA_EnumValueType;
 
 const
-  UA_TYPES_ENUMVALUETYPE = 31;
+  UA_TYPES_ENUMVALUETYPE = 30;
 
 (**
  * EnumField
@@ -296,7 +282,7 @@ type
   PUA_EnumField = ^UA_EnumField;
 
 const
-  UA_TYPES_ENUMFIELD = 32;
+  UA_TYPES_ENUMFIELD = 31;
 
 (**
  * Duration
@@ -306,7 +292,7 @@ type
   UA_Duration = UA_Double;
 
 const
-  UA_TYPES_DURATION = 33;
+  UA_TYPES_DURATION = 32;
 
 (**
  * UtcTime
@@ -316,7 +302,7 @@ type
   UA_UtcTime = UA_DateTime;
 
 const
-  UA_TYPES_UTCTIME = 34;
+  UA_TYPES_UTCTIME = 33;
 
 (**
  * LocaleId
@@ -326,21 +312,7 @@ type
   UA_LocaleId = UA_String;
 
 const
-  UA_TYPES_LOCALEID = 35;
-
-(**
- * TimeZoneDataType
- * ^^^^^^^^^^^^^^^^
- *)
-type
-  UA_TimeZoneDataType = record
-    offset : UA_Int16;
-    daylightSavingInOffset : UA_Boolean;
-  end;
-  PUA_TimeZoneDataType = ^UA_TimeZoneDataType;
-
-const
-  UA_TYPES_TIMEZONEDATATYPE	= 36;
+  UA_TYPES_LOCALEID = 34;
 
 (**
  * ApplicationType
@@ -355,10 +327,10 @@ type
     __UA_APPLICATIONTYPE_FORCE32BIT = $7fffffff
   );
   PUA_ApplicationType = ^UA_ApplicationType;
-  {$IF sizeof(UA_ApplicationType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_ApplicationType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_APPLICATIONTYPE = 37;
+  UA_TYPES_APPLICATIONTYPE = 35;
 
 (**
  * ApplicationDescription
@@ -378,7 +350,7 @@ type
   PUA_ApplicationDescription = ^UA_ApplicationDescription;
 
 const
-  UA_TYPES_APPLICATIONDESCRIPTION = 38;
+  UA_TYPES_APPLICATIONDESCRIPTION = 36;
 
 (**
  * RequestHeader
@@ -397,7 +369,7 @@ type
   PUA_RequestHeader = ^UA_RequestHeader;
 
 const
-  UA_TYPES_REQUESTHEADER = 39;
+  UA_TYPES_REQUESTHEADER = 37;
 
 (**
  * ResponseHeader
@@ -416,7 +388,7 @@ type
   PUA_ResponseHeader = ^UA_ResponseHeader;
 
 const
-  UA_TYPES_RESPONSEHEADER = 40;
+  UA_TYPES_RESPONSEHEADER = 38;
 
 (**
  * ServiceFault
@@ -429,7 +401,7 @@ type
   PUA_ServiceFault = ^UA_ServiceFault;
 
 const
-  UA_TYPES_SERVICEFAULT = 41;
+  UA_TYPES_SERVICEFAULT = 39;
 
 (**
  * FindServersRequest
@@ -447,7 +419,7 @@ type
   PUA_FindServersRequest = ^UA_FindServersRequest;
 
 const
-  UA_TYPES_FINDSERVERSREQUEST = 42;
+  UA_TYPES_FINDSERVERSREQUEST = 40;
 
 (**
  * FindServersResponse
@@ -462,7 +434,7 @@ type
   PUA_FindServersResponse = ^UA_FindServersResponse;
 
 const
-  UA_TYPES_FINDSERVERSRESPONSE = 43;
+  UA_TYPES_FINDSERVERSRESPONSE = 41;
 
 (**
  * MessageSecurityMode
@@ -477,10 +449,10 @@ type
     __UA_MESSAGESECURITYMODE_FORCE32BIT = $7fffffff
   );
   PUA_MessageSecurityMode = ^UA_MessageSecurityMode;
-  {$IF sizeof(UA_MessageSecurityMode) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_MessageSecurityMode) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_MESSAGESECURITYMODE = 44;
+  UA_TYPES_MESSAGESECURITYMODE = 42;
 
 (**
  * UserTokenType
@@ -495,10 +467,10 @@ type
     __UA_USERTOKENTYPE_FORCE32BIT = $7fffffff
   );
   PUA_UserTokenType = ^UA_UserTokenType;
-  {$IF sizeof(UA_UserTokenType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_UserTokenType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_USERTOKENTYPE = 45;
+  UA_TYPES_USERTOKENTYPE = 43;
 
 (**
  * UserTokenPolicy
@@ -515,7 +487,7 @@ type
   PUA_UserTokenPolicy = ^UA_UserTokenPolicy;
 
 const
-  UA_TYPES_USERTOKENPOLICY = 46;
+  UA_TYPES_USERTOKENPOLICY = 44;
 
 (**
  * EndpointDescription
@@ -536,7 +508,7 @@ type
   PUA_EndpointDescription = ^UA_EndpointDescription;
 
 const
-  UA_TYPES_ENDPOINTDESCRIPTION = 47;
+  UA_TYPES_ENDPOINTDESCRIPTION = 45;
 
 (**
  * GetEndpointsRequest
@@ -554,7 +526,7 @@ type
   PUA_GetEndpointsRequest = ^UA_GetEndpointsRequest;
 
 const
-  UA_TYPES_GETENDPOINTSREQUEST = 48;
+  UA_TYPES_GETENDPOINTSREQUEST = 46;
 
 (**
  * GetEndpointsResponse
@@ -569,7 +541,7 @@ type
   PUA_GetEndpointsResponse = ^UA_GetEndpointsResponse;
 
 const
-  UA_TYPES_GETENDPOINTSRESPONSE = 49;
+  UA_TYPES_GETENDPOINTSRESPONSE = 47;
 
 (**
  * SecurityTokenRequestType
@@ -582,10 +554,10 @@ type
     __UA_SECURITYTOKENREQUESTTYPE_FORCE32BIT = $7fffffff
   );
   PUA_SecurityTokenRequestType = ^UA_SecurityTokenRequestType;
-  {$IF sizeof(UA_SecurityTokenRequestType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_SecurityTokenRequestType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_SECURITYTOKENREQUESTTYPE = 50;
+  UA_TYPES_SECURITYTOKENREQUESTTYPE = 48;
 
 (**
  * ChannelSecurityToken
@@ -601,7 +573,7 @@ type
   PUA_ChannelSecurityToken = ^UA_ChannelSecurityToken;
 
 const
-  UA_TYPES_CHANNELSECURITYTOKEN = 51;
+  UA_TYPES_CHANNELSECURITYTOKEN = 49;
 
 (**
  * OpenSecureChannelRequest
@@ -619,7 +591,7 @@ type
   PUA_OpenSecureChannelRequest = ^UA_OpenSecureChannelRequest;
 
 const
-  UA_TYPES_OPENSECURECHANNELREQUEST = 52;
+  UA_TYPES_OPENSECURECHANNELREQUEST = 50;
 
 (**
  * OpenSecureChannelResponse
@@ -635,7 +607,7 @@ type
   PUA_OpenSecureChannelResponse = ^UA_OpenSecureChannelResponse;
 
 const
-  UA_TYPES_OPENSECURECHANNELRESPONSE = 53;
+  UA_TYPES_OPENSECURECHANNELRESPONSE = 51;
 
 (**
  * CloseSecureChannelRequest
@@ -648,7 +620,7 @@ type
   PUA_CloseSecureChannelRequest = ^UA_CloseSecureChannelRequest;
 
 const
-  UA_TYPES_CLOSESECURECHANNELREQUEST = 54;
+  UA_TYPES_CLOSESECURECHANNELREQUEST = 52;
 
 (**
  * CloseSecureChannelResponse
@@ -661,7 +633,7 @@ type
   PUA_CloseSecureChannelResponse = ^UA_CloseSecureChannelResponse;
 
 const
-  UA_TYPES_CLOSESECURECHANNELRESPONSE = 55;
+  UA_TYPES_CLOSESECURECHANNELRESPONSE = 53;
 
 (**
  * SignedSoftwareCertificate
@@ -675,7 +647,7 @@ type
   PUA_SignedSoftwareCertificate = ^UA_SignedSoftwareCertificate;
 
 const
-  UA_TYPES_SIGNEDSOFTWARECERTIFICATE = 56;
+  UA_TYPES_SIGNEDSOFTWARECERTIFICATE = 54;
 
 (**
  * SignatureData
@@ -689,7 +661,7 @@ type
   PUA_SignatureData = ^UA_SignatureData;
 
 const
-  UA_TYPES_SIGNATUREDATA = 57;
+  UA_TYPES_SIGNATUREDATA = 55;
 
 (**
  * CreateSessionRequest
@@ -710,7 +682,7 @@ type
   PUA_CreateSessionRequest = ^UA_CreateSessionRequest;
 
 const
-  UA_TYPES_CREATESESSIONREQUEST = 58;
+  UA_TYPES_CREATESESSIONREQUEST = 56;
 
 (**
  * CreateSessionResponse
@@ -734,7 +706,7 @@ type
   PUA_CreateSessionResponse = ^UA_CreateSessionResponse;
 
 const
-  UA_TYPES_CREATESESSIONRESPONSE = 59;
+  UA_TYPES_CREATESESSIONRESPONSE = 57;
 
 (**
  * UserIdentityToken
@@ -747,7 +719,7 @@ type
   PUA_UserIdentityToken = ^UA_UserIdentityToken;
 
 const
-  UA_TYPES_USERIDENTITYTOKEN = 60;
+  UA_TYPES_USERIDENTITYTOKEN = 58;
 
 (**
  * AnonymousIdentityToken
@@ -760,7 +732,7 @@ type
   PUA_AnonymousIdentityToken = ^UA_AnonymousIdentityToken;
 
 const
-  UA_TYPES_ANONYMOUSIDENTITYTOKEN = 61;
+  UA_TYPES_ANONYMOUSIDENTITYTOKEN = 59;
 
 (**
  * UserNameIdentityToken
@@ -776,7 +748,7 @@ type
   PUA_UserNameIdentityToken = ^UA_UserNameIdentityToken;
 
 const
-  UA_TYPES_USERNAMEIDENTITYTOKEN = 62;
+  UA_TYPES_USERNAMEIDENTITYTOKEN = 60;
 
 (**
  * X509IdentityToken
@@ -790,7 +762,7 @@ type
   PUA_X509IdentityToken = ^UA_X509IdentityToken;
 
 const
-  UA_TYPES_X509IDENTITYTOKEN = 63;
+  UA_TYPES_X509IDENTITYTOKEN = 61;
 
 (**
  * IssuedIdentityToken
@@ -805,7 +777,7 @@ type
   PUA_IssuedIdentityToken = ^UA_IssuedIdentityToken;
 
 const
-  UA_TYPES_ISSUEDIDENTITYTOKEN = 64;
+  UA_TYPES_ISSUEDIDENTITYTOKEN = 62;
 
 (**
  * ActivateSessionRequest
@@ -825,7 +797,7 @@ type
   PUA_ActivateSessionRequest = ^UA_ActivateSessionRequest;
 
 const
-  UA_TYPES_ACTIVATESESSIONREQUEST = 65;
+  UA_TYPES_ACTIVATESESSIONREQUEST = 63;
 
 (**
  * ActivateSessionResponse
@@ -843,7 +815,7 @@ type
   PUA_ActivateSessionResponse = ^UA_ActivateSessionResponse;
 
 const
-  UA_TYPES_ACTIVATESESSIONRESPONSE = 66;
+  UA_TYPES_ACTIVATESESSIONRESPONSE = 64;
 
 (**
  * CloseSessionRequest
@@ -857,7 +829,7 @@ type
   PUA_CloseSessionRequest = ^UA_CloseSessionRequest;
 
 const
-  UA_TYPES_CLOSESESSIONREQUEST = 67;
+  UA_TYPES_CLOSESESSIONREQUEST = 65;
 
 (**
  * CloseSessionResponse
@@ -870,7 +842,7 @@ type
   PUA_CloseSessionResponse = ^UA_CloseSessionResponse;
 
 const
-  UA_TYPES_CLOSESESSIONRESPONSE = 68;
+  UA_TYPES_CLOSESESSIONRESPONSE = 66;
 
 (**
  * NodeAttributesMask
@@ -916,10 +888,10 @@ type
     __UA_NODEATTRIBUTESMASK_FORCE32BIT = $7fffffff
   );
   PUA_NodeAttributesMask = ^UA_NodeAttributesMask;
-  {$IF sizeof(UA_NodeAttributesMask) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_NodeAttributesMask) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_NODEATTRIBUTESMASK = 69;
+  UA_TYPES_NODEATTRIBUTESMASK = 67;
 
 (**
  * NodeAttributes
@@ -936,7 +908,7 @@ type
   PUA_NodeAttributes = ^UA_NodeAttributes;
 
 const
-  UA_TYPES_NODEATTRIBUTES = 70;
+  UA_TYPES_NODEATTRIBUTES = 68;
 
 (**
  * ObjectAttributes
@@ -954,7 +926,7 @@ type
   PUA_ObjectAttributes = ^UA_ObjectAttributes;
 
 const
-  UA_TYPES_OBJECTATTRIBUTES = 71;
+  UA_TYPES_OBJECTATTRIBUTES = 69;
 
 (**
  * VariableAttributes
@@ -980,7 +952,7 @@ type
   PUA_VariableAttributes = ^UA_VariableAttributes;
 
 const
-  UA_TYPES_VARIABLEATTRIBUTES = 72;
+  UA_TYPES_VARIABLEATTRIBUTES = 70;
 
 (**
  * MethodAttributes
@@ -999,7 +971,7 @@ type
   PUA_MethodAttributes = ^UA_MethodAttributes;
 
 const
-  UA_TYPES_METHODATTRIBUTES = 73;
+  UA_TYPES_METHODATTRIBUTES = 71;
 
 (**
  * ObjectTypeAttributes
@@ -1017,7 +989,7 @@ type
   PUA_ObjectTypeAttributes = ^UA_ObjectTypeAttributes;
 
 const
-  UA_TYPES_OBJECTTYPEATTRIBUTES = 74;
+  UA_TYPES_OBJECTTYPEATTRIBUTES = 72;
 
 (**
  * VariableTypeAttributes
@@ -1040,7 +1012,7 @@ type
   PUA_VariableTypeAttributes = ^UA_VariableTypeAttributes;
 
 const
-  UA_TYPES_VARIABLETYPEATTRIBUTES = 75;
+  UA_TYPES_VARIABLETYPEATTRIBUTES = 73;
 
 (**
  * ReferenceTypeAttributes
@@ -1060,7 +1032,7 @@ type
   PUA_ReferenceTypeAttributes = ^UA_ReferenceTypeAttributes;
 
 const
-  UA_TYPES_REFERENCETYPEATTRIBUTES = 76;
+  UA_TYPES_REFERENCETYPEATTRIBUTES = 74;
 
 (**
  * DataTypeAttributes
@@ -1078,7 +1050,7 @@ type
   PUA_DataTypeAttributes = ^UA_DataTypeAttributes;
 
 const
-  UA_TYPES_DATATYPEATTRIBUTES = 77;
+  UA_TYPES_DATATYPEATTRIBUTES = 75;
 
 (**
  * ViewAttributes
@@ -1097,7 +1069,7 @@ type
   PUA_ViewAttributes = ^UA_ViewAttributes;
 
 const
-  UA_TYPES_VIEWATTRIBUTES = 78;
+  UA_TYPES_VIEWATTRIBUTES = 76;
 
 (**
  * AddNodesItem
@@ -1116,7 +1088,7 @@ type
   PUA_AddNodesItem = ^UA_AddNodesItem;
 
 const
-  UA_TYPES_ADDNODESITEM = 79;
+  UA_TYPES_ADDNODESITEM = 77;
 
 (**
  * AddNodesResult
@@ -1130,7 +1102,7 @@ type
   PUA_AddNodesResult = ^UA_AddNodesResult;
 
 const
-  UA_TYPES_ADDNODESRESULT = 80;
+  UA_TYPES_ADDNODESRESULT = 78;
 
 (**
  * AddNodesRequest
@@ -1145,7 +1117,7 @@ type
   PUA_AddNodesRequest = ^UA_AddNodesRequest;
 
 const
-  UA_TYPES_ADDNODESREQUEST = 81;
+  UA_TYPES_ADDNODESREQUEST = 79;
 
 (**
  * AddNodesResponse
@@ -1162,7 +1134,7 @@ type
   PUA_AddNodesResponse = ^UA_AddNodesResponse;
 
 const
-  UA_TYPES_ADDNODESRESPONSE = 82;
+  UA_TYPES_ADDNODESRESPONSE = 80;
 
 (**
  * AddReferencesItem
@@ -1180,7 +1152,7 @@ type
   PUA_AddReferencesItem = ^UA_AddReferencesItem;
 
 const
-  UA_TYPES_ADDREFERENCESITEM = 83;
+  UA_TYPES_ADDREFERENCESITEM = 81;
 
 (**
  * AddReferencesRequest
@@ -1195,7 +1167,7 @@ type
   PUA_AddReferencesRequest = ^UA_AddReferencesRequest;
 
 const
-  UA_TYPES_ADDREFERENCESREQUEST = 84;
+  UA_TYPES_ADDREFERENCESREQUEST = 82;
 
 (**
  * AddReferencesResponse
@@ -1212,7 +1184,7 @@ type
   PUA_AddReferencesResponse = ^UA_AddReferencesResponse;
 
 const
-  UA_TYPES_ADDREFERENCESRESPONSE = 85;
+  UA_TYPES_ADDREFERENCESRESPONSE = 83;
 
 (**
  * DeleteNodesItem
@@ -1226,7 +1198,7 @@ type
   PUA_DeleteNodesItem = ^UA_DeleteNodesItem;
 
 const
-  UA_TYPES_DELETENODESITEM = 86;
+  UA_TYPES_DELETENODESITEM = 84;
 
 (**
  * DeleteNodesRequest
@@ -1241,7 +1213,7 @@ type
   PUA_DeleteNodesRequest = ^UA_DeleteNodesRequest;
 
 const
-  UA_TYPES_DELETENODESREQUEST = 87;
+  UA_TYPES_DELETENODESREQUEST = 85;
 
 (**
  * DeleteNodesResponse
@@ -1258,7 +1230,7 @@ type
   PUA_DeleteNodesResponse = ^UA_DeleteNodesResponse;
 
 const
-  UA_TYPES_DELETENODESRESPONSE = 88;
+  UA_TYPES_DELETENODESRESPONSE = 86;
 
 (**
  * DeleteReferencesItem
@@ -1275,7 +1247,7 @@ type
   PUA_DeleteReferencesItem = ^UA_DeleteReferencesItem;
 
 const
-  UA_TYPES_DELETEREFERENCESITEM = 89;
+  UA_TYPES_DELETEREFERENCESITEM = 87;
 
 (**
  * DeleteReferencesRequest
@@ -1290,7 +1262,7 @@ type
   PUA_DeleteReferencesRequest = ^UA_DeleteReferencesRequest;
 
 const
-  UA_TYPES_DELETEREFERENCESREQUEST = 90;
+  UA_TYPES_DELETEREFERENCESREQUEST = 88;
 
 (**
  * DeleteReferencesResponse
@@ -1307,7 +1279,7 @@ type
   PUA_DeleteReferencesResponse = ^UA_DeleteReferencesResponse;
 
 const
-  UA_TYPES_DELETEREFERENCESRESPONSE = 91;
+  UA_TYPES_DELETEREFERENCESRESPONSE = 89;
 
 (**
  * BrowseDirection
@@ -1322,10 +1294,10 @@ type
     __UA_BROWSEDIRECTION_FORCE32BIT = $7fffffff
   );
   PUA_BrowseDirection = ^UA_BrowseDirection;
-  {$IF sizeof(UA_BrowseDirection) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_BrowseDirection) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_BROWSEDIRECTION = 92;
+  UA_TYPES_BROWSEDIRECTION = 90;
 
 (**
  * ViewDescription
@@ -1340,7 +1312,7 @@ type
   PUA_ViewDescription = ^UA_ViewDescription;
 
 const
-  UA_TYPES_VIEWDESCRIPTION = 93;
+  UA_TYPES_VIEWDESCRIPTION = 91;
 
 (**
  * BrowseDescription
@@ -1358,7 +1330,7 @@ type
   PUA_BrowseDescription = ^UA_BrowseDescription;
 
 const
-  UA_TYPES_BROWSEDESCRIPTION = 94;
+  UA_TYPES_BROWSEDESCRIPTION = 92;
 
 (**
  * BrowseResultMask
@@ -1379,10 +1351,10 @@ type
     __UA_BROWSERESULTMASK_FORCE32BIT = $7fffffff
   );
   PUA_BrowseResultMask = ^UA_BrowseResultMask;
-  {$IF sizeof(UA_BrowseResultMask) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_BrowseResultMask) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_BROWSERESULTMASK = 95;
+  UA_TYPES_BROWSERESULTMASK = 93;
 
 (**
  * ReferenceDescription
@@ -1401,7 +1373,7 @@ type
   PUA_ReferenceDescription = ^UA_ReferenceDescription;
 
 const
-  UA_TYPES_REFERENCEDESCRIPTION = 96;
+  UA_TYPES_REFERENCEDESCRIPTION = 94;
 
 (**
  * BrowseResult
@@ -1417,7 +1389,7 @@ type
   PUA_BrowseResult = ^UA_BrowseResult;
 
 const
-  UA_TYPES_BROWSERESULT = 97;
+  UA_TYPES_BROWSERESULT = 95;
 
 (**
  * BrowseRequest
@@ -1434,7 +1406,7 @@ type
   PUA_BrowseRequest = ^UA_BrowseRequest;
 
 const
-  UA_TYPES_BROWSEREQUEST = 98;
+  UA_TYPES_BROWSEREQUEST = 96;
 
 (**
  * BrowseResponse
@@ -1451,7 +1423,7 @@ type
   PUA_BrowseResponse = ^UA_BrowseResponse;
 
 const
-  UA_TYPES_BROWSERESPONSE = 99;
+  UA_TYPES_BROWSERESPONSE = 97;
 
 (**
  * BrowseNextRequest
@@ -1467,7 +1439,7 @@ type
   PUA_BrowseNextRequest = ^UA_BrowseNextRequest;
 
 const
-  UA_TYPES_BROWSENEXTREQUEST = 100;
+  UA_TYPES_BROWSENEXTREQUEST = 98;
 
 (**
  * BrowseNextResponse
@@ -1484,7 +1456,7 @@ type
   PUA_BrowseNextResponse = ^UA_BrowseNextResponse;
 
 const
-  UA_TYPES_BROWSENEXTRESPONSE = 101;
+  UA_TYPES_BROWSENEXTRESPONSE = 99;
 
 (**
  * RelativePathElement
@@ -1500,7 +1472,7 @@ type
   PUA_RelativePathElement = ^UA_RelativePathElement;
 
 const
-  UA_TYPES_RELATIVEPATHELEMENT = 102;
+  UA_TYPES_RELATIVEPATHELEMENT = 100;
 
 (**
  * RelativePath
@@ -1514,7 +1486,7 @@ type
   PUA_RelativePath = ^UA_RelativePath;
 
 const
-  UA_TYPES_RELATIVEPATH = 103;
+  UA_TYPES_RELATIVEPATH = 101;
 
 (**
  * BrowsePath
@@ -1528,7 +1500,7 @@ type
   PUA_BrowsePath = ^UA_BrowsePath;
 
 const
-  UA_TYPES_BROWSEPATH = 104;
+  UA_TYPES_BROWSEPATH = 102;
 
 (**
  * BrowsePathTarget
@@ -1542,7 +1514,7 @@ type
   PUA_BrowsePathTarget = ^UA_BrowsePathTarget;
 
 const
-  UA_TYPES_BROWSEPATHTARGET = 105;
+  UA_TYPES_BROWSEPATHTARGET = 103;
 
 (**
  * BrowsePathResult
@@ -1557,7 +1529,7 @@ type
   PUA_BrowsePathResult = ^UA_BrowsePathResult;
 
 const
-  UA_TYPES_BROWSEPATHRESULT = 106;
+  UA_TYPES_BROWSEPATHRESULT = 104;
 
 (**
  * TranslateBrowsePathsToNodeIdsRequest
@@ -1572,7 +1544,7 @@ type
   PUA_TranslateBrowsePathsToNodeIdsRequest = ^UA_TranslateBrowsePathsToNodeIdsRequest;
 
 const
-  UA_TYPES_TRANSLATEBROWSEPATHSTONODEIDSREQUEST = 107;
+  UA_TYPES_TRANSLATEBROWSEPATHSTONODEIDSREQUEST = 105;
 
 (**
  * TranslateBrowsePathsToNodeIdsResponse
@@ -1589,7 +1561,7 @@ type
   PUA_TranslateBrowsePathsToNodeIdsResponse = ^UA_TranslateBrowsePathsToNodeIdsResponse;
 
 const
-  UA_TYPES_TRANSLATEBROWSEPATHSTONODEIDSRESPONSE = 108;
+  UA_TYPES_TRANSLATEBROWSEPATHSTONODEIDSRESPONSE = 106;
 
 (**
  * RegisterNodesRequest
@@ -1604,7 +1576,7 @@ type
   PUA_RegisterNodesRequest = ^UA_RegisterNodesRequest;
 
 const
-  UA_TYPES_REGISTERNODESREQUEST = 109;
+  UA_TYPES_REGISTERNODESREQUEST = 107;
 
 (**
  * RegisterNodesResponse
@@ -1619,7 +1591,7 @@ type
   PUA_RegisterNodesResponse = ^UA_RegisterNodesResponse;
 
 const
-  UA_TYPES_REGISTERNODESRESPONSE = 110;
+  UA_TYPES_REGISTERNODESRESPONSE = 108;
 
 (**
  * UnregisterNodesRequest
@@ -1634,7 +1606,7 @@ type
   PUA_UnregisterNodesRequest = ^UA_UnregisterNodesRequest;
 
 const
-  UA_TYPES_UNREGISTERNODESREQUEST = 111;
+  UA_TYPES_UNREGISTERNODESREQUEST = 109;
 
 (**
  * UnregisterNodesResponse
@@ -1647,7 +1619,7 @@ type
   PUA_UnregisterNodesResponse = ^UA_UnregisterNodesResponse;
 
 const
-  UA_TYPES_UNREGISTERNODESRESPONSE = 112;
+  UA_TYPES_UNREGISTERNODESRESPONSE = 110;
 
 (**
  * FilterOperator
@@ -1676,10 +1648,10 @@ type
     __UA_FILTEROPERATOR_FORCE32BIT = $7fffffff
   );
   PUA_FilterOperator = ^UA_FilterOperator;
-  {$IF sizeof(UA_FilterOperator) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_FilterOperator) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_FILTEROPERATOR = 113;
+  UA_TYPES_FILTEROPERATOR = 111;
 
 (**
  * ContentFilterElement
@@ -1694,7 +1666,7 @@ type
   PUA_ContentFilterElement = ^UA_ContentFilterElement;
 
 const
-  UA_TYPES_CONTENTFILTERELEMENT = 114;
+  UA_TYPES_CONTENTFILTERELEMENT = 112;
 
 (**
  * ContentFilter
@@ -1708,10 +1680,9 @@ type
   PUA_ContentFilter = ^UA_ContentFilter;
 
 const
-  UA_TYPES_CONTENTFILTER = 115;
+  UA_TYPES_CONTENTFILTER = 113;
 
-
-{(**
+(**
  * FilterOperand
  * ^^^^^^^^^^^^^
  *)
@@ -1719,7 +1690,7 @@ type
   UA_FilterOperand = pointer;
 
 const
-  UA_TYPES_FILTEROPERAND = 114;}
+  UA_TYPES_FILTEROPERAND = 114;
 
 (**
  * ElementOperand
@@ -1732,7 +1703,7 @@ type
   PUA_ElementOperand = ^UA_ElementOperand;
 
 const
-  UA_TYPES_ELEMENTOPERAND = 116;
+  UA_TYPES_ELEMENTOPERAND = 115;
 
 (**
  * LiteralOperand
@@ -1745,7 +1716,7 @@ type
   PUA_LiteralOperand = ^UA_LiteralOperand;
 
 const
-  UA_TYPES_LITERALOPERAND = 117;
+  UA_TYPES_LITERALOPERAND = 116;
 
 (**
  * AttributeOperand
@@ -1762,7 +1733,7 @@ type
   PUA_AttributeOperand = ^UA_AttributeOperand;
 
 const
-  UA_TYPES_ATTRIBUTEOPERAND = 118;
+  UA_TYPES_ATTRIBUTEOPERAND = 117;
 
 (**
  * SimpleAttributeOperand
@@ -1779,7 +1750,7 @@ type
   PUA_SimpleAttributeOperand = ^UA_SimpleAttributeOperand;
 
 const
-  UA_TYPES_SIMPLEATTRIBUTEOPERAND = 119;
+  UA_TYPES_SIMPLEATTRIBUTEOPERAND = 118;
 
 (**
  * ContentFilterElementResult
@@ -1796,7 +1767,7 @@ type
   PUA_ContentFilterElementResult = ^UA_ContentFilterElementResult;
 
 const
-  UA_TYPES_CONTENTFILTERELEMENTRESULT = 120;
+  UA_TYPES_CONTENTFILTERELEMENTRESULT = 119;
 
 (**
  * ContentFilterResult
@@ -1812,7 +1783,7 @@ type
   PUA_ContentFilterResult = ^UA_ContentFilterResult;
 
 const
-  UA_TYPES_CONTENTFILTERRESULT = 121;
+  UA_TYPES_CONTENTFILTERRESULT = 120;
 
 (**
  * TimestampsToReturn
@@ -1828,10 +1799,10 @@ type
     __UA_TIMESTAMPSTORETURN_FORCE32BIT = $7fffffff
   );
   PUA_TimestampsToReturn = ^UA_TimestampsToReturn;
-  {$IF sizeof(UA_TimestampsToReturn) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_TimestampsToReturn) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_TIMESTAMPSTORETURN = 122;
+  UA_TYPES_TIMESTAMPSTORETURN = 121;
 
 (**
  * ReadValueId
@@ -1847,7 +1818,7 @@ type
   PUA_ReadValueId = ^UA_ReadValueId;
 
 const
-  UA_TYPES_READVALUEID = 123;
+  UA_TYPES_READVALUEID = 122;
 
 (**
  * ReadRequest
@@ -1864,7 +1835,7 @@ type
   PUA_ReadRequest = ^UA_ReadRequest;
 
 const
-  UA_TYPES_READREQUEST = 124;
+  UA_TYPES_READREQUEST = 123;
 
 (**
  * ReadResponse
@@ -1881,7 +1852,7 @@ type
   PUA_ReadResponse = ^UA_ReadResponse;
 
 const
-  UA_TYPES_READRESPONSE = 125;
+  UA_TYPES_READRESPONSE = 124;
 
 (**
  * WriteValue
@@ -1897,7 +1868,7 @@ type
   PUA_WriteValue = ^UA_WriteValue;
 
 const
-  UA_TYPES_WRITEVALUE = 126;
+  UA_TYPES_WRITEVALUE = 125;
 
 (**
  * WriteRequest
@@ -1912,7 +1883,7 @@ type
   PUA_WriteRequest = ^UA_WriteRequest;
 
 const
-  UA_TYPES_WRITEREQUEST = 127;
+  UA_TYPES_WRITEREQUEST = 126;
 
 (**
  * WriteResponse
@@ -1929,7 +1900,7 @@ type
   PUA_WriteResponse = ^UA_WriteResponse;
 
 const
-  UA_TYPES_WRITERESPONSE = 128;
+  UA_TYPES_WRITERESPONSE = 127;
 
 (**
  * CallMethodRequest
@@ -1945,7 +1916,7 @@ type
   PUA_CallMethodRequest = ^UA_CallMethodRequest;
 
 const
-  UA_TYPES_CALLMETHODREQUEST = 129;
+  UA_TYPES_CALLMETHODREQUEST = 128;
 
 (**
  * CallMethodResult
@@ -1964,7 +1935,7 @@ type
   PUA_CallMethodResult = ^UA_CallMethodResult;
 
 const
-  UA_TYPES_CALLMETHODRESULT = 130;
+  UA_TYPES_CALLMETHODRESULT = 129;
 
 (**
  * CallRequest
@@ -1979,7 +1950,7 @@ type
   PUA_CallRequest = ^UA_CallRequest;
 
 const
-  UA_TYPES_CALLREQUEST = 131;
+  UA_TYPES_CALLREQUEST = 130;
 
 (**
  * CallResponse
@@ -1996,7 +1967,7 @@ type
   PUA_CallResponse = ^UA_CallResponse;
 
 const
-  UA_TYPES_CALLRESPONSE = 132;
+  UA_TYPES_CALLRESPONSE = 131;
 
 (**
  * MonitoringMode
@@ -2010,10 +1981,10 @@ type
     __UA_MONITORINGMODE_FORCE32BIT = $7fffffff
   );
   PUA_MonitoringMode = ^UA_MonitoringMode;
-  {$IF sizeof(UA_MonitoringMode) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_MonitoringMode) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_MONITORINGMODE = 133;
+  UA_TYPES_MONITORINGMODE = 132;
 
 (**
  * DataChangeTrigger
@@ -2027,10 +1998,10 @@ type
     __UA_DATACHANGETRIGGER_FORCE32BIT = $7fffffff
   );
   PUA_DataChangeTrigger = ^UA_DataChangeTrigger;
-  {$IF sizeof(UA_DataChangeTrigger) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_DataChangeTrigger) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_DATACHANGETRIGGER = 134;
+  UA_TYPES_DATACHANGETRIGGER = 133;
 
 (**
  * DeadbandType
@@ -2044,10 +2015,10 @@ type
     __UA_DEADBANDTYPE_FORCE32BIT = $7fffffff
   );
   PUA_DeadbandType = ^UA_DeadbandType;
-  {$IF sizeof(UA_DeadbandType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_DeadbandType) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_DEADBANDTYPE = 135;
+  UA_TYPES_DEADBANDTYPE = 134;
 
 (**
  * DataChangeFilter
@@ -2062,7 +2033,7 @@ type
   PUA_DataChangeFilter = ^UA_DataChangeFilter;
 
 const
-  UA_TYPES_DATACHANGEFILTER = 136;
+  UA_TYPES_DATACHANGEFILTER = 135;
 
 (**
  * EventFilter
@@ -2077,7 +2048,7 @@ type
   PUA_EventFilter = ^UA_EventFilter;
 
 const
-  UA_TYPES_EVENTFILTER = 137;
+  UA_TYPES_EVENTFILTER = 136;
 
 (**
  * AggregateConfiguration
@@ -2094,7 +2065,7 @@ type
   PUA_AggregateConfiguration = ^UA_AggregateConfiguration;
 
 const
-  UA_TYPES_AGGREGATECONFIGURATION = 138;
+  UA_TYPES_AGGREGATECONFIGURATION = 137;
 
 (**
  * AggregateFilter
@@ -2110,7 +2081,7 @@ type
   PUA_AggregateFilter = ^UA_AggregateFilter;
 
 const
-  UA_TYPES_AGGREGATEFILTER = 139;
+  UA_TYPES_AGGREGATEFILTER = 138;
 
 (**
  * EventFilterResult
@@ -2127,7 +2098,7 @@ type
   PUA_EventFilterResult = ^UA_EventFilterResult;
 
 const
-  UA_TYPES_EVENTFILTERRESULT = 140;
+  UA_TYPES_EVENTFILTERRESULT = 139;
 
 (**
  * MonitoringParameters
@@ -2144,7 +2115,7 @@ type
   PUA_MonitoringParameters = ^UA_MonitoringParameters;
 
 const
-  UA_TYPES_MONITORINGPARAMETERS = 141;
+  UA_TYPES_MONITORINGPARAMETERS = 140;
 
 (**
  * MonitoredItemCreateRequest
@@ -2159,7 +2130,7 @@ type
   PUA_MonitoredItemCreateRequest = ^UA_MonitoredItemCreateRequest;
 
 const
-  UA_TYPES_MONITOREDITEMCREATEREQUEST = 142;
+  UA_TYPES_MONITOREDITEMCREATEREQUEST = 141;
 
 (**
  * MonitoredItemCreateResult
@@ -2176,7 +2147,7 @@ type
   PUA_MonitoredItemCreateResult = ^UA_MonitoredItemCreateResult;
 
 const
-  UA_TYPES_MONITOREDITEMCREATERESULT = 143;
+  UA_TYPES_MONITOREDITEMCREATERESULT = 142;
 
 (**
  * CreateMonitoredItemsRequest
@@ -2193,7 +2164,7 @@ type
   PUA_CreateMonitoredItemsRequest = ^UA_CreateMonitoredItemsRequest;
 
 const
-  UA_TYPES_CREATEMONITOREDITEMSREQUEST = 144;
+  UA_TYPES_CREATEMONITOREDITEMSREQUEST = 143;
 
 (**
  * CreateMonitoredItemsResponse
@@ -2210,7 +2181,7 @@ type
   PUA_CreateMonitoredItemsResponse = ^UA_CreateMonitoredItemsResponse;
 
 const
-  UA_TYPES_CREATEMONITOREDITEMSRESPONSE = 145;
+  UA_TYPES_CREATEMONITOREDITEMSRESPONSE = 144;
 
 (**
  * MonitoredItemModifyRequest
@@ -2224,7 +2195,7 @@ type
   PUA_MonitoredItemModifyRequest = ^UA_MonitoredItemModifyRequest;
 
 const
-  UA_TYPES_MONITOREDITEMMODIFYREQUEST = 146;
+  UA_TYPES_MONITOREDITEMMODIFYREQUEST = 145;
 
 (**
  * MonitoredItemModifyResult
@@ -2240,7 +2211,7 @@ type
   PUA_MonitoredItemModifyResult = ^UA_MonitoredItemModifyResult;
 
 const
-  UA_TYPES_MONITOREDITEMMODIFYRESULT = 147;
+  UA_TYPES_MONITOREDITEMMODIFYRESULT = 146;
 
 (**
  * ModifyMonitoredItemsRequest
@@ -2257,7 +2228,7 @@ type
   PUA_ModifyMonitoredItemsRequest = ^UA_ModifyMonitoredItemsRequest;
 
 const
-  UA_TYPES_MODIFYMONITOREDITEMSREQUEST = 148;
+  UA_TYPES_MODIFYMONITOREDITEMSREQUEST = 147;
 
 (**
  * ModifyMonitoredItemsResponse
@@ -2274,7 +2245,7 @@ type
   PUA_ModifyMonitoredItemsResponse = ^UA_ModifyMonitoredItemsResponse;
 
 const
-  UA_TYPES_MODIFYMONITOREDITEMSRESPONSE = 149;
+  UA_TYPES_MODIFYMONITOREDITEMSRESPONSE = 148;
 
 (**
  * SetMonitoringModeRequest
@@ -2291,7 +2262,7 @@ type
   PUA_SetMonitoringModeRequest = ^UA_SetMonitoringModeRequest;
 
 const
-  UA_TYPES_SETMONITORINGMODEREQUEST = 150;
+  UA_TYPES_SETMONITORINGMODEREQUEST = 149;
 
 (**
  * SetMonitoringModeResponse
@@ -2308,7 +2279,7 @@ type
   PUA_SetMonitoringModeResponse = ^UA_SetMonitoringModeResponse;
 
 const
-  UA_TYPES_SETMONITORINGMODERESPONSE = 151;
+  UA_TYPES_SETMONITORINGMODERESPONSE = 150;
 
 (**
  * SetTriggeringRequest
@@ -2327,7 +2298,7 @@ type
   PUA_SetTriggeringRequest = ^UA_SetTriggeringRequest;
 
 const
-  UA_TYPES_SETTRIGGERINGREQUEST = 152;
+  UA_TYPES_SETTRIGGERINGREQUEST = 151;
 
 (**
  * SetTriggeringResponse
@@ -2348,7 +2319,7 @@ type
   PUA_SetTriggeringResponse = ^UA_SetTriggeringResponse;
 
 const
-  UA_TYPES_SETTRIGGERINGRESPONSE = 153;
+  UA_TYPES_SETTRIGGERINGRESPONSE = 152;
 
 (**
  * DeleteMonitoredItemsRequest
@@ -2364,7 +2335,7 @@ type
   PUA_DeleteMonitoredItemsRequest = ^UA_DeleteMonitoredItemsRequest;
 
 const
-  UA_TYPES_DELETEMONITOREDITEMSREQUEST = 154;
+  UA_TYPES_DELETEMONITOREDITEMSREQUEST = 153;
 
 (**
  * DeleteMonitoredItemsResponse
@@ -2381,7 +2352,7 @@ type
   PUA_DeleteMonitoredItemsResponse = ^UA_DeleteMonitoredItemsResponse;
 
 const
-  UA_TYPES_DELETEMONITOREDITEMSRESPONSE = 155;
+  UA_TYPES_DELETEMONITOREDITEMSRESPONSE = 154;
 
 (**
  * CreateSubscriptionRequest
@@ -2400,7 +2371,7 @@ type
   PUA_CreateSubscriptionRequest = ^UA_CreateSubscriptionRequest;
 
 const
-  UA_TYPES_CREATESUBSCRIPTIONREQUEST = 156;
+  UA_TYPES_CREATESUBSCRIPTIONREQUEST = 155;
 
 (**
  * CreateSubscriptionResponse
@@ -2417,7 +2388,7 @@ type
   PUA_CreateSubscriptionResponse = ^UA_CreateSubscriptionResponse;
 
 const
-  UA_TYPES_CREATESUBSCRIPTIONRESPONSE = 157;
+  UA_TYPES_CREATESUBSCRIPTIONRESPONSE = 156;
 
 (**
  * ModifySubscriptionRequest
@@ -2436,7 +2407,7 @@ type
   PUA_ModifySubscriptionRequest = ^UA_ModifySubscriptionRequest;
 
 const
-  UA_TYPES_MODIFYSUBSCRIPTIONREQUEST = 158;
+  UA_TYPES_MODIFYSUBSCRIPTIONREQUEST = 157;
 
 (**
  * ModifySubscriptionResponse
@@ -2452,7 +2423,7 @@ type
   PUA_ModifySubscriptionResponse = ^UA_ModifySubscriptionResponse;
 
 const
-  UA_TYPES_MODIFYSUBSCRIPTIONRESPONSE = 159;
+  UA_TYPES_MODIFYSUBSCRIPTIONRESPONSE = 158;
 
 (**
  * SetPublishingModeRequest
@@ -2468,7 +2439,7 @@ type
   PUA_SetPublishingModeRequest = ^UA_SetPublishingModeRequest;
 
 const
-  UA_TYPES_SETPUBLISHINGMODEREQUEST = 160;
+  UA_TYPES_SETPUBLISHINGMODEREQUEST = 159;
 
 (**
  * SetPublishingModeResponse
@@ -2485,7 +2456,7 @@ type
   PUA_SetPublishingModeResponse = ^UA_SetPublishingModeResponse;
 
 const
-  UA_TYPES_SETPUBLISHINGMODERESPONSE = 161;
+  UA_TYPES_SETPUBLISHINGMODERESPONSE = 160;
 
 (**
  * NotificationMessage
@@ -2501,7 +2472,7 @@ type
   PUA_NotificationMessage = ^UA_NotificationMessage;
 
 const
-  UA_TYPES_NOTIFICATIONMESSAGE = 162;
+  UA_TYPES_NOTIFICATIONMESSAGE = 161;
 
 (**
  * MonitoredItemNotification
@@ -2515,7 +2486,7 @@ type
   PUA_MonitoredItemNotification = ^UA_MonitoredItemNotification;
 
 const
-  UA_TYPES_MONITOREDITEMNOTIFICATION = 163;
+  UA_TYPES_MONITOREDITEMNOTIFICATION = 162;
 
 (**
  * EventFieldList
@@ -2530,7 +2501,7 @@ type
   PUA_EventFieldList = ^UA_EventFieldList;
 
 const
-  UA_TYPES_EVENTFIELDLIST = 164;
+  UA_TYPES_EVENTFIELDLIST = 163;
 
 (**
  * StatusChangeNotification
@@ -2544,7 +2515,7 @@ type
   PUA_StatusChangeNotification = ^UA_StatusChangeNotification;
 
 const
-  UA_TYPES_STATUSCHANGENOTIFICATION = 165;
+  UA_TYPES_STATUSCHANGENOTIFICATION = 164;
 
 (**
  * SubscriptionAcknowledgement
@@ -2558,7 +2529,7 @@ type
   PUA_SubscriptionAcknowledgement = ^UA_SubscriptionAcknowledgement;
 
 const
-  UA_TYPES_SUBSCRIPTIONACKNOWLEDGEMENT = 166;
+  UA_TYPES_SUBSCRIPTIONACKNOWLEDGEMENT = 165;
 
 (**
  * PublishRequest
@@ -2573,7 +2544,7 @@ type
   PUA_PublishRequest = ^UA_PublishRequest;
 
 const
-  UA_TYPES_PUBLISHREQUEST = 167;
+  UA_TYPES_PUBLISHREQUEST = 166;
 
 (**
  * PublishResponse
@@ -2595,7 +2566,7 @@ type
   PUA_PublishResponse = ^UA_PublishResponse;
 
 const
-  UA_TYPES_PUBLISHRESPONSE = 168;
+  UA_TYPES_PUBLISHRESPONSE = 167;
 
 (**
  * RepublishRequest
@@ -2610,7 +2581,7 @@ type
   PUA_RepublishRequest = ^UA_RepublishRequest;
 
 const
-  UA_TYPES_REPUBLISHREQUEST = 169;
+  UA_TYPES_REPUBLISHREQUEST = 168;
 
 (**
  * RepublishResponse
@@ -2624,7 +2595,7 @@ type
   PUA_RepublishResponse = ^UA_RepublishResponse;
 
 const
-  UA_TYPES_REPUBLISHRESPONSE = 170;
+  UA_TYPES_REPUBLISHRESPONSE = 169;
 
 (**
  * TransferResult
@@ -2639,7 +2610,7 @@ type
   PUA_TransferResult = ^UA_TransferResult;
 
 const
-  UA_TYPES_TRANSFERRESULT = 171;
+  UA_TYPES_TRANSFERRESULT = 170;
 
 (**
  * TransferSubscriptionsRequest
@@ -2655,7 +2626,7 @@ type
   PUA_TransferSubscriptionsRequest = ^UA_TransferSubscriptionsRequest;
 
 const
-  UA_TYPES_TRANSFERSUBSCRIPTIONSREQUEST = 172;
+  UA_TYPES_TRANSFERSUBSCRIPTIONSREQUEST = 171;
 
 (**
  * TransferSubscriptionsResponse
@@ -2672,7 +2643,7 @@ type
   PUA_TransferSubscriptionsResponse = ^UA_TransferSubscriptionsResponse;
 
 const
-  UA_TYPES_TRANSFERSUBSCRIPTIONSRESPONSE = 173;
+  UA_TYPES_TRANSFERSUBSCRIPTIONSRESPONSE = 172;
 
 (**
  * DeleteSubscriptionsRequest
@@ -2687,7 +2658,7 @@ type
   PUA_DeleteSubscriptionsRequest = ^UA_DeleteSubscriptionsRequest;
 
 const
-  UA_TYPES_DELETESUBSCRIPTIONSREQUEST = 174;
+  UA_TYPES_DELETESUBSCRIPTIONSREQUEST = 173;
 
 (**
  * DeleteSubscriptionsResponse
@@ -2704,7 +2675,7 @@ type
   PUA_DeleteSubscriptionsResponse = ^UA_DeleteSubscriptionsResponse;
 
 const
-  UA_TYPES_DELETESUBSCRIPTIONSRESPONSE = 175;
+  UA_TYPES_DELETESUBSCRIPTIONSRESPONSE = 174;
 
 (**
  * BuildInfo
@@ -2722,7 +2693,7 @@ type
   PUA_BuildInfo = ^UA_BuildInfo;
 
 const
-  UA_TYPES_BUILDINFO = 176;
+  UA_TYPES_BUILDINFO = 175;
 
 (**
  * RedundancySupport
@@ -2739,10 +2710,10 @@ type
     __UA_REDUNDANCYSUPPORT_FORCE32BIT = $7fffffff
   );
   PUA_RedundancySupport = ^UA_RedundancySupport;
-  {$IF sizeof(UA_RedundancySupport) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_RedundancySupport) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_REDUNDANCYSUPPORT = 177;
+  UA_TYPES_REDUNDANCYSUPPORT = 176;
 
 (**
  * ServerState
@@ -2761,10 +2732,10 @@ type
     __UA_SERVERSTATE_FORCE32BIT = $7fffffff
   );
   PUA_ServerState = ^UA_ServerState;
-  {$IF sizeof(UA_ServerState) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_ServerState) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_SERVERSTATE = 178;
+  UA_TYPES_SERVERSTATE = 177;
 
 (**
  * ServerDiagnosticsSummaryDataType
@@ -2788,7 +2759,7 @@ type
   PUA_ServerDiagnosticsSummaryDataType = ^UA_ServerDiagnosticsSummaryDataType;
 
 const
-  UA_TYPES_SERVERDIAGNOSTICSSUMMARYDATATYPE = 179;
+  UA_TYPES_SERVERDIAGNOSTICSSUMMARYDATATYPE = 178;
 
 (**
  * ServerStatusDataType
@@ -2806,7 +2777,7 @@ type
   PUA_ServerStatusDataType = ^UA_ServerStatusDataType;
 
 const
-  UA_TYPES_SERVERSTATUSDATATYPE = 180;
+  UA_TYPES_SERVERSTATUSDATATYPE = 179;
 
 (**
  * Range
@@ -2820,7 +2791,7 @@ type
   PUA_Range = ^UA_Range;
 
 const
-  UA_TYPES_RANGE = 181;
+  UA_TYPES_RANGE = 180;
 
 (**
  * EUInformation
@@ -2836,7 +2807,7 @@ type
   PUA_EUInformation = ^UA_EUInformation;
 
 const
-  UA_TYPES_EUINFORMATION = 182;
+  UA_TYPES_EUINFORMATION = 181;
 
 (**
  * AxisScaleEnumeration
@@ -2850,10 +2821,10 @@ type
     __UA_AXISSCALEENUMERATION_FORCE32BIT = $7fffffff
   );
   PUA_AxisScaleEnumeration = ^UA_AxisScaleEnumeration;
-  {$IF sizeof(UA_AxisScaleEnumeration) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
+  {$IF SizeOf(UA_AxisScaleEnumeration) <> SizeOf(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_AXISSCALEENUMERATION = 183;
+  UA_TYPES_AXISSCALEENUMERATION = 182;
 
 (**
  * ComplexNumberType
@@ -2867,7 +2838,7 @@ type
   PUA_ComplexNumberType = ^UA_ComplexNumberType;
 
 const
-  UA_TYPES_COMPLEXNUMBERTYPE = 184;
+  UA_TYPES_COMPLEXNUMBERTYPE = 183;
 
 (**
  * DoubleComplexNumberType
@@ -2881,7 +2852,7 @@ type
   PUA_DoubleComplexNumberType = ^UA_DoubleComplexNumberType;
 
 const
-  UA_TYPES_DOUBLECOMPLEXNUMBERTYPE = 185;
+  UA_TYPES_DOUBLECOMPLEXNUMBERTYPE = 184;
 
 (**
  * AxisInformation
@@ -2899,7 +2870,7 @@ type
   PUA_AxisInformation = ^UA_AxisInformation;
 
 const
-  UA_TYPES_AXISINFORMATION = 186;
+  UA_TYPES_AXISINFORMATION = 185;
 
 (**
  * XVType
@@ -2913,7 +2884,7 @@ type
   PUA_XVType = ^UA_XVType;
 
 const
-  UA_TYPES_XVTYPE = 187;
+  UA_TYPES_XVTYPE = 186;
 
 (**
  * EnumDefinition
@@ -2927,7 +2898,7 @@ type
   PUA_EnumDefinition = ^UA_EnumDefinition;
 
 const
-  UA_TYPES_ENUMDEFINITION = 188;
+  UA_TYPES_ENUMDEFINITION = 187;
 
 (**
  * DataChangeNotification
@@ -2943,7 +2914,7 @@ type
   PUA_DataChangeNotification = ^UA_DataChangeNotification;
 
 const
-  UA_TYPES_DATACHANGENOTIFICATION = 189;
+  UA_TYPES_DATACHANGENOTIFICATION = 188;
 
 (**
  * EventNotificationList
@@ -2957,4 +2928,4 @@ type
   PUA_EventNotificationList = ^UA_EventNotificationList;
 
 const
-  UA_TYPES_EVENTNOTIFICATIONLIST = 190;
+  UA_TYPES_EVENTNOTIFICATIONLIST = 189;
