@@ -1,3 +1,4 @@
+{$CODEPAGE UTF8}
 unit TestOpcUa1;
 
 {$IFDEF FPC}
