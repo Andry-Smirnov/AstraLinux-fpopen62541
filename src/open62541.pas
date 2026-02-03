@@ -64,7 +64,7 @@ unit open62541;
 // Use open62541 v1.5
 { $DEFINE UA_VER1_5}
 // Use open62541 v1.4
-{ $DEFINE UA_VER1_4}
+{$DEFINE UA_VER1_4}
 // Use open62541 v1.3
 { $DEFINE UA_VER1_3}
 {$IFNDEF UA_VER1_5}
@@ -92,6 +92,7 @@ interface
 const
 
 {$IFDEF UNIX}
+(*
   {$IFDEF UA_VER1_5}
   libopen62541 = 'libopen62541.so.1.5';
   {$ENDIF}
@@ -102,29 +103,42 @@ const
   libopen62541 = 'libopen62541.so.1.3';
   {$ENDIF}
   {$IFDEF UA_VER1_2}
-  //libopen62541 = 'libopen62541.so.1.2';
-  libopen62541 = 'libopen62541.so';
+  libopen62541 = 'libopen62541.so.1.2';
   {$ENDIF}
-//  libopen62541 = 'libopen62541.so';
+*)
+  libopen62541 = 'libopen62541.so';
 {$ELSE}
+(*
+  {$IFDEF UA_VER1_5}
+  libopen62541 = 'libopen62541.1.5.dll';
+  {$ENDIF}
+  {$IFDEF UA_VER1_4}
+  libopen62541 = 'libopen62541.1.4.dll';
+  {$ENDIF}
+  {$IFDEF UA_VER1_3}
+  libopen62541 = 'libopen62541.1.3.dll';
+  {$ENDIF}
+  {$IFDEF UA_VER1_2}
+  libopen62541 = 'libopen62541.1.2.dll';
+  {$ENDIF}
+*)
   // GCC libgcc_s_sjlj-1.dll and libwinpthread-1.dll are also required
   //  they can be downloaded from packages at http://win-builds.org/1.5.0/packages/windows_32/
-  libopen62541 = 'libopen62541.dll';
+  libopen62541 = 's';//'libopen62541.dll';
 {$ENDIF}
 
 // Library version
 {$IFDEF UA_VER1_5}
   UA_VER = 1.5;
-{$ELSE}
-  {$IFDEF UA_VER1_4}
+{$ENDIF}
+{$IFDEF UA_VER1_4}
   UA_VER = 1.4;
-  {$ELSE}
-    {$IFDEF UA_VER1_3}
+{$ENDIF}
+{$IFDEF UA_VER1_3}
   UA_VER = 1.3;
-    {$ELSE}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
   UA_VER = 1.2;
-    {$ENDIF}
-  {$ENDIF}
 {$ENDIF}
 
 
@@ -144,13 +158,13 @@ type
 
   // --- types.h ---
 
-  UA_Boolean = bytebool;
+  UA_Boolean = ByteBool;
   PUA_Boolean = ^UA_Boolean;
   
   UA_Byte = Byte;       
   PUA_Byte = ^UA_Byte;
   
-  UA_Int16 = Smallint;  
+  UA_Int16 = SmallInt;  
   PUA_Int16 = ^UA_Int16;
   
   UA_UInt16 = Word;     
@@ -168,10 +182,10 @@ type
   UA_UInt64 = UInt64;   
   PUA_UInt64 = ^UA_UInt64;
   
-  UA_Float = single;    
+  UA_Float = Single;    
   PUA_Float = ^UA_Float;
   
-  UA_Double = double;   
+  UA_Double = Double;   
   PUA_Double = ^UA_Double;
 
 
@@ -274,12 +288,12 @@ type
     namespaceIndex: UA_UInt16;
     identifierType: UA_NodeIdType;
     identifier: record
-        case longint of
-          0: ( numeric: UA_UInt32 );
-          1: ( _string: UA_String );
-          2: ( guid: UA_Guid );
-          3: ( byteString: UA_ByteString );
-        end;
+      case longint of
+        0: ( numeric: UA_UInt32 );
+        1: ( _string: UA_String );
+        2: ( guid: UA_Guid );
+        3: ( byteString: UA_ByteString );
+      end;
   end;
   PUA_NodeId = ^UA_NodeId;
 
@@ -306,8 +320,8 @@ type
   //
   // Human readable text with an optional locale identifier.
   UA_LocalizedText = record
-      locale: UA_String;
-      text: UA_String;
+    locale: UA_String;
+    text: UA_String;
   end;
   PUA_LocalizedText = ^UA_LocalizedText;
 
@@ -316,8 +330,8 @@ type
   // NumericRanges are used to indicate subsets of a (multidimensional) array.
   // They no official data type in the OPC UA standard and are transmitted only
   // with a string encoding, such as "1:2,0:3,5". The colon separates min/max
-  // index and the comma separates dimensions. A single value indicates a range
-  // with a single element (min==max). *)
+  // index and the comma separates dimensions. A Single value indicates a range
+  // with a Single element (min==max). *)
   UA_NumericRangeDimension = record
     min: UA_UInt32;
     max: UA_UInt32;
@@ -392,18 +406,21 @@ type
 
   UA_ExtensionObject = record
     encoding: UA_ExtensionObjectEncoding;
-    content:  record
-                case LongInt of
-                  0 : ( encoded: record
-                          typeId: UA_NodeId;   // The nodeid of the datatype
-                          body: UA_ByteString; // The bytestring of the encoded data
-                        end );
-                  1 : ( decoded: record
-                          _type: PUA_DataType;
-                          data: Pointer;
-                        end );
-                end;
-              end;
+    content: record
+      case LongInt of
+        0:  ( encoded: record
+              // The nodeid of the datatype
+              typeId: UA_NodeId;
+              // The bytestring of the encoded data
+              body: UA_ByteString;
+            end
+            );
+        1:  ( decoded: record
+              _type: PUA_DataType;
+              data: Pointer;
+            end );
+      end;
+    end;
   PUA_ExtensionObject = ^UA_ExtensionObject;
 
   // DataValue
@@ -456,19 +473,64 @@ type
   // type operations as static inline functions.
 
 
-//TODO: RELEASE 1.5
+//TODO: RELEASE 1.4 and 1.5
+{$IFDEF UA_VER1_5}
+  UA_DataTypeMember = bitpacked record
+    {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
+    // Human-readable member name
+    memberName: PAnsiChar;
+    {$ENDIF}
+    // The member data type description
+    memberType: PUA_DataType;
+    // How much padding is there before this member element? For arrays this is
+    // the padding before the size_t length member.
+    // (No padding between size_t and the following ptr.) For unions,
+    // the padding includes the size of the switchfield (the offset from
+    // the start of the union type).
+    padding: 0..63;
+    // The member is an array
+    isArray: 0..1;
+    // The member is an optional field
+    isOptional: 0..1;
+  end;
+{$IFEND}
+{$IFDEF UA_VER1_4}
+  UA_DataTypeMember = bitpacked record
+    {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
+    // Human-readable member name
+    memberName: PAnsiChar;
+    {$ENDIF}
+    // The member data type description
+    memberType: PUA_DataType;
+    // How much padding is there before this member element? For arrays this is
+    // the padding before the size_t length member.
+    // (No padding between size_t and the following ptr.) For unions,
+    // the padding includes the size of the switchfield (the offset from
+    // the start of the union type).
+    padding: 0..63;
+    // The member is an array
+    isArray: 0..1;
+    // The member is an optional field
+    isOptional: 0..1;
+  end;
+{$ENDIF}
 {$IFDEF UA_VER1_3}
   UA_DataTypeMember = bitpacked record
     {$IFDEF UA_ENABLE_TYPEDESCRIPTION}
     memberName: PAnsiChar;
     {$ENDIF}
+    // The member data type description
     memberType: PUA_DataType;
-    padding: 0..63;               // How much padding is there before this member element?
-                                  // For arrays this is the
-                                  // padding before the size_t length member. 
-                                  // (No padding between size_t and the following ptr.)
-    isArray: 0..1;                // The member is an array
-    isOptional: 0..1;             // The member is an optional field
+    // How much padding is there before this member element?
+    // For arrays this is the
+    // padding before the size_t length member.
+    // (No padding between size_t and the following ptr.)
+    padding: 0..63;
+    // The member is an array
+    isArray: 0..1;
+    // The member is an optional field
+    isOptional: 0..1;
+(*
     fill: UA_Byte;
     fill1: UA_Byte;
     fill2: UA_Byte;
@@ -477,8 +539,10 @@ type
                                     // types from custom namespace may contain
                                     // members from the same namespace or
                                     // namespace zero only.
+*)
   end;
-{$ELSE}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
   UA_DataTypeMember = record
     memberTypeIndex: UA_UInt16;   // Index of the member in the array of data types
     padding: UA_Byte;             (* How much padding is there before this
@@ -592,16 +656,16 @@ type
   // --- types_generated.h ---
 
 {$IFDEF UA_VER1_5}
-  {$I types_generated_1_5.inc}
+  {$I types/generated_1_5.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_4}
-  {$I types_generated_1_4.inc}
+  {$I types/generated_1_4.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_3}
-  {$I types_generated_1_3.inc}
+  {$I types/generated_1_3.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_2}
-  {$I types_generated_1_2.inc}
+  {$I types/generated_1_2.inc}
 {$ENDIF}
 
 
@@ -1088,31 +1152,31 @@ const
 
   // --- statuscodes.h ---
 {$IFDEF UA_VER1_5}
-  {$I statuscodes_1_5.inc}
+  {$I const/statuscodes_1_5.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_4}
-  {$I statuscodes_1_4.inc}
+  {$I const/statuscodes_1_4.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_3}
-  {$I statuscodes_1_3.inc}
+  {$I const/statuscodes_1_3.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_2}
-  {$I statuscodes_1_2.inc}
+  {$I const/statuscodes_1_2.inc}
 {$ENDIF}
 
 
   // --- nodeids.h ---
 {$IFDEF UA_VER1_5}
-  {$I nodeids_1_5.inc}
+  {$I const/nodeids_1_5.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_4}
-  {$I nodeids_1_4.inc}
+  {$I const/nodeids_1_4.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_3}
-  {$I nodeids_1_3.inc}
+  {$I const/nodeids_1_3.inc}
 {$ENDIF}
 {$IFDEF UA_VER1_2}
-  {$I nodeids_1_2.inc}
+  {$I const/nodeids_1_2.inc}
 {$ENDIF}
 
 
@@ -1433,7 +1497,7 @@ function UA_Client_Subscriptions_create(client: PUA_Client;
   deleteCallback: UA_Client_DeleteSubscriptionCallback): UA_CreateSubscriptionResponse; cdecl; external libopen62541;
 function UA_Client_Subscriptions_delete(client: PUA_Client;
   const request: UA_DeleteSubscriptionsRequest): UA_DeleteSubscriptionsResponse; cdecl; external libopen62541;
-// Delete a single subscription
+// Delete a Single subscription
 function UA_Client_Subscriptions_deleteSingle(client: PUA_Client;
   subscriptionId: UA_UInt32): UA_StatusCode; cdecl; external libopen62541;
 
@@ -1490,7 +1554,7 @@ function UA_Server_run(server: PUA_Server; running: PUA_Boolean): UA_StatusCode;
 
 // The prologue part of UA_Server_run (no need to use if you call UA_Server_run)
 function UA_Server_run_startup(server: PUA_Server): UA_StatusCode; cdecl; external libopen62541;
-// Executes a single iteration of the server's main loop. *)
+// Executes a Single iteration of the server's main loop. *)
 function UA_Server_run_iterate(server: PUA_Server;
   waitInternal: UA_Boolean): UA_UInt16; cdecl; external libopen62541;
 // The epilogue part of UA_Server_run (no need to use if you call UA_Server_run)
@@ -1572,19 +1636,19 @@ function UA_Variant_hasScalarType(const v: PUA_Variant; const _type: PUA_DataTyp
 // Returns True if the variant contains an array of the given type
 function UA_Variant_hasArrayType(const v: PUA_Variant; const _type: PUA_DataType): Boolean;
 
-function UA_Variant_getFloat(var v: UA_Variant): single;
-function UA_Variant_getDouble(var v: UA_Variant): double;
+function UA_Variant_getFloat(var v: UA_Variant): Single;
+function UA_Variant_getDouble(var v: UA_Variant): Double;
 function UA_Variant_getByte(var v: UA_Variant): Byte;
-function UA_Variant_getSmallint(var v: UA_Variant): Smallint;
+function UA_Variant_getSmallint(var v: UA_Variant): SmallInt;
 function UA_Variant_getInteger(var v: UA_Variant): Integer;
 function UA_Variant_getInt64(var v: UA_Variant): Int64;
 function UA_Variant_getString(var v: UA_Variant): AnsiString; overload;
 function UA_Variant_getString(var v: UA_Variant; arrayIndex: DWord): AnsiString; overload;
-procedure UA_Variant_setBoolean(out v: UA_Variant; b: bytebool);
-procedure UA_Variant_setFloat(out v: UA_Variant; f: single);
-procedure UA_Variant_setDouble(out v: UA_Variant; d: double);
+procedure UA_Variant_setBoolean(out v: UA_Variant; b: ByteBool);
+procedure UA_Variant_setFloat(out v: UA_Variant; f: Single);
+procedure UA_Variant_setDouble(out v: UA_Variant; d: Double);
 procedure UA_Variant_setByte(out v: UA_Variant; i: Byte);
-procedure UA_Variant_setSmallint(out v: UA_Variant; i: Smallint);
+procedure UA_Variant_setSmallint(out v: UA_Variant; i: SmallInt);
 procedure UA_Variant_setUInt16(out v: UA_Variant; i: UInt16);
 procedure UA_Variant_setInteger(out v: UA_Variant; i: Integer);
 procedure UA_Variant_setUInt32(out v: UA_Variant; i: UInt32);
@@ -1659,7 +1723,7 @@ function UA_Client_readValueAttribute(client: PUA_Client;
 function UA_Client_readValueAttribute(client: PUA_Client;
   const nodeId: UA_NodeId; out outValue: Byte): UA_StatusCode; overload;
 function UA_Client_readValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outValue: Smallint): UA_StatusCode; overload;
+  const nodeId: UA_NodeId; out outValue: SmallInt): UA_StatusCode; overload;
 function UA_Client_readValueAttribute(client: PUA_Client;
   const nodeId: UA_NodeId; out outValue: Longint): UA_StatusCode; overload;
 function UA_Client_readValueAttribute(client: PUA_Client;
@@ -1681,7 +1745,7 @@ function UA_Client_writeValueAttribute(client: PUA_Client;
 function UA_Client_writeValueAttribute(client: PUA_Client;
   const nodeId: UA_NodeId; const newValue: Byte): UA_StatusCode; overload;
 function UA_Client_writeValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; const newValue: Smallint): UA_StatusCode; overload;
+  const nodeId: UA_NodeId; const newValue: SmallInt): UA_StatusCode; overload;
 function UA_Client_writeValueAttribute(client: PUA_Client;
   const nodeId: UA_NodeId; const newValue: Longint): UA_StatusCode; overload;
 function UA_Client_writeValueAttribute(client: PUA_Client;
@@ -1973,13 +2037,15 @@ begin
   Result := UA_ByteString(_UA_STRING_ALLOC(chars));
 end;
 
-function _UA_QUALIFIEDNAME(nsIndex: UA_UInt16; var chars: AnsiString): UA_QualifiedName;
+function _UA_QUALIFIEDNAME(nsIndex: UA_UInt16;
+  var chars: AnsiString): UA_QualifiedName;
 begin
   Result.namespaceIndex := nsIndex;
   Result.name := _UA_STRING(chars);
 end;
 
-function _UA_QUALIFIEDNAME_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_QualifiedName;
+function _UA_QUALIFIEDNAME_ALLOC(nsIndex: UA_UInt16;
+  const chars: AnsiString): UA_QualifiedName;
 begin
   Result.namespaceIndex := nsIndex;
   Result.name := _UA_STRING_ALLOC(chars);
@@ -2189,22 +2255,24 @@ begin
   Result := (v^.arrayLength = 0) and (PByte(v^.data) > PByte(UA_EMPTY_ARRAY_SENTINEL));
 end;
 
-function UA_Variant_hasScalarType(const v: PUA_Variant; const _type: PUA_DataType): Boolean;
+function UA_Variant_hasScalarType(const v: PUA_Variant;
+  const _type: PUA_DataType): Boolean;
 begin
   Result := UA_Variant_isScalar(v) and (_type = v^._type);
 end;
 
-function UA_Variant_hasArrayType(const v: PUA_Variant; const _type: PUA_DataType): Boolean;
+function UA_Variant_hasArrayType(const v: PUA_Variant;
+  const _type: PUA_DataType): Boolean;
 begin
   Result := (not UA_Variant_isScalar(v)) and (_type = v^._type);
 end;
 
-function UA_Variant_getFloat(var v: UA_Variant): single;
+function UA_Variant_getFloat(var v: UA_Variant): Single;
 begin
   Result := PUA_Float(v.data)^;
 end;
 
-function UA_Variant_getDouble(var v: UA_Variant): double;
+function UA_Variant_getDouble(var v: UA_Variant): Double;
 begin
   Result := PUA_Double(v.data)^;
 end;
@@ -2214,7 +2282,7 @@ begin
   Result := PUA_Byte(v.data)^;
 end;
 
-function UA_Variant_getSmallint(var v: UA_Variant): Smallint;
+function UA_Variant_getSmallint(var v: UA_Variant): SmallInt;
 begin
   Result := PUA_Int16(v.data)^;
 end;
@@ -2234,7 +2302,8 @@ begin
   SetString(Result, PAnsiChar(PUA_String(v.data)^.data), PUA_String(v.data)^.length);
 end;
 
-function UA_Variant_getString(var v: UA_Variant; arrayIndex: DWord): AnsiString;
+function UA_Variant_getString(var v: UA_Variant;
+  arrayIndex: DWord): AnsiString;
 begin
   if arrayIndex < v.arrayLength then
     SetString(Result, PAnsiChar(PUA_String(v.data)[arrayIndex].data), PUA_String(v.data)[arrayIndex].length)
@@ -2242,17 +2311,17 @@ begin
     Result := '';
 end;
 
-procedure UA_Variant_setBoolean(out v: UA_Variant; b: bytebool);
+procedure UA_Variant_setBoolean(out v: UA_Variant; b: ByteBool);
 begin
   UA_Variant_setScalarCopy(@v, @b, @UA_TYPES[UA_TYPES_BOOLEAN]);
 end;
 
-procedure UA_Variant_setFloat(out v: UA_Variant; f: single);
+procedure UA_Variant_setFloat(out v: UA_Variant; f: Single);
 begin
   UA_Variant_setScalarCopy(@v, @f, @UA_TYPES[UA_TYPES_FLOAT]);
 end;
 
-procedure UA_Variant_setDouble(out v: UA_Variant; d: double);
+procedure UA_Variant_setDouble(out v: UA_Variant; d: Double);
 begin
   UA_Variant_setScalarCopy(@v, @d, @UA_TYPES[UA_TYPES_DOUBLE]);
 end;
@@ -2262,7 +2331,7 @@ begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_BYTE]);
 end;
 
-procedure UA_Variant_setSmallint(out v: UA_Variant; i: Smallint);
+procedure UA_Variant_setSmallint(out v: UA_Variant; i: SmallInt);
 begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_INT16]);
 end;
@@ -2292,7 +2361,8 @@ begin
   UA_Variant_setScalarCopy(@v, @i, @UA_TYPES[UA_TYPES_UINT64]);
 end;
 
-procedure UA_Variant_setString(out v: UA_Variant; const s: AnsiString);
+procedure UA_Variant_setString(out v: UA_Variant;
+  const s: AnsiString);
 var 
   UAStr: UA_STRING;
 begin
@@ -2301,21 +2371,24 @@ begin
   UA_String_clear(UAStr);
 end;
 
-function UA_NODEID_NUMERIC(nsIndex: UA_UInt16; identifier: UA_UInt32): UA_NodeId;
+function UA_NODEID_NUMERIC(nsIndex: UA_UInt16;
+  identifier: UA_UInt32): UA_NodeId;
 begin
   Result.namespaceIndex := nsIndex;
   Result.identifierType := UA_NODEIDTYPE_NUMERIC;
   Result.identifier.numeric := identifier;
 end;
 
-function UA_NODEID_STRING(nsIndex: UA_UInt16; var chars: AnsiString): UA_NodeId;
+function UA_NODEID_STRING(nsIndex: UA_UInt16;
+  var chars: AnsiString): UA_NodeId;
 begin
   Result.namespaceIndex := nsIndex;
   Result.identifierType := UA_NODEIDTYPE_STRING;
   Result.identifier._string := _UA_STRING(chars);
 end;
 
-function UA_NODEID_STRING_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_NodeId;
+function UA_NODEID_STRING_ALLOC(nsIndex: UA_UInt16;
+  const chars: AnsiString): UA_NodeId;
 begin
   Result.namespaceIndex := nsIndex;
   Result.identifierType := UA_NODEIDTYPE_STRING;
@@ -2329,21 +2402,24 @@ begin
   Result.identifier.guid := guid;
 end;
 
-function UA_NODEID_BYTESTRING(nsIndex: UA_UInt16; var chars: AnsiString): UA_NodeId;
+function UA_NODEID_BYTESTRING(nsIndex: UA_UInt16;
+  var chars: AnsiString): UA_NodeId;
 begin
   Result.namespaceIndex := nsIndex;
   Result.identifierType := UA_NODEIDTYPE_BYTESTRING;
   Result.identifier.byteString := _UA_BYTESTRING(chars);
 end;
 
-function UA_NODEID_BYTESTRING_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_NodeId;
+function UA_NODEID_BYTESTRING_ALLOC(nsIndex: UA_UInt16;
+  const chars: AnsiString): UA_NodeId;
 begin
   Result.namespaceIndex := nsIndex;
   Result.identifierType := UA_NODEIDTYPE_BYTESTRING;
   Result.identifier.byteString := _UA_BYTESTRING_ALLOC(chars);
 end;
 
-function UA_EXPANDEDNODEID_NUMERIC(nsIndex: UA_UInt16; identifier: UA_Uint32): UA_ExpandedNodeId;
+function UA_EXPANDEDNODEID_NUMERIC(nsIndex: UA_UInt16;
+  identifier: UA_Uint32): UA_ExpandedNodeId;
 begin
   Result.nodeId:=UA_NODEID_NUMERIC(nsIndex, identifier);
   Result.serverIndex:=0;
@@ -2375,17 +2451,17 @@ begin
   if IdentityToken = nil then
     Result := UA_STATUSCODE_BADOUTOFMEMORY
   else
-  begin
-    IdentityToken^.userName := _UA_STRING_ALLOC(username);
-    IdentityToken^.password := _UA_STRING_ALLOC(password);
-    ClientConfig := UA_Client_getConfig(client);
-    //UA_ExtensionObject_clear()
-    UA_clear(@ClientConfig^.userIdentityToken, @UA_TYPES[UA_TYPES_EXTENSIONOBJECT]);
-    ClientConfig^.userIdentityToken.encoding := UA_EXTENSIONOBJECT_DECODED;
-    ClientConfig^.userIdentityToken.content.decoded._type := @UA_TYPES[UA_TYPES_USERNAMEIDENTITYTOKEN];
-    ClientConfig^.userIdentityToken.content.decoded.data := IdentityToken;
-    Result := UA_Client_connect(client, endpointUrl);
-  end;
+    begin
+      IdentityToken^.userName := _UA_STRING_ALLOC(username);
+      IdentityToken^.password := _UA_STRING_ALLOC(password);
+      ClientConfig := UA_Client_getConfig(client);
+      //UA_ExtensionObject_clear()
+      UA_clear(@ClientConfig^.userIdentityToken, @UA_TYPES[UA_TYPES_EXTENSIONOBJECT]);
+      ClientConfig^.userIdentityToken.encoding := UA_EXTENSIONOBJECT_DECODED;
+      ClientConfig^.userIdentityToken.content.decoded._type := @UA_TYPES[UA_TYPES_USERNAMEIDENTITYTOKEN];
+      ClientConfig^.userIdentityToken.content.decoded.data := IdentityToken;
+      Result := UA_Client_connect(client, endpointUrl);
+    end;
 end;
 
 function UA_Client_Service_read(client: PUA_Client;
@@ -2403,7 +2479,8 @@ begin
 end;
 
 function UA_Client_readValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outValue: UA_Variant): UA_StatusCode; overload;
+  const nodeId: UA_NodeId;
+  out outValue: UA_Variant): UA_StatusCode; overload;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE,
     @outValue, @UA_TYPES[UA_TYPES_VARIANT]);
@@ -2413,7 +2490,8 @@ end;
 // taken from ua_client_highlevel.c: __UA_Client_readAttribute()
 // (use to read subrange of array variable)
 function UA_Client_readValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; const indexRange: AnsiString;
+  const nodeId: UA_NodeId;
+  const indexRange: AnsiString;
   out outValue: UA_Variant): UA_StatusCode; overload;
 var
   Item: UA_ReadValueId;
@@ -2430,29 +2508,29 @@ begin
   Response := UA_Client_Service_read(client, Request);
   Result := Response.responseHeader.serviceResult;
   if Result = UA_STATUSCODE_GOOD then
-  begin
-    if Response.resultsSize = 1 then
-      Result := Response.results[0].status
-    else
-      Result := UA_STATUSCODE_BADUNEXPECTEDERROR;
-  end;
+    begin
+      if Response.resultsSize = 1 then
+        Result := Response.results[0].status
+      else
+        Result := UA_STATUSCODE_BADUNEXPECTEDERROR;
+    end;
 
   if Result = UA_STATUSCODE_GOOD then
-  begin
-    (* Set the StatusCode *)
-    if Response.results^.flag and 2 <> 0 then
-      Result :=  Response.results^.status;
-
-    (* Return early of no value is given *)
-    if Response.results^.flag and 1 <> 0 then
     begin
-      (* Copy value into out *)
-       outValue := Response.results^.value;
-       UA_Variant_init(Response.results^.value);
-    end
-    else
-      Result := UA_STATUSCODE_BADUNEXPECTEDERROR;
-  end;
+      (* Set the StatusCode *)
+      if Response.results^.flag and 2 <> 0 then
+        Result :=  Response.results^.status;
+
+      (* Return early of no value is given *)
+      if Response.results^.flag and 1 <> 0 then
+        begin
+          (* Copy value into out *)
+           outValue := Response.results^.value;
+           UA_Variant_init(Response.results^.value);
+        end
+      else
+        Result := UA_STATUSCODE_BADUNEXPECTEDERROR;
+    end;
 
   UA_clear(@Response, @UA_TYPES[UA_TYPES_READRESPONSE]);
   UA_String_clear(Item.indexRange);
@@ -2460,41 +2538,44 @@ end;
 {$IFDEF FPC} {$WARN 5058 ON : Variable "$1" does not seem to be initialized} {$ENDIF}
 
 function UA_Client_readValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outValue: Byte): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  out outValue: Byte): UA_StatusCode;
 var
   Value: UA_Variant;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE,
     @Value, @UA_TYPES[UA_TYPES_VARIANT]);
   if Result = UA_STATUSCODE_GOOD then
-  begin
-    if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_BYTE]) then
-      outValue:= PUA_Byte(Value.data)^
-    else
-      Result := UA_STATUSCODE_BADTYPEMISMATCH;
-  end;
+    begin
+      if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_BYTE]) then
+        outValue:= PUA_Byte(Value.data)^
+      else
+        Result := UA_STATUSCODE_BADTYPEMISMATCH;
+    end;
   UA_Variant_clear(Value);
 end;
 
 function UA_Client_readValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outValue: Smallint): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  out outValue: SmallInt): UA_StatusCode;
 var
   Value: UA_Variant;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE,
     @Value, @UA_TYPES[UA_TYPES_VARIANT]);
   if Result = UA_STATUSCODE_GOOD then
-  begin
-    if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_INT16]) then
-      outValue:= PUA_Int16(Value.data)^
-    else
-      Result := UA_STATUSCODE_BADTYPEMISMATCH;
-  end;
+    begin
+      if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_INT16]) then
+        outValue:= PUA_Int16(Value.data)^
+      else
+        Result := UA_STATUSCODE_BADTYPEMISMATCH;
+    end;
   UA_Variant_clear(Value);
 end;
 
 function UA_Client_readValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outValue: Longint): UA_StatusCode; overload;
+  const nodeId: UA_NodeId;
+  out outValue: Longint): UA_StatusCode; overload;
 var
   Value: UA_Variant;
 begin
@@ -2502,41 +2583,44 @@ begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE,
     @Value, @UA_TYPES[UA_TYPES_VARIANT]);
   if Result = UA_STATUSCODE_GOOD then
-  begin
-    if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_INT32]) then
-      outValue:= PUA_Int32(Value.data)^
-    else
-      Result := UA_STATUSCODE_BADTYPEMISMATCH;
-  end;
+    begin
+      if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_INT32]) then
+        outValue:= PUA_Int32(Value.data)^
+      else
+        Result := UA_STATUSCODE_BADTYPEMISMATCH;
+    end;
   UA_Variant_clear(Value);
 end;
 
 function UA_Client_readValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outValue: AnsiString): UA_StatusCode; overload;
+  const nodeId: UA_NodeId;
+  out outValue: AnsiString): UA_StatusCode; overload;
 var
   Value: UA_Variant;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUE,
     @Value, @UA_TYPES[UA_TYPES_VARIANT]);
   if Result = UA_STATUSCODE_GOOD then
-  begin
-    if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_STRING]) then
-      SetString(outValue, PAnsiChar(PUA_String(Value.data)^.data), PUA_String(Value.data)^.length)
-    else
-      Result := UA_STATUSCODE_BADTYPEMISMATCH;
-  end;
+    begin
+      if UA_Variant_hasScalarType(@Value, @UA_TYPES[UA_TYPES_STRING]) then
+        SetString(outValue, PAnsiChar(PUA_String(Value.data)^.data), PUA_String(Value.data)^.length)
+      else
+        Result := UA_STATUSCODE_BADTYPEMISMATCH;
+    end;
   UA_Variant_clear(Value);
 end;
 
 function UA_Client_readDataTypeAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outDataType: UA_NodeId): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  out outDataType: UA_NodeId): UA_StatusCode;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_DATATYPE,
     @outDataType, @UA_TYPES[UA_TYPES_NODEID]);
 end;
 
 function UA_Client_readValueRankAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outValueRank: UA_Int32): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  out outValueRank: UA_Int32): UA_StatusCode;
 begin
   // -2:Any; -1:Scalar; 0:OneOrMoreDimensions; 1:OneDimension
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUERANK,
@@ -2544,21 +2628,24 @@ begin
 end;
 
 function UA_Client_readBrowseNameAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outBrowseName: UA_QualifiedName): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  out outBrowseName: UA_QualifiedName): UA_StatusCode;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_BROWSENAME,
     @outBrowseName, @UA_TYPES[UA_TYPES_QUALIFIEDNAME]);
 end;
 
 function UA_Client_readDisplayNameAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outDisplayName: UA_LocalizedText): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  out outDisplayName: UA_LocalizedText): UA_StatusCode;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_DISPLAYNAME,
     @outDisplayName, @UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
 end;
 
 function UA_Client_readDescriptionAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; out outDescription: UA_LocalizedText): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  out outDescription: UA_LocalizedText): UA_StatusCode;
 begin
   Result := __UA_Client_readAttribute(client, @nodeId, UA_ATTRIBUTEID_DESCRIPTION,
     @outDescription, @UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
@@ -2573,7 +2660,8 @@ begin
 end;
 
 function UA_Client_writeValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; const newValue: Byte): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  const newValue: Byte): UA_StatusCode;
 var
   UAVar: UA_Variant;
 begin
@@ -2582,7 +2670,8 @@ begin
 end;
 
 function UA_Client_writeValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; const newValue: Smallint): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  const newValue: SmallInt): UA_StatusCode;
 var
   UAVar: UA_Variant;
 begin
@@ -2591,7 +2680,8 @@ begin
 end;
 
 function UA_Client_writeValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; const newValue: Longint): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  const newValue: Longint): UA_StatusCode;
 var
   UAVar: UA_Variant;
 begin
@@ -2600,7 +2690,8 @@ begin
 end;
 
 function UA_Client_writeValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; const newValue: AnsiString): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  const newValue: AnsiString): UA_StatusCode;
 var
   UAVar: UA_Variant;
   UAStr: UA_String;
@@ -2613,7 +2704,8 @@ end;
 
 {$IFDEF FPC} {$WARN 5058 OFF : Variable "$1" does not seem to be initialized} {$ENDIF}
 function UA_Client_writeValueAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; const newValues: array of AnsiString): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  const newValues: array of AnsiString): UA_StatusCode;
 var
   UAVar: UA_Variant;
   UAStr: array of UA_String;
@@ -2638,14 +2730,16 @@ begin
 end;
 
 function UA_Client_writeDataTypeAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; newDataType: PUA_NodeId): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  newDataType: PUA_NodeId): UA_StatusCode;
 begin
   Result := __UA_Client_writeAttribute(client, @nodeId, UA_ATTRIBUTEID_DATATYPE,
     newDataType, @UA_TYPES[UA_TYPES_NODEID]);
 end;
 
 function UA_Client_writeValueRankAttribute(client: PUA_Client;
-  const nodeId: UA_NodeId; const newValueRank: UA_Int32): UA_StatusCode;
+  const nodeId: UA_NodeId;
+  const newValueRank: UA_Int32): UA_StatusCode;
 begin
   Result := __UA_Client_writeAttribute(client, @nodeId, UA_ATTRIBUTEID_VALUERANK,
     @newValueRank, @UA_TYPES[UA_TYPES_INT32]);
@@ -2691,11 +2785,12 @@ end;
 
 (* Creates a new server config with one endpoint.
  *
- * The config will set the tcp network layer to the given port and adds a single
+ * The config will set the tcp network layer to the given port and adds a Single
  * endpoint with the security policy ``SecurityPolicy#None`` to the server. A
  * server certificate may be supplied but is optional. *)
 function UA_ServerConfig_setMinimal(config: PUA_ServerConfig;
-  portNumber: UA_UInt16; const certificate: PUA_ByteString): UA_StatusCode;
+  portNumber: UA_UInt16;
+  const certificate: PUA_ByteString): UA_StatusCode;
 begin
   Result := UA_ServerConfig_setMinimalCustomBuffer(config, portNumber, certificate, 0, 0);
 end;
@@ -2707,7 +2802,8 @@ function UA_Server_addVariableNode(server: PUA_Server;
   const browseName: UA_QualifiedName;
   const typeDefinition: UA_NodeId;
   const attr: UA_VariableAttributes;
-  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
   Result := __UA_Server_addNode(server, UA_NODECLASS_VARIABLE, @requestedNewNodeId,
     @parentNodeId, @referenceTypeId, browseName,
@@ -2722,7 +2818,8 @@ function UA_Server_addObjectTypeNode(server: PUA_Server;
   const referenceTypeId: UA_NodeId;
   const browseName: UA_QualifiedName;
   const attr:UA_ObjectTypeAttributes;
-  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
   Result :=__UA_Server_addNode(server, UA_NODECLASS_OBJECTTYPE, @requestedNewNodeId,
     @parentNodeId, @referenceTypeId, browseName,
@@ -2739,7 +2836,8 @@ function UA_Server_addObjectNode(server: PUA_Server;
   const browseName: UA_QualifiedName;
   const typeDefinition: UA_NodeId;
   const attr:UA_ObjectAttributes;
-  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
   Result :=__UA_Server_addNode(server, UA_NODECLASS_OBJECT, @requestedNewNodeId,
     @parentNodeId, @referenceTypeId, browseName,
@@ -2755,7 +2853,8 @@ function UA_Server_addVariableTypeNode(server: PUA_Server;
   const browseName: UA_QualifiedName;
   const typeDefinition: UA_NodeId;
   const attr:UA_VariableTypeAttributes;
-  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
   Result :=__UA_Server_addNode(server, UA_NODECLASS_VARIABLETYPE,
     @requestedNewNodeId, @parentNodeId, @referenceTypeId,
@@ -2771,7 +2870,8 @@ function UA_Server_addViewNode(server: PUA_Server;
   const referenceTypeId: UA_NodeId;
   const browseName: UA_QualifiedName;
   const attr:UA_ViewAttributes;
-  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
   Result :=__UA_Server_addNode(server, UA_NODECLASS_VIEW, @requestedNewNodeId,
     @parentNodeId, @referenceTypeId, browseName,
@@ -2786,7 +2886,8 @@ function UA_Server_addReferenceTypeNode(server: PUA_Server;
   const referenceTypeId: UA_NodeId;
   const browseName: UA_QualifiedName;
   const attr: UA_ReferenceTypeAttributes;
-  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
   Result :=__UA_Server_addNode(server, UA_NODECLASS_REFERENCETYPE,
     @requestedNewNodeId, @parentNodeId, @referenceTypeId,
@@ -2802,7 +2903,8 @@ function UA_Server_addDataTypeNode(server: PUA_Server;
   const referenceTypeId: UA_NodeId;
   const browseName: UA_QualifiedName;
   const attr:UA_DataTypeAttributes;
-  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
   Result :=__UA_Server_addNode(server, UA_NODECLASS_DATATYPE, @requestedNewNodeId,
     @parentNodeId, @referenceTypeId, browseName,
@@ -2811,21 +2913,27 @@ begin
     nodeContext, outNewNodeId);
 end;
 
-function UA_Server_writeValue(server: PUA_Server; const nodeId: UA_NodeId;
+function UA_Server_writeValue(server: PUA_Server;
+  const nodeId: UA_NodeId;
   const value: UA_Variant): UA_StatusCode;
 begin
   Result := __UA_Server_write(server, @nodeId, UA_ATTRIBUTEID_VALUE,
     @UA_TYPES[UA_TYPES_VARIANT], @value);
 end;
 
-function UA_Server_addMethodNode(server: PUA_Server; const requestedNewNodeId: UA_NodeId;
+function UA_Server_addMethodNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
   const parentNodeId: UA_NodeId;
   const referenceTypeId: UA_NodeId;
   const browseName: UA_QualifiedName;
-  const attr: UA_MethodAttributes; method: UA_MethodCallback;
-  inputArgumentsSize: size_t; const inputArguments: PUA_Argument;
-  outputArgumentsSize: size_t; const outputArguments: PUA_Argument;
-  nodeContext: Pointer; outNewNodeId: PUA_NodeId): UA_StatusCode;
+  const attr: UA_MethodAttributes;
+  method: UA_MethodCallback;
+  inputArgumentsSize: size_t;
+  const inputArguments: PUA_Argument;
+  outputArgumentsSize: size_t;
+  const outputArguments: PUA_Argument;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
 begin
   Result := UA_Server_addMethodNodeEx(server, requestedNewNodeId, parentNodeId,
     referenceTypeId, browseName, attr, method,
