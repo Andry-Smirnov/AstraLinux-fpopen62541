@@ -1,3 +1,4 @@
+{$CODEPAGE UTF8}
 program TestOpcUa;
 
 {$mode objfpc}{$H+}
