@@ -3,6 +3,7 @@
   <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="fpopen62541"/>
+    <Author Value="Lacak &lt;lacak At Sourceforge>"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
@@ -12,59 +13,73 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="13">
+    <Description Value="This allows the open62541 library to be combined and distributed with any proprietary software.
+Only changes to the open62541 library itself need to be licensed under the MPLv2 when copied and distributed.
+The plugins, as well as the server and client examples are in the public domain (CC0 license).
+They can be reused under any license and changes do not have to be published."/>
+    <License Value="open62541 is licensed under the Mozilla Public License v2.0 (MPLv2)."/>
+    <Version Major="1" Minor="3"/>
+    <Files Count="15">
       <Item1>
-        <Filename Value="src/open62541.pas"/>
+        <Filename Value="src\open62541.pas"/>
         <UnitName Value="open62541"/>
       </Item1>
       <Item2>
-        <Filename Value="src/types/generated_1_2.inc"/>
+        <Filename Value="src\open62541_config.h.inc"/>
         <Type Value="Include"/>
       </Item2>
       <Item3>
-        <Filename Value="src/types/generated_1_3.inc"/>
+        <Filename Value="src\open62541_definitions.inc"/>
         <Type Value="Include"/>
       </Item3>
       <Item4>
-        <Filename Value="src/types/generated_1_4.inc"/>
+        <Filename Value="src\types\generated_1_2.inc"/>
         <Type Value="Include"/>
       </Item4>
       <Item5>
-        <Filename Value="src/types/generated_1_5.inc"/>
+        <Filename Value="src\types\generated_1_3.inc"/>
         <Type Value="Include"/>
       </Item5>
       <Item6>
-        <Filename Value="src/const/nodeids_1_2.inc"/>
+        <Filename Value="src\types\generated_1_4.inc"/>
         <Type Value="Include"/>
       </Item6>
       <Item7>
-        <Filename Value="src/const/nodeids_1_3.inc"/>
+        <Filename Value="src\types\generated_1_5.inc"/>
         <Type Value="Include"/>
       </Item7>
       <Item8>
-        <Filename Value="src/const/nodeids_1_4.inc"/>
+        <Filename Value="src\const\nodeids_1_2.inc"/>
         <Type Value="Include"/>
       </Item8>
       <Item9>
-        <Filename Value="src/const/nodeids_1_5.inc"/>
+        <Filename Value="src\const\nodeids_1_3.inc"/>
         <Type Value="Include"/>
       </Item9>
       <Item10>
-        <Filename Value="src/const/statuscodes_1_2.inc"/>
+        <Filename Value="src\const\nodeids_1_4.inc"/>
         <Type Value="Include"/>
       </Item10>
       <Item11>
-        <Filename Value="src/const/statuscodes_1_3.inc"/>
+        <Filename Value="src\const\nodeids_1_5.inc"/>
         <Type Value="Include"/>
       </Item11>
       <Item12>
-        <Filename Value="src/const/statuscodes_1_4.inc"/>
+        <Filename Value="src\const\statuscodes_1_2.inc"/>
         <Type Value="Include"/>
       </Item12>
       <Item13>
-        <Filename Value="src/const/statuscodes_1_5.inc"/>
+        <Filename Value="src\const\statuscodes_1_3.inc"/>
         <Type Value="Include"/>
       </Item13>
+      <Item14>
+        <Filename Value="src\const\statuscodes_1_4.inc"/>
+        <Type Value="Include"/>
+      </Item14>
+      <Item15>
+        <Filename Value="src\const\statuscodes_1_5.inc"/>
+        <Type Value="Include"/>
+      </Item15>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
