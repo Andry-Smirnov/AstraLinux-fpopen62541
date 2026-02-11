@@ -67,42 +67,6 @@ interface
 
 const
 
-{$IFDEF UNIX}
-(*
-  {$IFDEF UA_VER1_5}
-  libopen62541 = 'libopen62541.so.1.5';
-  {$ENDIF}
-  {$IFDEF UA_VER1_4}
-  libopen62541 = 'libopen62541.so.1.4';
-  {$ENDIF}
-  {$IFDEF UA_VER1_3}
-  libopen62541 = 'libopen62541.so.1.3';
-  {$ENDIF}
-  {$IFDEF UA_VER1_2}
-  libopen62541 = 'libopen62541.so.1.2';
-  {$ENDIF}
-*)
-  libopen62541 = 'libopen62541.so';
-{$ELSE}
-(*
-  {$IFDEF UA_VER1_5}
-  libopen62541 = 'libopen62541.1.5.dll';
-  {$ENDIF}
-  {$IFDEF UA_VER1_4}
-  libopen62541 = 'libopen62541.1.4.dll';
-  {$ENDIF}
-  {$IFDEF UA_VER1_3}
-  libopen62541 = 'libopen62541.1.3.dll';
-  {$ENDIF}
-  {$IFDEF UA_VER1_2}
-  libopen62541 = 'libopen62541.1.2.dll';
-  {$ENDIF}
-*)
-  // GCC libgcc_s_sjlj-1.dll and libwinpthread-1.dll are also required
-  //  they can be downloaded from packages at http://win-builds.org/1.5.0/packages/windows_32/
-  libopen62541 = 'libopen62541.dll';
-{$ENDIF}
-
 // Library version
 {$IFDEF UA_VER1_5}
   UA_VER = 1.5;
@@ -1828,10 +1792,11 @@ implementation
 uses
   SysUtils,
 {$IFDEF MSWINDOWS}
-  Windows
+  Windows,
 {$ELSE}
-  DynLibs
+  DynLibs,
 {$ENDIF}
+  open62541_const
   ;
 
 var
