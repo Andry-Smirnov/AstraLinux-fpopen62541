@@ -21,7 +21,7 @@
   UA_STATUSCODE_INFOTYPE_DATAVALUE = $00000400;
   UA_STATUSCODE_INFOBITS_OVERFLOW = $00000080;
 
-  UA_STATUSCODE_GOOD = $00000000; (* "The operation succeeded." *)
+//  UA_STATUSCODE_GOOD = $00000000; (* "The operation succeeded." *)
   UA_STATUSCODE_UNCERTAIN = $40000000; (* "The operation was uncertain." *)
   UA_STATUSCODE_BAD = $80000000; (* "The operation failed." *)
   UA_STATUSCODE_BADUNEXPECTEDERROR = $80010000; (* "An unexpected error occurred." *)
