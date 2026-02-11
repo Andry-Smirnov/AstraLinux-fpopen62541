@@ -8,7 +8,7 @@ unit fpopen62541;
 interface
 
 uses
-  open62541;
+  open62541, open64541_const;
 
 implementation
 
