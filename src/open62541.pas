@@ -124,7 +124,7 @@ const
 *)
   // GCC libgcc_s_sjlj-1.dll and libwinpthread-1.dll are also required
   //  they can be downloaded from packages at http://win-builds.org/1.5.0/packages/windows_32/
-  libopen62541 = 's';//'libopen62541.dll';
+  libopen62541 = 'libopen62541.dll';
 {$ENDIF}
 
 // Library version
