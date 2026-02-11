@@ -44,49 +44,25 @@
  *)
 unit open62541;
 
-{$DEFINE LOAD_DYNAMICALLY}
+
+{$I open62541_definitions.inc}
 
 {$IFDEF FPC}
   {$IFDEF LOAD_DYNAMICALLY}
     {$MODE DELPHI}
+    {$HINT DELPHI MODE SELECTED}
   {$ENDIF}
-  {$PACKENUM 4} // GCC on x86 enums have size of 4 bytes
-  {$PACKRECORDS C}
+{$PACKENUM 4} // GCC on x86 enums have size of 4 bytes
+{$PACKRECORDS C}
 {$ELSE}
-  {$MINENUMSIZE 4}
-  {$ALIGN 4}
+{$MINENUMSIZE 4}
+{$ALIGN 4}
 {$ENDIF}
 {$H+}
 {$POINTERMATH ON}
 
-{$DEFINE ENABLE_SERVER}
-
-// Use open62541 v1.5
-{ $DEFINE UA_VER1_5}
-// Use open62541 v1.4
-{$DEFINE UA_VER1_4}
-// Use open62541 v1.3
-{ $DEFINE UA_VER1_3}
-{$IFNDEF UA_VER1_5}
-  {$IFNDEF UA_VER1_4}
-    {$IFNDEF UA_VER1_3}
-      {$DEFINE UA_VER1_2}
-    {$ENDIF}
-  {$ENDIF}
-{$ENDIF}
-
 
 interface
-
-
-// --- config.h ---
-{$DEFINE UA_ENABLE_METHODCALLS}
-{$DEFINE UA_ENABLE_SUBSCRIPTIONS}
-{$DEFINE UA_ENABLE_STATUSCODE_DESCRIPTIONS}
-{$DEFINE UA_ENABLE_TYPEDESCRIPTION}
-
-// disabled in pre-compiled "libopen62541" library (required for SIGN and SIGN&ENCRYPT)
-{ $DEFINE UA_ENABLE_ENCRYPTION} 
 
 
 const
