@@ -9,8 +9,7 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  TestOpcUa1
-  ;
+  TestOpcUa1;
 
 {$R *.res}
 
