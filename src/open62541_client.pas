@@ -102,6 +102,16 @@ function UA_Client_run_iterate(client: PUA_Client; timeout: UA_UInt32): UA_Statu
 {$ENDIF}
 
 
+function UA_Client_connect_username(client: PUA_Client;
+  const endpointUrl, username, password: AnsiString): UA_StatusCode; deprecated;
+function UA_Client_connectUsername(client: PUA_Client;
+  const endpointUrl, username, password: AnsiString): UA_StatusCode;
+function UA_Client_Service_read(client: PUA_Client;
+  const request: UA_ReadRequest): UA_ReadResponse;
+function UA_Client_Service_browse(client: PUA_Client;
+  const request: UA_BrowseRequest): UA_BrowseResponse;
+
+
 implementation
 
 

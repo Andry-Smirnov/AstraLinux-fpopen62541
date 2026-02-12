@@ -34,6 +34,55 @@ function UA_Client_call(client: PUA_Client; const objectId, methodId: UA_NodeId;
   {$ENDIF}
 {$ENDIF}
 
+
+function UA_Client_readValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outValue: UA_Variant): UA_StatusCode; overload;
+function UA_Client_readValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outValue: Byte): UA_StatusCode; overload;
+function UA_Client_readValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outValue: SmallInt): UA_StatusCode; overload;
+function UA_Client_readValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outValue: Longint): UA_StatusCode; overload;
+function UA_Client_readValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outValue: AnsiString): UA_StatusCode; overload;
+function UA_Client_readDataTypeAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outDataType: UA_NodeId): UA_StatusCode;
+function UA_Client_readValueRankAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outValueRank: UA_Int32): UA_StatusCode;
+function UA_Client_readBrowseNameAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outBrowseName: UA_QualifiedName): UA_StatusCode;
+function UA_Client_readDisplayNameAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outDisplayName: UA_LocalizedText): UA_StatusCode;
+function UA_Client_readDescriptionAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; out outDescription: UA_LocalizedText): UA_StatusCode;
+
+function UA_Client_writeValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId;
+  {$IFDEF FPC}constref{$ELSE}const{$ENDIF} newValue: UA_Variant): UA_StatusCode; overload;
+function UA_Client_writeValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; const newValue: Byte): UA_StatusCode; overload;
+function UA_Client_writeValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; const newValue: SmallInt): UA_StatusCode; overload;
+function UA_Client_writeValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; const newValue: Longint): UA_StatusCode; overload;
+function UA_Client_writeValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; const newValue: AnsiString): UA_StatusCode; overload;
+function UA_Client_writeValueAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; const newValues: array of AnsiString): UA_StatusCode; overload;
+function UA_Client_writeDescriptionAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId;
+  {$IFDEF FPC}constref{$ELSE}const{$ENDIF} newDescription: UA_LocalizedText): UA_StatusCode;
+function UA_Client_writeDataTypeAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; newDataType: PUA_NodeId): UA_StatusCode;
+function UA_Client_writeValueRankAttribute(client: PUA_Client;
+  const nodeId: UA_NodeId; const newValueRank: UA_Int32): UA_StatusCode;
+
+{$IFDEF UA_ENABLE_SUBSCRIPTIONS}
+function UA_CreateSubscriptionRequest_default(): UA_CreateSubscriptionRequest;
+function UA_MonitoredItemCreateRequest_default(nodeId: UA_NodeId): UA_MonitoredItemCreateRequest;
+{$ENDIF}
+
+
 implementation
 
 

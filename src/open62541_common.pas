@@ -142,6 +142,19 @@ type
   PUA_SessionStatistics = ^UA_SessionStatistics;
 
 
+const
+  // Access Level Masks
+  // The access level to a node is given by the following constants that
+  // are ANDed with the overall access level.
+  UA_ACCESSLEVELMASK_READ           = $01 shl 0;
+  UA_ACCESSLEVELMASK_WRITE          = $01 shl 1;
+  UA_ACCESSLEVELMASK_HISTORYREAD    = $01 shl 2;
+  UA_ACCESSLEVELMASK_HISTORYWRITE   = $01 shl 3;
+  UA_ACCESSLEVELMASK_SEMANTICCHANGE = $01 shl 4;
+  UA_ACCESSLEVELMASK_STATUSWRITE    = $01 shl 5;
+  UA_ACCESSLEVELMASK_TIMESTAMPWRITE = $01 shl 6;
+
+
 implementation
 
 

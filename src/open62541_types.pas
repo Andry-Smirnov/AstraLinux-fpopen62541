@@ -591,6 +591,77 @@ procedure UA_delete(p: Pointer; const _type: PUA_DataType); cdecl; external libo
 procedure UA_Array_delete(p: Pointer; size: size_t; const _type: PUA_DataType); cdecl; external libopen62541;
 {$ENDIF}
 
+
+// the non allocating versions use 'var' to emphasize that not a copy but the
+//  original value is used (and it shouldn't be changed)  and to make it
+//  impossible to use a property as an actual parameter
+function _UA_StatusCode_Name(code: UA_StatusCode): AnsiString;
+function _UA_STRING(var chars: AnsiString): UA_String; inline;
+function _UA_STRING_ALLOC(const chars: AnsiString): UA_String; inline;
+function _UA_BYTESTRING(var chars: AnsiString): UA_ByteString; inline;
+function _UA_BYTESTRING_ALLOC(const chars: AnsiString): UA_ByteString; inline;
+function _UA_QUALIFIEDNAME(nsIndex: UA_UInt16; var chars: AnsiString): UA_QualifiedName;
+function _UA_QUALIFIEDNAME_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_QualifiedName; inline;
+function _UA_LOCALIZEDTEXT(var locale, text: AnsiString): UA_LocalizedText;
+function _UA_LOCALIZEDTEXT_ALLOC(const locale, text: AnsiString): UA_LocalizedText; inline;
+function _UA_NUMERICRANGE(const s: AnsiString): UA_NumericRange;
+function _UA_String_equal(const s1: UA_String; const s2: AnsiString):boolean; overload;
+
+// my helper functions
+function UA_StringToStr(const s: UA_String): AnsiString;
+function UA_LocalizedTextToStr(const t: UA_LocalizedText): AnsiString;
+function UA_NodeIdToStr(const id: UA_NodeId): AnsiString;
+function UA_DataTypeToStr(typeId: UA_NodeId): AnsiString;
+function UA_Client_readValueAttribute(client: PUA_Client; const nodeId: UA_NodeId;
+  const indexRange: AnsiString; out outValue: UA_Variant): UA_StatusCode; overload;
+
+// Returns True if the variant has no value defined (contains neither an array nor a scalar value)
+function UA_Variant_isEmpty(const v: PUA_Variant): Boolean;
+// Returns True if the variant contains a scalar value.
+// Note that empty variants contain an array of length -1 (undefined)
+function UA_Variant_isScalar(const v: PUA_Variant): Boolean;
+// Returns True if the variant contains a scalar value of the given type
+function UA_Variant_hasScalarType(const v: PUA_Variant; const _type: PUA_DataType): Boolean;
+// Returns True if the variant contains an array of the given type
+function UA_Variant_hasArrayType(const v: PUA_Variant; const _type: PUA_DataType): Boolean;
+
+function UA_Variant_getFloat(var v: UA_Variant): Single;
+function UA_Variant_getDouble(var v: UA_Variant): Double;
+function UA_Variant_getByte(var v: UA_Variant): Byte;
+function UA_Variant_getSmallint(var v: UA_Variant): SmallInt;
+function UA_Variant_getInteger(var v: UA_Variant): Integer;
+function UA_Variant_getInt64(var v: UA_Variant): Int64;
+function UA_Variant_getString(var v: UA_Variant): AnsiString; overload;
+function UA_Variant_getString(var v: UA_Variant; arrayIndex: DWord): AnsiString; overload;
+procedure UA_Variant_setBoolean(out v: UA_Variant; b: ByteBool);
+procedure UA_Variant_setFloat(out v: UA_Variant; f: Single);
+procedure UA_Variant_setDouble(out v: UA_Variant; d: Double);
+procedure UA_Variant_setByte(out v: UA_Variant; i: Byte);
+procedure UA_Variant_setSmallint(out v: UA_Variant; i: SmallInt);
+procedure UA_Variant_setUInt16(out v: UA_Variant; i: UInt16);
+procedure UA_Variant_setInteger(out v: UA_Variant; i: Integer);
+procedure UA_Variant_setUInt32(out v: UA_Variant; i: UInt32);
+procedure UA_Variant_setInt64(out v: UA_Variant; i: Int64);
+procedure UA_Variant_setUInt64(out v: UA_Variant; i: UInt64);
+procedure UA_Variant_setString(out v: UA_Variant; const s: AnsiString);
+
+// The following functions are shorthand for creating NodeIds
+function UA_NODEID_NUMERIC(nsIndex: UA_UInt16; identifier: UA_UInt32): UA_NodeId;
+function UA_NODEID_STRING(nsIndex: UA_UInt16; var chars: AnsiString): UA_NodeId;
+function UA_NODEID_STRING_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_NodeId;
+function UA_NODEID_GUID(nsIndex: UA_UInt16; guid: UA_Guid): UA_NodeId;
+function UA_NODEID_BYTESTRING(nsIndex: UA_UInt16; var chars: AnsiString): UA_NodeId;
+function UA_NODEID_BYTESTRING_ALLOC(nsIndex: UA_UInt16; const chars: AnsiString): UA_NodeId;
+function UA_EXPANDEDNODEID_NUMERIC(nsIndex: UA_UInt16; identifier: UA_Uint32): UA_ExpandedNodeId;
+
+// Test if the data type is a numeric builtin data type. This includes Boolean,
+// integers and floating point numbers. Not included are DateTime and StatusCode. *)
+//function UA_DataType_isNumeric(_type: PUA_DataType): UA_Boolean; cdecl; external libopen62541;
+
+// Initializes a variable to default values *)
+procedure UA_init(p: Pointer; const _type: PUA_DataType);
+
+
 implementation
 
 
