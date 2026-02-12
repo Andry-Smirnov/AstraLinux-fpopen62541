@@ -2,11 +2,21 @@
 // Open62541 Constants
 //
 // created 2026.02.11
-unit open64541_const;
+
+unit open62541_const;
 
 
 {$I open62541_definitions.inc}
 
+(*
+{$IFDEF FPC}
+  {$IFDEF LOAD_DYNAMICALLY}
+    {$MODE DELPHI}
+    {$HINT DELPHI MODE SELECTED}
+  {$ENDIF}
+{$ENDIF}
+{$H+}
+*)
 
 interface
 
