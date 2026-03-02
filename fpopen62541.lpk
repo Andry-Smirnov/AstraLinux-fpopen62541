@@ -3,68 +3,159 @@
   <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="fpopen62541"/>
+    <Author Value="Lacak &lt;lacak At Sourceforge>"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
         <IncludeFiles Value="src;src\const;src\types"/>
-        <OtherUnitFiles Value="src"/>
+        <OtherUnitFiles Value="src;src\const;src\plugins;src\types"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="13">
+    <Description Value="This allows the open62541 library to be combined and distributed with any proprietary software.
+Only changes to the open62541 library itself need to be licensed under the MPLv2 when copied and distributed.
+The plugins, as well as the server and client examples are in the public domain (CC0 license).
+They can be reused under any license and changes do not have to be published."/>
+    <License Value="open62541 is licensed under the Mozilla Public License v2.0 (MPLv2)."/>
+    <Version Major="1" Minor="3"/>
+    <Files Count="34">
       <Item1>
-        <Filename Value="src/open62541.pas"/>
+        <Filename Value="src\open62541.pas"/>
         <UnitName Value="open62541"/>
       </Item1>
       <Item2>
-        <Filename Value="src/types/generated_1_2.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_client.pas"/>
+        <UnitName Value="open62541_client"/>
       </Item2>
       <Item3>
-        <Filename Value="src/types/generated_1_3.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_client_config.pas"/>
+        <UnitName Value="open62541_client_config"/>
       </Item3>
       <Item4>
-        <Filename Value="src/types/generated_1_4.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_client_highlevel.pas"/>
+        <UnitName Value="open62541_client_highlevel"/>
       </Item4>
       <Item5>
-        <Filename Value="src/types/generated_1_5.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_client_subscriptions.pas"/>
+        <UnitName Value="open62541_client_subscriptions"/>
       </Item5>
       <Item6>
-        <Filename Value="src/const/nodeids_1_2.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_common.pas"/>
+        <UnitName Value="open62541_common"/>
       </Item6>
       <Item7>
-        <Filename Value="src/const/nodeids_1_3.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_const.pas"/>
+        <UnitName Value="open62541_const"/>
       </Item7>
       <Item8>
-        <Filename Value="src/const/nodeids_1_4.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_network.pas"/>
+        <UnitName Value="open62541_network"/>
       </Item8>
       <Item9>
-        <Filename Value="src/const/nodeids_1_5.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_server.pas"/>
+        <UnitName Value="open62541_server"/>
       </Item9>
       <Item10>
-        <Filename Value="src/const/statuscodes_1_2.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_server_config.pas"/>
+        <UnitName Value="open62541_server_config"/>
       </Item10>
       <Item11>
-        <Filename Value="src/const/statuscodes_1_3.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_server_config_default.pas"/>
+        <UnitName Value="open62541_server_config_default"/>
       </Item11>
       <Item12>
-        <Filename Value="src/const/statuscodes_1_4.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\open62541_types.pas"/>
+        <UnitName Value="open62541_types"/>
       </Item12>
       <Item13>
-        <Filename Value="src/const/statuscodes_1_5.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="src\types\open62541_types_h.pas"/>
+        <UnitName Value="open62541_types_h"/>
       </Item13>
+      <Item14>
+        <Filename Value="src\open62541_ua_types.pas"/>
+        <UnitName Value="open62541_ua_types"/>
+      </Item14>
+      <Item15>
+        <Filename Value="src\const\open62541_nodeids.pas"/>
+        <UnitName Value="open62541_nodeids"/>
+      </Item15>
+      <Item16>
+        <Filename Value="src\const\open62541_statuscodes.pas"/>
+        <UnitName Value="open62541_statuscodes"/>
+      </Item16>
+      <Item17>
+        <Filename Value="src\plugins\open62541_pki.pas"/>
+        <UnitName Value="open62541_pki"/>
+      </Item17>
+      <Item18>
+        <Filename Value="src\plugins\open62541_securitypolicy.pas"/>
+        <UnitName Value="open62541_securitypolicy"/>
+      </Item18>
+      <Item19>
+        <Filename Value="src\types\open62541_types_generated.pas"/>
+        <UnitName Value="open62541_types_generated"/>
+      </Item19>
+      <Item20>
+        <Filename Value="src\types\open62541_types_generated_handling.pas"/>
+        <UnitName Value="open62541_types_generated_handling"/>
+      </Item20>
+      <Item21>
+        <Filename Value="src\open62541_config.h.inc"/>
+        <Type Value="Include"/>
+      </Item21>
+      <Item22>
+        <Filename Value="src\open62541_definitions.inc"/>
+        <Type Value="Include"/>
+      </Item22>
+      <Item23>
+        <Filename Value="src\types\generated_1_2.inc"/>
+        <Type Value="Include"/>
+      </Item23>
+      <Item24>
+        <Filename Value="src\types\generated_1_3.inc"/>
+        <Type Value="Include"/>
+      </Item24>
+      <Item25>
+        <Filename Value="src\types\generated_1_4.inc"/>
+        <Type Value="Include"/>
+      </Item25>
+      <Item26>
+        <Filename Value="src\types\generated_1_5.inc"/>
+        <Type Value="Include"/>
+      </Item26>
+      <Item27>
+        <Filename Value="src\const\nodeids_1_2.inc"/>
+        <Type Value="Include"/>
+      </Item27>
+      <Item28>
+        <Filename Value="src\const\nodeids_1_3.inc"/>
+        <Type Value="Include"/>
+      </Item28>
+      <Item29>
+        <Filename Value="src\const\nodeids_1_4.inc"/>
+        <Type Value="Include"/>
+      </Item29>
+      <Item30>
+        <Filename Value="src\const\nodeids_1_5.inc"/>
+        <Type Value="Include"/>
+      </Item30>
+      <Item31>
+        <Filename Value="src\const\statuscodes_1_2.inc"/>
+        <Type Value="Include"/>
+      </Item31>
+      <Item32>
+        <Filename Value="src\const\statuscodes_1_3.inc"/>
+        <Type Value="Include"/>
+      </Item32>
+      <Item33>
+        <Filename Value="src\const\statuscodes_1_4.inc"/>
+        <Type Value="Include"/>
+      </Item33>
+      <Item34>
+        <Filename Value="src\const\statuscodes_1_5.inc"/>
+        <Type Value="Include"/>
+      </Item34>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

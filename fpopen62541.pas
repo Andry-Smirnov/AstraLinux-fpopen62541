@@ -8,7 +8,13 @@ unit fpopen62541;
 interface
 
 uses
-  open62541;
+  open62541, open62541_client, open62541_client_config, 
+  open62541_client_highlevel, open62541_client_subscriptions, 
+  open62541_common, open62541_const, open62541_network, open62541_server, 
+  open62541_server_config, open62541_server_config_default, open62541_types, 
+  open62541_types_h, open62541_ua_types, open62541_nodeids, 
+  open62541_statuscodes, open62541_pki, open62541_securitypolicy, 
+  open62541_types_generated, open62541_types_generated_handling;
 
 implementation
 
