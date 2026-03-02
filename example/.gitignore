@@ -1,0 +1,6 @@
+lib
+backup
+TestOpcUa
+*.bak
+*.exe
+*.dll
