@@ -23,12 +23,13 @@ unit open62541_server;
 interface
 
 
+{$IFDEF ENABLE_SERVER}
 uses
-  open62541_types
+  open62541_types_h,
+  open62541_types_generated
   ;
 
 
-{$IFDEF ENABLE_SERVER}
 type
   UA_Server = record
   end;
@@ -107,9 +108,6 @@ function UA_Server_addMethodNodeEx: function(server: PUA_Server;
   outNewNodeId: PUA_NodeId): UA_StatusCode; cdecl;  external libopen62541;
   {$ENDIF}
 
-{$ENDIF}
-
-{$IFDEF ENABLE_SERVER}
 function UA_Server_addVariableNode(server: PUA_Server;
   const requestedNewNodeId: UA_NodeId;
   const parentNodeId: UA_NodeId;
@@ -181,6 +179,171 @@ function UA_Server_addMethodNode(server: PUA_Server;
 
 
 implementation
+
+
+{$IFDEF ENABLE_SERVER}
+uses
+  open62541_types,
+  open62541_ua_types,
+  open62541_common
+  ;
+
+
+function UA_Server_addVariableNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const typeDefinition: UA_NodeId;
+  const attr: UA_VariableAttributes;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
+begin
+  Result := __UA_Server_addNode(server, UA_NODECLASS_VARIABLE, @requestedNewNodeId,
+    @parentNodeId, @referenceTypeId, browseName,
+    @typeDefinition, PUA_NodeAttributes(@attr),
+    @UA_TYPES[UA_TYPES_VARIABLEATTRIBUTES],
+    nodeContext, outNewNodeId);
+end;
+
+
+function UA_Server_addObjectTypeNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const attr:UA_ObjectTypeAttributes;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
+begin
+  Result :=__UA_Server_addNode(server, UA_NODECLASS_OBJECTTYPE, @requestedNewNodeId,
+    @parentNodeId, @referenceTypeId, browseName,
+    @UA_NODEID_NULL, @attr,
+    @UA_TYPES[UA_TYPES_OBJECTTYPEATTRIBUTES],
+    nodeContext, outNewNodeId);
+end;
+
+
+function UA_Server_addObjectNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const typeDefinition: UA_NodeId;
+  const attr:UA_ObjectAttributes;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
+begin
+  Result :=__UA_Server_addNode(server, UA_NODECLASS_OBJECT, @requestedNewNodeId,
+    @parentNodeId, @referenceTypeId, browseName,
+    @typeDefinition, @attr,
+    @UA_TYPES[UA_TYPES_OBJECTATTRIBUTES],
+    nodeContext, outNewNodeId);
+end;
+
+
+function UA_Server_addVariableTypeNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const typeDefinition: UA_NodeId;
+  const attr:UA_VariableTypeAttributes;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
+begin
+  Result :=__UA_Server_addNode(server, UA_NODECLASS_VARIABLETYPE,
+    @requestedNewNodeId, @parentNodeId, @referenceTypeId,
+    browseName, @typeDefinition,
+    @attr,
+    @UA_TYPES[UA_TYPES_VARIABLETYPEATTRIBUTES],
+    nodeContext, outNewNodeId);
+end;
+
+
+function UA_Server_addViewNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const attr:UA_ViewAttributes;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
+begin
+  Result :=__UA_Server_addNode(server, UA_NODECLASS_VIEW, @requestedNewNodeId,
+    @parentNodeId, @referenceTypeId, browseName,
+    @UA_NODEID_NULL, @attr,
+    @UA_TYPES[UA_TYPES_VIEWATTRIBUTES],
+    nodeContext, outNewNodeId);
+end;
+
+
+function UA_Server_addReferenceTypeNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const attr: UA_ReferenceTypeAttributes;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
+begin
+  Result :=__UA_Server_addNode(server, UA_NODECLASS_REFERENCETYPE,
+    @requestedNewNodeId, @parentNodeId, @referenceTypeId,
+    browseName, @UA_NODEID_NULL,
+    @attr,
+    @UA_TYPES[UA_TYPES_REFERENCETYPEATTRIBUTES],
+    nodeContext, outNewNodeId);
+end;
+
+
+function UA_Server_addDataTypeNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const attr:UA_DataTypeAttributes;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
+begin
+  Result :=__UA_Server_addNode(server, UA_NODECLASS_DATATYPE, @requestedNewNodeId,
+    @parentNodeId, @referenceTypeId, browseName,
+    @UA_NODEID_NULL, @attr,
+    @UA_TYPES[UA_TYPES_DATATYPEATTRIBUTES],
+    nodeContext, outNewNodeId);
+end;
+
+
+function UA_Server_writeValue(server: PUA_Server;
+  const nodeId: UA_NodeId;
+  const value: UA_Variant): UA_StatusCode;
+begin
+  Result := __UA_Server_write(server, @nodeId, UA_ATTRIBUTEID_VALUE,
+    @UA_TYPES[UA_TYPES_VARIANT], @value);
+end;
+
+
+function UA_Server_addMethodNode(server: PUA_Server;
+  const requestedNewNodeId: UA_NodeId;
+  const parentNodeId: UA_NodeId;
+  const referenceTypeId: UA_NodeId;
+  const browseName: UA_QualifiedName;
+  const attr: UA_MethodAttributes;
+  method: UA_MethodCallback;
+  inputArgumentsSize: size_t;
+  const inputArguments: PUA_Argument;
+  outputArgumentsSize: size_t;
+  const outputArguments: PUA_Argument;
+  nodeContext: Pointer;
+  outNewNodeId: PUA_NodeId): UA_StatusCode;
+begin
+  Result := UA_Server_addMethodNodeEx(server, requestedNewNodeId, parentNodeId,
+    referenceTypeId, browseName, attr, method,
+    inputArgumentsSize, inputArguments, UA_NODEID_NULL, nil,
+    outputArgumentsSize, outputArguments, UA_NODEID_NULL, nil,
+    nodeContext, outNewNodeId);
+end;
+{$ENDIF}
+
 
 end.
 

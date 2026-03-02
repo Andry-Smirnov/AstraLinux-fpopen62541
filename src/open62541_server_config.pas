@@ -21,15 +21,15 @@ unit open62541_server_config;
 interface
 
 
+{$IFDEF ENABLE_SERVER}
 uses
-  open62541_types,
+  open62541_types_h,
   open62541_types_generated,
   open62541_common,
   open62541_network
   ;
 
 
-{$IFDEF ENABLE_SERVER}
 type
   UA_ServerConfig = record
     logger: UA_Logger;

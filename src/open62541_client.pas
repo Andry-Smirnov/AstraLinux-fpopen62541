@@ -23,6 +23,14 @@ unit open62541_client;
 interface
 
 
+uses
+  open62541_types_h,
+  open62541_types_generated,
+  open62541_client_config,
+  open62541_statuscodes
+  ;
+
+
 {$IFNDEF LOAD_DYNAMICALLY}
 // Client(.. _client:)
 // ======
@@ -113,6 +121,62 @@ function UA_Client_Service_browse(client: PUA_Client;
 
 
 implementation
+
+
+uses
+  open62541_types
+  ;
+
+
+function UA_Client_connect_username(client: PUA_Client;
+  const endpointUrl, username, password: AnsiString): UA_StatusCode;
+begin
+  Result := UA_Client_connectUsername(client, endpointUrl, username, password);
+end;
+
+
+// Connect to the server and create+activate a Session with the given username
+// and password. This first set the UserIdentityToken in the client config and
+// then calls the regular connect method.
+function UA_Client_connectUsername(client: PUA_Client;
+  const endpointUrl, username, password: AnsiString): UA_StatusCode;
+var
+  IdentityToken: PUA_UserNameIdentityToken;
+  ClientConfig: PUA_ClientConfig;
+begin
+  //UA_UserNameIdentityToken_new()
+  IdentityToken := PUA_UserNameIdentityToken(UA_new(@UA_TYPES[UA_TYPES_USERNAMEIDENTITYTOKEN]));
+  if IdentityToken = nil then
+    Result := UA_STATUSCODE_BADOUTOFMEMORY
+  else
+    begin
+      IdentityToken^.userName := _UA_STRING_ALLOC(username);
+      IdentityToken^.password := _UA_STRING_ALLOC(password);
+      ClientConfig := UA_Client_getConfig(client);
+      //UA_ExtensionObject_clear()
+      UA_clear(@ClientConfig^.userIdentityToken, @UA_TYPES[UA_TYPES_EXTENSIONOBJECT]);
+      ClientConfig^.userIdentityToken.encoding := UA_EXTENSIONOBJECT_DECODED;
+      ClientConfig^.userIdentityToken.content.decoded._type := @UA_TYPES[UA_TYPES_USERNAMEIDENTITYTOKEN];
+      ClientConfig^.userIdentityToken.content.decoded.data := IdentityToken;
+      Result := UA_Client_connect(client, endpointUrl);
+    end;
+end;
+
+
+function UA_Client_Service_read(client: PUA_Client;
+  const request: UA_ReadRequest): UA_ReadResponse;
+begin
+  __UA_Client_Service(client, @request, @UA_TYPES[UA_TYPES_READREQUEST], @Result,
+    @UA_TYPES[UA_TYPES_READRESPONSE]);
+end;
+
+
+function UA_Client_Service_browse(client: PUA_Client;
+  const request: UA_BrowseRequest): UA_BrowseResponse;
+begin
+  __UA_Client_Service(client, @request, @UA_TYPES[UA_TYPES_BROWSEREQUEST],
+    @Result, @UA_TYPES[UA_TYPES_BROWSERESPONSE]);
+end;
 
 
 end.

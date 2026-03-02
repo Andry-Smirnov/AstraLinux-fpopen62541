@@ -24,7 +24,7 @@ interface
 
 
 uses
-  open62541_types,
+  open62541_types_h,
   open62541_types_generated
   ;
 

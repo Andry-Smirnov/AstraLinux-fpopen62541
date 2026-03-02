@@ -24,7 +24,7 @@ interface
 
 
 uses
-  open62541_types,
+  open62541_types_h,
   open62541_common,
   open62541_server
   ;
@@ -53,9 +53,15 @@ type
     remoteMaxChunkCount: UA_UInt32;   // (0 = unbounded)
   end;
 
-  UA_ConnectionState = (UA_CONNECTION_CLOSED, UA_CONNECTION_OPENING, UA_CONNECTION_ESTABLISHED);
+  UA_ConnectionState = (
+    UA_CONNECTION_CLOSED, 
+    UA_CONNECTION_OPENING, 
+    UA_CONNECTION_ESTABLISHED
+  );
 
-  UA_SecureChannel = record {undefined structure} end;
+  // undefined structure
+  UA_SecureChannel = record
+  end;
 
   UA_SOCKET = Integer;
 
@@ -92,10 +98,12 @@ type
     statistics: PUA_NetworkStatistics;
     discoveryUrl: UA_String;
     localConnectionConfig: UA_ConnectionConfig;
+    
     // Start listening on the networklayer.
     // @param nl The network layer
     // @return Returns UA_STATUSCODE_GOOD or an error code.
     start: function(nl: PUA_ServerNetworkLayer; const logger: PUA_Logger; const customHostname: PUA_String): UA_StatusCode; cdecl;
+    
     // Listen for new and closed connections and arriving packets. Calls
     // UA_Server_processBinaryMessage for the arriving packets. Closed
     // connections are picked up here and forwarded to
@@ -105,13 +113,14 @@ type
     // @param timeout The timeout during which an event must arrive in milliseconds
     // @return A statuscode for the status of the network layer.
     listen: function(nl: PUA_ServerNetworkLayer; server: PUA_Server; timeout: UA_UInt16): UA_StatusCode; cdecl;
+    
     // Close the network socket and all open connections. Afterwards, the
     // network layer can be safely deleted.
-    //
     // @param nl The network layer
     // @param server The server that processes the incoming packets and for closing connections before deleting them.
     // @return A statuscode for the status of the closing operation.
     stop: procedure(nl: PUA_ServerNetworkLayer; server: PUA_Server); cdecl;
+    
     // Deletes the network layer context. Call only after stopping.
     clear: procedure(nl: PUA_ServerNetworkLayer); cdecl;
   end;

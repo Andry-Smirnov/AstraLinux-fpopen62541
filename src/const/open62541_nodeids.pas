@@ -23,6 +23,11 @@ unit open62541_nodeids;
 interface
 
 
+uses
+  open62541_types_h
+  ;
+
+
 const
 {$IFDEF UA_VER1_5}
   {$I const/nodeids_1_5.inc}
