@@ -1,0 +1,253 @@
+Microsoft (R) COFF/PE Dumper Version 14.44.35223.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file libopen62541.1.2.dll
+
+File Type: DLL
+
+  Section contains the following exports for libopen62541.dll
+
+    00000000 characteristics
+    69A68817 time date stamp Tue Mar  3 10:04:55 2026
+        0.00 version
+           1 ordinal base
+         213 number of functions
+         213 number of names
+
+    ordinal hint RVA      name
+
+          1    0 0007669D UA_AccessControl_default
+          2    1 00004919 UA_Array_copy
+          3    2 00004A8A UA_Array_delete
+          4    3 000048CD UA_Array_new
+          5    4 00088010 UA_BYTESTRING_NULL
+          6    5 00001F5C UA_ByteString_allocBuffer
+          7    6 0000C95C UA_ByteString_fromBase64
+          8    7 0000243C UA_ByteString_hash
+          9    8 0000C8E0 UA_ByteString_toBase64
+         10    9 0007A115 UA_CertificateVerification_AcceptAll
+         11    A 0003EB65 UA_Cient_translateBrowsePathsToNodeIds_async
+         12    B 00079E2C UA_ClientConfig_setDefault
+         13    C 0007D171 UA_ClientConnectionTCP_init
+         14    D 0007CB18 UA_ClientConnectionTCP_poll
+         15    E 00041043 UA_Client_MonitoredItems_createDataChange
+         16    F 00040F42 UA_Client_MonitoredItems_createDataChanges
+         17   10 00040FC0 UA_Client_MonitoredItems_createDataChanges_async
+         18   11 000412D3 UA_Client_MonitoredItems_createEvent
+         19   12 000411D2 UA_Client_MonitoredItems_createEvents
+         20   13 00041250 UA_Client_MonitoredItems_createEvents_async
+         21   14 00041667 UA_Client_MonitoredItems_delete
+         22   15 00041822 UA_Client_MonitoredItems_deleteSingle
+         23   16 0004172D UA_Client_MonitoredItems_delete_async
+         24   17 00041924 UA_Client_MonitoredItems_modify
+         25   18 0003CA78 UA_Client_NamespaceGetIndex
+         26   19 0003F272 UA_Client_Subscriptions_create
+         27   1A 0003F3CD UA_Client_Subscriptions_create_async
+         28   1B 0003FF86 UA_Client_Subscriptions_delete
+         29   1C 000400E6 UA_Client_Subscriptions_deleteSingle
+         30   1D 0003FE08 UA_Client_Subscriptions_delete_async
+         31   1E 0003F5D9 UA_Client_Subscriptions_modify
+         32   1F 0003F6C6 UA_Client_Subscriptions_modify_async
+         33   20 0003CEC3 UA_Client_addReference
+         34   21 000380E2 UA_Client_addRepeatedCallback
+         35   22 00038094 UA_Client_addTimedCallback
+         36   23 0003D814 UA_Client_call
+         37   24 00038133 UA_Client_changeRepeatedCallbackInterval
+         38   25 0003B65B UA_Client_connect
+         39   26 0003B498 UA_Client_connectAsync
+         40   27 0003B6C8 UA_Client_connectSecureChannel
+         41   28 0003B505 UA_Client_connectSecureChannelAsync
+         42   29 00036E8E UA_Client_delete
+         43   2A 0003D376 UA_Client_deleteNode
+         44   2B 0003D12F UA_Client_deleteReference
+         45   2C 0003BAD0 UA_Client_disconnect
+         46   2D 0003B9FF UA_Client_disconnectAsync
+         47   2E 0003BAA1 UA_Client_disconnectSecureChannel
+         48   2F 0003865D UA_Client_findDataType
+         49   30 0003BED3 UA_Client_findServers
+         50   31 0003CC8A UA_Client_forEachChildNodeCall
+         51   32 00036F21 UA_Client_getConfig
+         52   33 0003BDE5 UA_Client_getEndpoints
+         53   34 00036EC5 UA_Client_getState
+         54   35 00079DD2 UA_Client_new
+         55   36 00036C27 UA_Client_newWithConfig
+         56   37 0003E23D UA_Client_readArrayDimensionsAttribute
+         57   38 0003816D UA_Client_removeCallback
+         58   39 00039D59 UA_Client_renewSecureChannel
+         59   3A 00038473 UA_Client_run_iterate
+         60   3B 00038043 UA_Client_sendAsyncRequest
+         61   3C 0003DCB7 UA_Client_writeArrayDimensionsAttribute
+         62   3D 000974A0 UA_ConnectionConfig_default
+         63   3E 00091D00 UA_DataTypeAttributes_default
+         64   3F 00001D74 UA_DateTime_fromStruct
+         65   40 0007A7F2 UA_DateTime_localTimeUtcOffset
+         66   41 0007A7B0 UA_DateTime_now
+         67   42 0007A856 UA_DateTime_nowMonotonic
+         68   43 000019F9 UA_DateTime_toStruct
+         69   44 00088060 UA_EXPANDEDNODEID_NULL
+         70   45 000026D3 UA_ExpandedNodeId_hash
+         71   46 000025BF UA_ExpandedNodeId_isLocal
+         72   47 000025F0 UA_ExpandedNodeId_order
+         73   48 00070734 UA_ExpandedNodeId_parse
+         74   49 00009ED3 UA_ExpandedNodeId_print
+         75   4A 000028B8 UA_ExtensionObject_setValue
+         76   4B 0000294A UA_ExtensionObject_setValueCopy
+         77   4C 00002901 UA_ExtensionObject_setValueNoDelete
+         78   4D 00088020 UA_GUID_NULL
+         79   4E 00001E5C UA_Guid_equal
+         80   4F 0006FAB9 UA_Guid_parse
+         81   50 00001E98 UA_Guid_random
+         82   51 000878F8 UA_Log_Stdout
+         83   52 00097140 UA_Log_Stdout_
+         84   53 00075F3F UA_Log_Stdout_clear
+         85   54 00075DF0 UA_Log_Stdout_log
+         86   55 00075F4A UA_Log_Stdout_withLevel
+         87   56 00091B00 UA_MethodAttributes_default
+         88   57 00088030 UA_NODEID_NULL
+         89   58 00002491 UA_NodeId_hash
+         90   59 000020FC UA_NodeId_isNull
+         91   5A 000021A8 UA_NodeId_order
+         92   5B 0006FF87 UA_NodeId_parse
+         93   5C 0000997B UA_NodeId_print
+         94   5D 00013226 UA_Node_addReference
+         95   5E 00011F96 UA_Node_clear
+         96   5F 000124D6 UA_Node_copy
+         97   60 000128AF UA_Node_copy_alloc
+         98   61 0001330A UA_Node_deleteReference
+         99   62 000137AA UA_Node_deleteReferences
+        100   63 000135A8 UA_Node_deleteReferencesSubset
+        101   64 00012D39 UA_Node_setAttributes
+        102   65 00078B73 UA_Nodestore_HashMap
+        103   66 00077AF2 UA_Nodestore_ZipTree
+        104   67 00004C30 UA_NumericRange_parse
+        105   68 000919C0 UA_ObjectAttributes_default
+        106   69 00091B60 UA_ObjectTypeAttributes_default
+        107   6A 00001970 UA_QualifiedName_equal
+        108   6B 0000193A UA_QualifiedName_hash
+        109   6C 00091C80 UA_ReferenceTypeAttributes_default
+        110   6D 0007118A UA_RelativePath_parse
+        111   6E 00090530 UA_SECURITY_POLICY_NONE_URI
+        112   6F 00088000 UA_STRING_NULL
+        113   70 0007A465 UA_SecurityPolicy_None
+        114   71 00079A06 UA_ServerConfig_addAllEndpoints
+        115   72 000798A4 UA_ServerConfig_addEndpoint
+        116   73 00079578 UA_ServerConfig_addNetworkLayerTCP
+        117   74 00079771 UA_ServerConfig_addSecurityPolicyNone
+        118   75 00019D54 UA_ServerConfig_clean
+        119   76 000794FD UA_ServerConfig_setBasics
+        120   77 00079C3F UA_ServerConfig_setMinimalCustomBuffer
+        121   78 0007C89C UA_ServerNetworkLayerTCP
+        122   79 000355A9 UA_Server_addDataSourceVariableNode
+        123   7A 000363F2 UA_Server_addMethodNodeEx
+        124   7B 00036318 UA_Server_addMethodNode_finish
+        125   7C 00013BD3 UA_Server_addNamespace
+        126   7D 00033A8B UA_Server_addNode_begin
+        127   7E 00033BB0 UA_Server_addNode_finish
+        128   7F 000350D9 UA_Server_addReference
+        129   80 000145B5 UA_Server_addRepeatedCallback
+        130   81 00014510 UA_Server_addTimedCallback
+        131   82 0001FF8D UA_Server_browse
+        132   83 000201FB UA_Server_browseNext
+        133   84 0001EF2E UA_Server_browseRecursive
+        134   85 00021194 UA_Server_browseSimplifiedBrowsePath
+        135   86 000223B0 UA_Server_call
+        136   87 0001463A UA_Server_changeRepeatedCallbackInterval
+        137   88 0002CB75 UA_Server_createDataChangeMonitoredItem
+        138   89 00013F12 UA_Server_delete
+        139   8A 0002D450 UA_Server_deleteMonitoredItem
+        140   8B 000348CA UA_Server_deleteNode
+        141   8C 0003541B UA_Server_deleteReference
+        142   8D 0001CA4E UA_Server_findDataType
+        143   8E 00013D3B UA_Server_forEachChildNodeCall
+        144   8F 00013C29 UA_Server_getConfig
+        145   90 00013CE2 UA_Server_getNamespaceByName
+        146   91 0002EFAC UA_Server_getNodeContext
+        147   92 0001496E UA_Server_getStatistics
+        148   93 00078FD1 UA_Server_new
+        149   94 00014385 UA_Server_newWithConfig
+        150   95 0001C7D0 UA_Server_processBinaryMessage
+        151   96 00026BA0 UA_Server_read
+        152   97 00026DBD UA_Server_readObjectProperty
+        153   98 000146A1 UA_Server_removeCallback
+        154   99 0001C918 UA_Server_removeConnection
+        155   9A 00014F5C UA_Server_run
+        156   9B 00014D55 UA_Server_run_iterate
+        157   9C 00014EAD UA_Server_run_shutdown
+        158   9D 000149A9 UA_Server_run_startup
+        159   9E 000366FB UA_Server_setAdminSessionContext
+        160   9F 000366AA UA_Server_setMethodNode_callback
+        161   A0 0002F107 UA_Server_setNodeContext
+        162   A1 00036791 UA_Server_setNodeTypeLifecycle
+        163   A2 00035939 UA_Server_setVariableNode_dataSource
+        164   A3 00035A1F UA_Server_setVariableNode_valueBackend
+        165   A4 00035549 UA_Server_setVariableNode_valueCallback
+        166   A5 00020E2A UA_Server_translateBrowsePathToNodeIds
+        167   A6 000146C8 UA_Server_updateCertificate
+        168   A7 000294B5 UA_Server_write
+        169   A8 000296B9 UA_Server_writeObjectProperty
+        170   A9 000298B1 UA_Server_writeObjectProperty_scalar
+        171   AA 00003EA7 UA_StatusCode_isBad
+        172   AB 0000C1B0 UA_StatusCode_name
+        173   AC 00001720 UA_String_equal
+        174   AD 000017A3 UA_String_equal_ignorecase
+        175   AE 00001654 UA_String_fromChars
+        176   AF 0008DDE0 UA_TRANSPORT
+        177   B0 0008A6A0 UA_TYPES
+        178   B1 00001637 UA_UInt32_random
+        179   B2 00091A20 UA_VariableAttributes_default
+        180   B3 00091BC0 UA_VariableTypeAttributes_default
+        181   B4 000032E9 UA_Variant_copyRange
+        182   B5 00002C5E UA_Variant_setArray
+        183   B6 00002CAC UA_Variant_setArrayCopy
+        184   B7 00003B58 UA_Variant_setRange
+        185   B8 00003BBB UA_Variant_setRangeCopy
+        186   B9 00002B88 UA_Variant_setScalar
+        187   BA 00002BD2 UA_Variant_setScalarCopy
+        188   BB 00091D60 UA_ViewAttributes_default
+        189   BC 00004812 UA_clear
+        190   BD 00004451 UA_copy
+        191   BE 00004879 UA_delete
+        192   BF 000015E3 UA_findDataType
+        193   C0 00003EC3 UA_new
+        194   C1 0000C411 UA_parseEndpointUrl
+        195   C2 0000C6DE UA_parseEndpointUrlEthernet
+        196   C3 0000C018 UA_print
+        197   C4 00001606 UA_random_seed
+        198   C5 0000C3DA UA_readNumber
+        199   C6 0000C284 UA_readNumberWithBase
+        200   C7 00037FE7 __UA_Client_AsyncService
+        201   C8 00037E68 __UA_Client_AsyncServiceEx
+        202   C9 00037BE7 __UA_Client_Service
+        203   CA 0003D539 __UA_Client_addNode
+        204   CB 0003E8E0 __UA_Client_addNode_async
+        205   CC 0003EA5C __UA_Client_call_async
+        206   CD 0003DEBA __UA_Client_readAttribute
+        207   CE 0003E538 __UA_Client_readAttribute_async
+        208   CF 0003EB4A __UA_Client_translateBrowsePathsToNodeIds_async
+        209   D0 0003DA67 __UA_Client_writeAttribute
+        210   D1 0003E777 __UA_Client_writeAttribute_async
+        211   D2 000339EA __UA_Server_addNode
+        212   D3 00026C33 __UA_Server_read
+        213   D4 00029502 __UA_Server_write
+
+  Summary
+
+        1000 .bss
+        3000 .data
+        D000 .debug_abbrev
+        1000 .debug_aranges
+       14000 .debug_frame
+       FA000 .debug_info
+       23000 .debug_line
+        D000 .debug_line_str
+        1000 .debug_rnglists
+        A000 .debug_str
+        2000 .edata
+        1000 .idata
+        6000 .pdata
+       12000 .rdata
+        1000 .reloc
+       84000 .text
+        1000 .tls
+        6000 .xdata
