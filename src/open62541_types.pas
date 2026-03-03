@@ -25,16 +25,17 @@ interface
 uses
   SysUtils,
   // ---
+  open62541,
   open62541_const,
   open62541_types_h,
-  open62541_types_generated,
-  open62541_client,
+//  open62541_types_generated,
+//  open62541_client,
   open62541_client_config,
   open62541_client_subscriptions,
   open62541_common,
   open62541_server,
   open62541_server_config,
-  open62541_statuscodes,
+//  open62541_statuscodes,
   open62541_pki
   ;
 
@@ -322,12 +323,12 @@ begin
   if RefCount <> 1 then
     Exit;
 
-  open62541LibHandle := LoadLibrary(libopen62541);
+  open62541LibHandle := LoadLibrary(LIB_OPEN62541_FILENAME);
   if open62541LibHandle = 0 then
   begin
     RefCount := 0;
     raise EInOutError.CreateFmt('Can not load library "%s". Check your installation.' + sLineBreak + '%s',
-      [libopen62541, GetLoadErrorStr()]);
+      [LIB_OPEN62541_FILENAME, GetLoadErrorStr()]);
   end;
 
   Pointer(UA_TYPES) := GetProcedureAddress(open62541LibHandle,'UA_TYPES'); // external variable name

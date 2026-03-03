@@ -64,23 +64,18 @@ interface
 
 
 uses
-  open62541_client_config,
-  open62541_common,
-  open62541_network,
-  open62541_nodeids,
-  open62541_pki,
-  open62541_server,
-  open62541_server_config,
-  open62541_server_config_default,
-  open62541_statuscodes,
-  open62541_types,
-  open62541_types_h,
-  open62541_types_generated,
-  open62541_types_generated_handling,
-  open62541_ua_types
+//  open62541_client_config,
+//  open62541_common,
+//  open62541_network,
+//  open62541_nodeids,
+//  open62541_pki,
+//  open62541_server,
+//  open62541_server_config,
+//  open62541_server_config_default,
+//  open62541_statuscodes,
 {$IFDEF UA_ENABLE_SUBSCRIPTIONS}
-  ,
-  open62541_client_subscriptions
+//  ,
+//  open62541_client_subscriptions
 {$ENDIF}
 {$IFNDEF LOAD_DYNAMICALLY}
   ,
@@ -90,7 +85,26 @@ uses
 
   open62541_server_config_default,
 {$ENDIF}
+//  open62541_types,
+  open62541_types_h
+//  open62541_types_generated,
+//  open62541_types_generated_handling,
+//  , open62541_ua_types
   ;
+
+
+{$IFDEF UA_VER1_5}
+  {$I types/generated_1_5.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_4}
+  {$I types/generated_1_4.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_3}
+  {$I types/generated_1_3.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
+  {$I types/generated_1_2.inc}
+{$ENDIF}
 
 
 const
@@ -109,6 +123,36 @@ const
 {$ENDIF}
 
 
+const
+{$IFDEF UA_VER1_5}
+  {$I const/statuscodes_1_5.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_4}
+  {$I const/statuscodes_1_4.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_3}
+  {$I const/statuscodes_1_3.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
+  {$I const/statuscodes_1_2.inc}
+{$ENDIF}
+
+
+const
+{$IFDEF UA_VER1_5}
+  {$I const/nodeids_1_5.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_4}
+  {$I const/nodeids_1_4.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_3}
+  {$I const/nodeids_1_3.inc}
+{$ENDIF}
+{$IFDEF UA_VER1_2}
+  {$I const/nodeids_1_2.inc}
+{$ENDIF}
+
+
 implementation
 
 
@@ -122,6 +166,7 @@ uses
   {$ENDIF}
   open62541_const
   ;
+
 
 var
   UA_TYPES: PUA_DataType;

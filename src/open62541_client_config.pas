@@ -24,8 +24,9 @@ interface
 
 
 uses
+  open62541,
   open62541_types_h,
-  open62541_types_generated,
+//  open62541_types_generated,
   open62541_common,
   open62541_network,
   open62541_securitypolicy,

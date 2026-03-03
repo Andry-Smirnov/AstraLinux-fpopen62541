@@ -24,10 +24,11 @@ interface
 
 
 uses
+//  open62541_statuscodes,
+  open62541,
   open62541_types_h,
-  open62541_types_generated,
-  open62541_client_config,
-  open62541_statuscodes
+//  open62541_types_generated,
+  open62541_client_config
   ;
 
 
