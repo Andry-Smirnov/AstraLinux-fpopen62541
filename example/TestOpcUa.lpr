@@ -14,8 +14,8 @@ uses
 {$R *.res}
 
 begin
-  RequireDerivedFormResource:=True;
-  Application.Scaled:=True;
+  RequireDerivedFormResource := True;
+  Application.Scaled := True;
   Application.Initialize;
   Application.CreateForm(TTestOpcUaForm, TestOpcUaForm);
   Application.Run;

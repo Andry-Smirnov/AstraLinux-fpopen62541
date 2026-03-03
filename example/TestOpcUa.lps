@@ -3,12 +3,12 @@
   <ProjectSession>
     <Version Value="12"/>
     <BuildModes Active="Win64"/>
-    <Units Count="34">
+    <Units Count="35">
       <Unit0>
         <Filename Value="TestOpcUa.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="6" Y="16"/>
-        <UsageCount Value="50"/>
+        <CursorPos X="4" Y="7"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -19,18 +19,21 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="3" Y="26"/>
-        <UsageCount Value="50"/>
+        <TopLine Value="71"/>
+        <CursorPos Y="95"/>
+        <UsageCount Value="53"/>
         <Bookmarks Count="1">
           <Item0 Y="31" Left="1" Top="1" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../src/types/open62541_types_h.pas"/>
         <EditorIndex Value="-1"/>
+        <TopLine Value="533"/>
         <CursorPos X="22" Y="5"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit2>
       <Unit3>
         <Filename Value="open62541.pas"/>
@@ -86,13 +89,14 @@
       </Unit9>
       <Unit10>
         <Filename Value="../src/open62541.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="51"/>
-        <CursorPos Y="68"/>
-        <UsageCount Value="19"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="12"/>
+        <CursorPos X="16" Y="89"/>
+        <UsageCount Value="20"/>
         <Bookmarks Count="1">
-          <Item0 Y="109" Left="1" Top="109" ID="2"/>
+          <Item0 Y="123" Left="1" Top="123" ID="2"/>
         </Bookmarks>
+        <Loaded Value="True"/>
       </Unit10>
       <Unit11>
         <Filename Value="../src/open62541_definitions.inc"/>
@@ -109,7 +113,8 @@
       <Unit13>
         <Filename Value="../src/open62541_const.pas"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="21" Y="6"/>
+        <TopLine Value="13"/>
+        <CursorPos X="25" Y="27"/>
         <UsageCount Value="11"/>
       </Unit13>
       <Unit14>
@@ -120,14 +125,15 @@
       <Unit15>
         <Filename Value="../src/open62541_client.pas"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="27" Y="29"/>
+        <TopLine Value="104"/>
+        <CursorPos Y="128"/>
         <UsageCount Value="10"/>
       </Unit15>
       <Unit16>
         <Filename Value="../src/open62541_client_highlevel.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="380"/>
-        <CursorPos Y="414"/>
+        <TopLine Value="80"/>
+        <CursorPos X="7" Y="105"/>
         <UsageCount Value="13"/>
       </Unit16>
       <Unit17>
@@ -156,8 +162,8 @@
       <Unit21>
         <Filename Value="../src/open62541_server.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="300"/>
-        <CursorPos Y="346"/>
+        <TopLine Value="7"/>
+        <CursorPos X="20" Y="29"/>
         <UsageCount Value="11"/>
       </Unit21>
       <Unit22>
@@ -170,15 +176,15 @@
       <Unit23>
         <Filename Value="../src/open62541_client_subscriptions.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="56"/>
-        <CursorPos X="3" Y="120"/>
-        <UsageCount Value="9"/>
+        <TopLine Value="6"/>
+        <CursorPos X="20" Y="28"/>
+        <UsageCount Value="10"/>
       </Unit23>
       <Unit24>
         <Filename Value="../src/types/open62541_types_generated.pas"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="19" Y="41"/>
-        <UsageCount Value="9"/>
+        <CursorPos X="31" Y="7"/>
+        <UsageCount Value="10"/>
       </Unit24>
       <Unit25>
         <Filename Value="../src/plugins/open62541_pki.pas"/>
@@ -195,7 +201,7 @@
       <Unit27>
         <Filename Value="../src/const/open62541_statuscodes.pas"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="27" Y="7"/>
+        <CursorPos Y="39"/>
         <UsageCount Value="10"/>
       </Unit27>
       <Unit28>
@@ -220,9 +226,9 @@
       <Unit31>
         <Filename Value="../src/types/open62541_types_generated_handling.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="55"/>
-        <CursorPos X="18" Y="65"/>
-        <UsageCount Value="9"/>
+        <TopLine Value="42"/>
+        <CursorPos Y="66"/>
+        <UsageCount Value="10"/>
       </Unit31>
       <Unit32>
         <Filename Value="../src/types/open62541_types.pas"/>
@@ -233,87 +239,95 @@
       </Unit32>
       <Unit33>
         <Filename Value="../src/open62541_types.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="21" Y="5"/>
-        <UsageCount Value="14"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="320"/>
+        <CursorPos Y="334"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
       </Unit33>
+      <Unit34>
+        <Filename Value="C:/lazarus/fpc/3.2.2/source/rtl/win/syswinh.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3" Y="49"/>
+        <UsageCount Value="10"/>
+      </Unit34>
     </Units>
     <JumpHistory Count="19" HistoryIndex="18">
       <Position1>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="24" Column="19" TopLine="10"/>
+        <Filename Value="../src/open62541.pas"/>
+        <Caret Line="130" Column="9" TopLine="107"/>
       </Position1>
       <Position2>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="25" Column="21" TopLine="15"/>
+        <Filename Value="../src/open62541.pas"/>
+        <Caret Line="74" TopLine="106"/>
       </Position2>
       <Position3>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="184" Column="9" TopLine="160"/>
+        <Filename Value="../src/open62541_types.pas"/>
+        <Caret Line="303" Column="13" TopLine="280"/>
       </Position3>
       <Position4>
         <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="27"/>
+        <Caret Line="764" Column="3" TopLine="740"/>
       </Position4>
       <Position5>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="174" Column="16" TopLine="167"/>
+        <Filename Value="../src/open62541.pas"/>
+        <Caret Line="92" Column="7" TopLine="69"/>
       </Position5>
       <Position6>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="27" Column="34"/>
+        <Filename Value="../src/open62541.pas"/>
+        <Caret Line="91" Column="40" TopLine="69"/>
       </Position6>
       <Position7>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="245" Column="72" TopLine="221"/>
+        <Filename Value="../src/open62541_types.pas"/>
+        <Caret Line="304" TopLine="280"/>
       </Position7>
       <Position8>
         <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="26" Column="29"/>
+        <Caret Line="760" Column="16" TopLine="741"/>
       </Position8>
       <Position9>
         <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="28" Column="35" TopLine="5"/>
+        <Caret Line="709" Column="3" TopLine="704"/>
       </Position9>
       <Position10>
         <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="318" Column="19" TopLine="297"/>
+        <Caret Line="758" Column="10" TopLine="737"/>
       </Position10>
       <Position11>
         <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="30" Column="20"/>
+        <Caret Line="718" Column="17" TopLine="704"/>
       </Position11>
       <Position12>
         <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="325" Column="9" TopLine="301"/>
+        <Caret Line="52" Column="5" TopLine="27"/>
       </Position12>
       <Position13>
         <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="25"/>
+        <Caret Line="170" Column="3" TopLine="168"/>
       </Position13>
       <Position14>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="392" Column="61" TopLine="368"/>
+        <Filename Value="../src/open62541_types.pas"/>
+        <Caret Line="149" Column="13" TopLine="125"/>
       </Position14>
       <Position15>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="26" Column="21"/>
+        <Filename Value="../src/open62541_types.pas"/>
+        <Caret Line="322" Column="3" TopLine="320"/>
       </Position15>
       <Position16>
         <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="387" Column="18" TopLine="370"/>
+        <Caret Line="170" Column="7" TopLine="156"/>
       </Position16>
       <Position17>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="30" Column="38"/>
+        <Filename Value="../src/open62541_types.pas"/>
+        <Caret Line="149" Column="13" TopLine="125"/>
       </Position17>
       <Position18>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="395" Column="20" TopLine="372"/>
+        <Filename Value="../src/open62541_types.pas"/>
+        <Caret Line="322" Column="3" TopLine="320"/>
       </Position18>
       <Position19>
-        <Filename Value="TestOpcUa1.pas"/>
-        <Caret Line="26" Column="3"/>
+        <Filename Value="../src/open62541_types.pas"/>
+        <Caret Line="334" TopLine="320"/>
       </Position19>
     </JumpHistory>
     <RunParams>
@@ -326,4 +340,15 @@
       </List0>
     </HistoryLists>
   </ProjectSession>
+  <Debugging>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="../src/open62541_types.pas"/>
+        <Line Value="334"/>
+      </Item>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>

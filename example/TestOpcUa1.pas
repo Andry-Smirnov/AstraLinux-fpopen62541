@@ -24,15 +24,15 @@ uses
   open62541_client_config,
   open62541_client_highlevel,
   open62541_common,
-  open62541_nodeids,
+//  open62541_nodeids,
   open62541_types,
   open62541_types_h,
-  open62541_types_generated,
+//  open62541_types_generated,
   open62541_types_generated_handling,
+//  open62541_statuscodes,
   open62541_server_config,
   open62541_server_config_default,
-  open62541_server,
-  open62541_statuscodes
+  open62541_server
   ;
 
 type
@@ -48,8 +48,10 @@ type
     running: UA_Boolean;
     server: PUA_Server;
     FOwner: TTestOpcUaForm;
-    constructor Create(owner: TTestOpcUaForm);
+
+    constructor Create(Owner: TTestOpcUaForm);
     destructor Destroy; override;
+
     procedure Execute; override;
   private
     procedure Log(const msg: string);
@@ -757,6 +759,7 @@ begin
   Memo1.Lines.Append(Format('Server add variable "%s" (Result=%x)',
     [eServerVariableName.Text, res]));
 end;
+
 
 procedure TTestOpcUaForm.btnServerWriteVariableClick(Sender: TObject);
 var
