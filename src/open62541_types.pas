@@ -331,7 +331,9 @@ begin
       [LIB_OPEN62541_FILENAME, GetLoadErrorStr()]);
   end;
 
-  Pointer(UA_TYPES) := GetProcedureAddress(open62541LibHandle,'UA_TYPES'); // external variable name
+  // external variable name
+  Pointer(UA_TYPES) := GetProcedureAddress(open62541LibHandle, 'UA_TYPES');
+
   UA_VariableAttributes_default := PUA_VariableAttributes(GetProcedureAddress(open62541LibHandle, 'UA_VariableAttributes_default'))^;
   UA_MethodAttributes_default := PUA_MethodAttributes(GetProcedureAddress(open62541LibHandle, 'UA_MethodAttributes_default'))^;
   UA_ObjectAttributes_default := PUA_ObjectAttributes(GetProcedureAddress(open62541LibHandle, 'UA_ObjectAttributes_default'))^;
