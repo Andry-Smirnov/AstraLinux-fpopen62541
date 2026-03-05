@@ -333,6 +333,30 @@ type
     innerDiagnosticInfo: PUA_DiagnosticInfo;
   end;
 
+(*
+  // DiagnosticInfo - A structure that contains detailed error and diagnostic information
+  // associated with a StatusCode.
+  PUA_DiagnosticInfo = ^UA_DiagnosticInfo;
+  UA_DiagnosticInfo = bitpacked record
+  //    flag: UA_Boolean;
+    hasSymbolicId: 0..1;
+    hasNamespaceUri: 0..1;
+    hasLocalizedText: 0..1;
+    hasLocale: 0..1;
+    hasAdditionalInfo: 0..1;
+    hasInnerStatusCode: 0..1;
+    hasInnerDiagnosticInfo: 0..1;
+
+    symbolicId: UA_Int32;
+    namespaceUri: UA_Int32;
+    localizedText: UA_Int32;
+    locale: UA_Int32;
+    additionalInfo: UA_String;
+    innerStatusCode: UA_StatusCode;
+    innerDiagnosticInfo: PUA_DiagnosticInfo;
+  end;
+*)
+
   // Generic Type Handling (.. _generic-types:)
   //
   // All information about a (builtin/structured) data type is stored in a
@@ -490,12 +514,12 @@ type
     {$ENDIF}
     typeId: UA_NodeId;               // The nodeid of the type
     binaryEncodingId: UA_NodeId;     // NodeId of datatype when encoded as binary
-    //xmlEncodingId: UA_NodeId;      // NodeId of datatype when encoded as XML
+    xmlEncodingId: UA_NodeId;        // NodeId of datatype when encoded as XML
     memSize: UA_UInt16;              // Size of the struct in memory
-    typeKind : 0..63;                // Dispatch index for the handling routines
-    pointerFree : 0..1;              // The type (and its members) contains no pointers that need to be freed
-    overlayable : 0..1;              // The type has the identical memory layout in memory and on the binary stream.
-    membersSize : UA_Byte;           // How many members does the type have?
+    typeKind: 0..63;                 // Dispatch index for the handling routines
+    pointerFree: 0..1;               // The type (and its members) contains no pointers that need to be freed
+    overlayable: 0..1;               // The type has the identical memory layout in memory and on the binary stream.
+    membersSize: UA_Byte;            // How many members does the type have?
     members: ^UA_DataTypeMember;
   end;
 {$ENDIF}
@@ -506,12 +530,12 @@ type
     {$ENDIF}
     typeId: UA_NodeId;               // The nodeid of the type
     binaryEncodingId: UA_NodeId;     // NodeId of datatype when encoded as binary
-    //xmlEncodingId: UA_NodeId;      // NodeId of datatype when encoded as XML
+    xmlEncodingId: UA_NodeId;        // NodeId of datatype when encoded as XML
     memSize: UA_UInt16;              // Size of the struct in memory
-    typeKind : 0..63;                // Dispatch index for the handling routines
-    pointerFree : 0..1;              // The type (and its members) contains no pointers that need to be freed
-    overlayable : 0..1;              // The type has the identical memory layout in memory and on the binary stream.
-    membersSize : UA_Byte;           // How many members does the type have?
+    typeKind: 0..63;                 // Dispatch index for the handling routines
+    pointerFree: 0..1;               // The type (and its members) contains no pointers that need to be freed
+    overlayable: 0..1;               // The type has the identical memory layout in memory and on the binary stream.
+    membersSize: UA_Byte;            // How many members does the type have?
     members: ^UA_DataTypeMember;
   end;
 {$ENDIF}
@@ -522,12 +546,12 @@ type
     {$ENDIF}
     typeId: UA_NodeId;               // The nodeid of the type
     binaryEncodingId: UA_NodeId;     // NodeId of datatype when encoded as binary
-    //xmlEncodingId: UA_NodeId;      // NodeId of datatype when encoded as XML
+    xmlEncodingId: UA_NodeId;        // NodeId of datatype when encoded as XML
     memSize: UA_UInt16;              // Size of the struct in memory
-    typeKind : 0..63;                // Dispatch index for the handling routines
-    pointerFree : 0..1;              // The type (and its members) contains no pointers that need to be freed
-    overlayable : 0..1;              // The type has the identical memory layout in memory and on the binary stream.
-    membersSize : UA_Byte;           // How many members does the type have?
+    typeKind: 0..63;                 // Dispatch index for the handling routines
+    pointerFree: 0..1;               // The type (and its members) contains no pointers that need to be freed
+    overlayable: 0..1;               // The type has the identical memory layout in memory and on the binary stream.
+    membersSize: UA_Byte;            // How many members does the type have?
     members: ^UA_DataTypeMember;
   end;
 {$ENDIF}
