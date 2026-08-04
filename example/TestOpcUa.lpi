@@ -35,6 +35,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
+              <DebugInfoType Value="dsDwarf3"/>
               <StripSymbols Value="True"/>
             </Debugging>
             <Options>

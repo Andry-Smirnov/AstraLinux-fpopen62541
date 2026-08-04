@@ -1,3 +1,4 @@
+{$CODEPAGE UTF8}
 program TestOpcUa;
 
 {$mode objfpc}{$H+}
@@ -8,13 +9,12 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  TestOpcUa1
-  ;
+  TestOpcUa1;
 
 {$R *.res}
 
 begin
-  RequireDerivedFormResource:=True;
+  RequireDerivedFormResource := True;
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TTestOpcUaForm, TestOpcUaForm);

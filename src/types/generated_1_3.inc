@@ -1,5 +1,5 @@
 (* Generated from Opc.Ua.Types.bsd with script ./generate_datatypes_fpc.py
-* on host seis by user luca at 2021-11-04 04:52:46 *)
+* on host virus-astra by user virus at 2026-01-30 11:32:34 *)
 
 (**
  * Every type is assigned an index in an array containing the type descriptions.
@@ -164,8 +164,8 @@ const
  *)
 type
   UA_KeyValuePair = record
-    key : UA_QualifiedName ;
-    value : UA_Variant;
+    key: UA_QualifiedName;
+    value: UA_Variant;
   end;
   PUA_KeyValuePair = ^UA_KeyValuePair;
 
@@ -175,7 +175,7 @@ const
 (**
  * NodeClass
  * ^^^^^^^^^
- * A mask specifying the class of the node. *)
+ *)
 type
   UA_NodeClass = (
     UA_NODECLASS_UNSPECIFIED = 0,
@@ -252,7 +252,7 @@ const
 (**
  * Argument
  * ^^^^^^^^
- * An argument for a method. *)
+ *)
 type
   UA_Argument = record
     name: UA_String;
@@ -270,7 +270,7 @@ const
 (**
  * EnumValueType
  * ^^^^^^^^^^^^^
- * A mapping between a value of an enumerated type and a name and description. *)
+ *)
 type
   UA_EnumValueType = record
     value: UA_Int64;
@@ -301,7 +301,7 @@ const
 (**
  * Duration
  * ^^^^^^^^
- * A period of time measured in milliseconds. *)
+ *)
 type
   UA_Duration = UA_Double;
 
@@ -311,7 +311,7 @@ const
 (**
  * UtcTime
  * ^^^^^^^
- * A date/time value specified in Universal Coordinated Time (UTC). *)
+ *)
 type
   UA_UtcTime = UA_DateTime;
 
@@ -321,7 +321,7 @@ const
 (**
  * LocaleId
  * ^^^^^^^^
- * An identifier for a user locale. *)
+ *)
 type
   UA_LocaleId = UA_String;
 
@@ -329,23 +329,9 @@ const
   UA_TYPES_LOCALEID = 35;
 
 (**
- * TimeZoneDataType
- * ^^^^^^^^^^^^^^^^
- *)
-type
-  UA_TimeZoneDataType = record
-    offset : UA_Int16;
-    daylightSavingInOffset : UA_Boolean;
-  end;
-  PUA_TimeZoneDataType = ^UA_TimeZoneDataType;
-
-const
-  UA_TYPES_TIMEZONEDATATYPE	= 36;
-
-(**
  * ApplicationType
  * ^^^^^^^^^^^^^^^
- * The types of applications. *)
+ *)
 type
   UA_ApplicationType = (
     UA_APPLICATIONTYPE_SERVER = 0,
@@ -358,12 +344,12 @@ type
   {$IF sizeof(UA_ApplicationType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_APPLICATIONTYPE = 37;
+  UA_TYPES_APPLICATIONTYPE = 36;
 
 (**
  * ApplicationDescription
  * ^^^^^^^^^^^^^^^^^^^^^^
- * Describes an application and how to find it. *)
+ *)
 type
   UA_ApplicationDescription = record
     applicationUri: UA_String;
@@ -378,12 +364,12 @@ type
   PUA_ApplicationDescription = ^UA_ApplicationDescription;
 
 const
-  UA_TYPES_APPLICATIONDESCRIPTION = 38;
+  UA_TYPES_APPLICATIONDESCRIPTION = 37;
 
 (**
  * RequestHeader
  * ^^^^^^^^^^^^^
- * The header passed with every server request. *)
+ *)
 type
   UA_RequestHeader = record
     authenticationToken: UA_NodeId;
@@ -397,12 +383,12 @@ type
   PUA_RequestHeader = ^UA_RequestHeader;
 
 const
-  UA_TYPES_REQUESTHEADER = 39;
+  UA_TYPES_REQUESTHEADER = 38;
 
 (**
  * ResponseHeader
  * ^^^^^^^^^^^^^^
- * The header passed with every server response. *)
+ *)
 type
   UA_ResponseHeader = record
     timestamp: UA_DateTime;
@@ -416,12 +402,12 @@ type
   PUA_ResponseHeader = ^UA_ResponseHeader;
 
 const
-  UA_TYPES_RESPONSEHEADER = 40;
+  UA_TYPES_RESPONSEHEADER = 39;
 
 (**
  * ServiceFault
  * ^^^^^^^^^^^^
- * The response returned by all services when there is a service level error. *)
+ *)
 type
   UA_ServiceFault = record
     responseHeader: UA_ResponseHeader;
@@ -429,12 +415,12 @@ type
   PUA_ServiceFault = ^UA_ServiceFault;
 
 const
-  UA_TYPES_SERVICEFAULT = 41;
+  UA_TYPES_SERVICEFAULT = 40;
 
 (**
  * FindServersRequest
  * ^^^^^^^^^^^^^^^^^^
- * Finds the servers known to the discovery server. *)
+ *)
 type
   UA_FindServersRequest = record
     requestHeader: UA_RequestHeader;
@@ -447,12 +433,12 @@ type
   PUA_FindServersRequest = ^UA_FindServersRequest;
 
 const
-  UA_TYPES_FINDSERVERSREQUEST = 42;
+  UA_TYPES_FINDSERVERSREQUEST = 41;
 
 (**
  * FindServersResponse
  * ^^^^^^^^^^^^^^^^^^^
- * Finds the servers known to the discovery server. *)
+ *)
 type
   UA_FindServersResponse = record
     responseHeader: UA_ResponseHeader;
@@ -462,12 +448,12 @@ type
   PUA_FindServersResponse = ^UA_FindServersResponse;
 
 const
-  UA_TYPES_FINDSERVERSRESPONSE = 43;
+  UA_TYPES_FINDSERVERSRESPONSE = 42;
 
 (**
  * MessageSecurityMode
  * ^^^^^^^^^^^^^^^^^^^
- * The type of security to use on a message. *)
+ *)
 type
   UA_MessageSecurityMode = (
     UA_MESSAGESECURITYMODE_INVALID = 0,
@@ -480,12 +466,12 @@ type
   {$IF sizeof(UA_MessageSecurityMode) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_MESSAGESECURITYMODE = 44;
+  UA_TYPES_MESSAGESECURITYMODE = 43;
 
 (**
  * UserTokenType
  * ^^^^^^^^^^^^^
- * The possible user token types. *)
+ *)
 type
   UA_UserTokenType = (
     UA_USERTOKENTYPE_ANONYMOUS = 0,
@@ -498,12 +484,12 @@ type
   {$IF sizeof(UA_UserTokenType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_USERTOKENTYPE = 45;
+  UA_TYPES_USERTOKENTYPE = 44;
 
 (**
  * UserTokenPolicy
  * ^^^^^^^^^^^^^^^
- * Describes a user token that can be used with a server. *)
+ *)
 type
   UA_UserTokenPolicy = record
     policyId: UA_String;
@@ -515,12 +501,12 @@ type
   PUA_UserTokenPolicy = ^UA_UserTokenPolicy;
 
 const
-  UA_TYPES_USERTOKENPOLICY = 46;
+  UA_TYPES_USERTOKENPOLICY = 45;
 
 (**
  * EndpointDescription
  * ^^^^^^^^^^^^^^^^^^^
- * The description of a endpoint that can be used to access a server. *)
+ *)
 type
   UA_EndpointDescription = record
     endpointUrl: UA_String;
@@ -536,12 +522,12 @@ type
   PUA_EndpointDescription = ^UA_EndpointDescription;
 
 const
-  UA_TYPES_ENDPOINTDESCRIPTION = 47;
+  UA_TYPES_ENDPOINTDESCRIPTION = 46;
 
 (**
  * GetEndpointsRequest
  * ^^^^^^^^^^^^^^^^^^^
- * Gets the endpoints used by the server. *)
+ *)
 type
   UA_GetEndpointsRequest = record
     requestHeader: UA_RequestHeader;
@@ -554,12 +540,12 @@ type
   PUA_GetEndpointsRequest = ^UA_GetEndpointsRequest;
 
 const
-  UA_TYPES_GETENDPOINTSREQUEST = 48;
+  UA_TYPES_GETENDPOINTSREQUEST = 47;
 
 (**
  * GetEndpointsResponse
  * ^^^^^^^^^^^^^^^^^^^^
- * Gets the endpoints used by the server. *)
+ *)
 type
   UA_GetEndpointsResponse = record
     responseHeader: UA_ResponseHeader;
@@ -569,12 +555,12 @@ type
   PUA_GetEndpointsResponse = ^UA_GetEndpointsResponse;
 
 const
-  UA_TYPES_GETENDPOINTSRESPONSE = 49;
+  UA_TYPES_GETENDPOINTSRESPONSE = 48;
 
 (**
  * SecurityTokenRequestType
  * ^^^^^^^^^^^^^^^^^^^^^^^^
- * Indicates whether a token if being created or renewed. *)
+ *)
 type
   UA_SecurityTokenRequestType = (
     UA_SECURITYTOKENREQUESTTYPE_ISSUE = 0,
@@ -585,12 +571,12 @@ type
   {$IF sizeof(UA_SecurityTokenRequestType) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_SECURITYTOKENREQUESTTYPE = 50;
+  UA_TYPES_SECURITYTOKENREQUESTTYPE = 49;
 
 (**
  * ChannelSecurityToken
  * ^^^^^^^^^^^^^^^^^^^^
- * The token that identifies a set of keys for an active secure channel. *)
+ *)
 type
   UA_ChannelSecurityToken = record
     channelId: UA_UInt32;
@@ -601,12 +587,12 @@ type
   PUA_ChannelSecurityToken = ^UA_ChannelSecurityToken;
 
 const
-  UA_TYPES_CHANNELSECURITYTOKEN = 51;
+  UA_TYPES_CHANNELSECURITYTOKEN = 50;
 
 (**
  * OpenSecureChannelRequest
  * ^^^^^^^^^^^^^^^^^^^^^^^^
- * Creates a secure channel with a server. *)
+ *)
 type
   UA_OpenSecureChannelRequest = record
     requestHeader: UA_RequestHeader;
@@ -619,12 +605,12 @@ type
   PUA_OpenSecureChannelRequest = ^UA_OpenSecureChannelRequest;
 
 const
-  UA_TYPES_OPENSECURECHANNELREQUEST = 52;
+  UA_TYPES_OPENSECURECHANNELREQUEST = 51;
 
 (**
  * OpenSecureChannelResponse
  * ^^^^^^^^^^^^^^^^^^^^^^^^^
- * Creates a secure channel with a server. *)
+ *)
 type
   UA_OpenSecureChannelResponse = record
     responseHeader: UA_ResponseHeader;
@@ -635,12 +621,12 @@ type
   PUA_OpenSecureChannelResponse = ^UA_OpenSecureChannelResponse;
 
 const
-  UA_TYPES_OPENSECURECHANNELRESPONSE = 53;
+  UA_TYPES_OPENSECURECHANNELRESPONSE = 52;
 
 (**
  * CloseSecureChannelRequest
  * ^^^^^^^^^^^^^^^^^^^^^^^^^
- * Closes a secure channel. *)
+ *)
 type
   UA_CloseSecureChannelRequest = record
     requestHeader: UA_RequestHeader;
@@ -648,12 +634,12 @@ type
   PUA_CloseSecureChannelRequest = ^UA_CloseSecureChannelRequest;
 
 const
-  UA_TYPES_CLOSESECURECHANNELREQUEST = 54;
+  UA_TYPES_CLOSESECURECHANNELREQUEST = 53;
 
 (**
  * CloseSecureChannelResponse
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^
- * Closes a secure channel. *)
+ *)
 type
   UA_CloseSecureChannelResponse = record
     responseHeader: UA_ResponseHeader;
@@ -661,12 +647,12 @@ type
   PUA_CloseSecureChannelResponse = ^UA_CloseSecureChannelResponse;
 
 const
-  UA_TYPES_CLOSESECURECHANNELRESPONSE = 55;
+  UA_TYPES_CLOSESECURECHANNELRESPONSE = 54;
 
 (**
  * SignedSoftwareCertificate
  * ^^^^^^^^^^^^^^^^^^^^^^^^^
- * A software certificate with a digital signature. *)
+ *)
 type
   UA_SignedSoftwareCertificate = record
     certificateData: UA_ByteString;
@@ -675,12 +661,12 @@ type
   PUA_SignedSoftwareCertificate = ^UA_SignedSoftwareCertificate;
 
 const
-  UA_TYPES_SIGNEDSOFTWARECERTIFICATE = 56;
+  UA_TYPES_SIGNEDSOFTWARECERTIFICATE = 55;
 
 (**
  * SignatureData
  * ^^^^^^^^^^^^^
- * A digital signature. *)
+ *)
 type
   UA_SignatureData = record
     algorithm: UA_String;
@@ -689,12 +675,12 @@ type
   PUA_SignatureData = ^UA_SignatureData;
 
 const
-  UA_TYPES_SIGNATUREDATA = 57;
+  UA_TYPES_SIGNATUREDATA = 56;
 
 (**
  * CreateSessionRequest
  * ^^^^^^^^^^^^^^^^^^^^
- * Creates a new session with the server. *)
+ *)
 type
   UA_CreateSessionRequest = record
     requestHeader: UA_RequestHeader;
@@ -710,12 +696,12 @@ type
   PUA_CreateSessionRequest = ^UA_CreateSessionRequest;
 
 const
-  UA_TYPES_CREATESESSIONREQUEST = 58;
+  UA_TYPES_CREATESESSIONREQUEST = 57;
 
 (**
  * CreateSessionResponse
  * ^^^^^^^^^^^^^^^^^^^^^
- * Creates a new session with the server. *)
+ *)
 type
   UA_CreateSessionResponse = record
     responseHeader: UA_ResponseHeader;
@@ -734,12 +720,12 @@ type
   PUA_CreateSessionResponse = ^UA_CreateSessionResponse;
 
 const
-  UA_TYPES_CREATESESSIONRESPONSE = 59;
+  UA_TYPES_CREATESESSIONRESPONSE = 58;
 
 (**
  * UserIdentityToken
  * ^^^^^^^^^^^^^^^^^
- * A base type for a user identity token. *)
+ *)
 type
   UA_UserIdentityToken = record
     policyId: UA_String;
@@ -747,12 +733,12 @@ type
   PUA_UserIdentityToken = ^UA_UserIdentityToken;
 
 const
-  UA_TYPES_USERIDENTITYTOKEN = 60;
+  UA_TYPES_USERIDENTITYTOKEN = 59;
 
 (**
  * AnonymousIdentityToken
  * ^^^^^^^^^^^^^^^^^^^^^^
- * A token representing an anonymous user. *)
+ *)
 type
   UA_AnonymousIdentityToken = record
     policyId: UA_String;
@@ -760,12 +746,12 @@ type
   PUA_AnonymousIdentityToken = ^UA_AnonymousIdentityToken;
 
 const
-  UA_TYPES_ANONYMOUSIDENTITYTOKEN = 61;
+  UA_TYPES_ANONYMOUSIDENTITYTOKEN = 60;
 
 (**
  * UserNameIdentityToken
  * ^^^^^^^^^^^^^^^^^^^^^
- * A token representing a user identified by a user name and password. *)
+ *)
 type
   UA_UserNameIdentityToken = record
     policyId: UA_String;
@@ -776,12 +762,12 @@ type
   PUA_UserNameIdentityToken = ^UA_UserNameIdentityToken;
 
 const
-  UA_TYPES_USERNAMEIDENTITYTOKEN = 62;
+  UA_TYPES_USERNAMEIDENTITYTOKEN = 61;
 
 (**
  * X509IdentityToken
  * ^^^^^^^^^^^^^^^^^
- * A token representing a user identified by an X509 certificate. *)
+ *)
 type
   UA_X509IdentityToken = record
     policyId: UA_String;
@@ -790,12 +776,12 @@ type
   PUA_X509IdentityToken = ^UA_X509IdentityToken;
 
 const
-  UA_TYPES_X509IDENTITYTOKEN = 63;
+  UA_TYPES_X509IDENTITYTOKEN = 62;
 
 (**
  * IssuedIdentityToken
  * ^^^^^^^^^^^^^^^^^^^
- * A token representing a user identified by a WS-Security XML token. *)
+ *)
 type
   UA_IssuedIdentityToken = record
     policyId: UA_String;
@@ -805,12 +791,12 @@ type
   PUA_IssuedIdentityToken = ^UA_IssuedIdentityToken;
 
 const
-  UA_TYPES_ISSUEDIDENTITYTOKEN = 64;
+  UA_TYPES_ISSUEDIDENTITYTOKEN = 63;
 
 (**
  * ActivateSessionRequest
  * ^^^^^^^^^^^^^^^^^^^^^^
- * Activates a session with the server. *)
+ *)
 type
   UA_ActivateSessionRequest = record
     requestHeader: UA_RequestHeader;
@@ -825,12 +811,12 @@ type
   PUA_ActivateSessionRequest = ^UA_ActivateSessionRequest;
 
 const
-  UA_TYPES_ACTIVATESESSIONREQUEST = 65;
+  UA_TYPES_ACTIVATESESSIONREQUEST = 64;
 
 (**
  * ActivateSessionResponse
  * ^^^^^^^^^^^^^^^^^^^^^^^
- * Activates a session with the server. *)
+ *)
 type
   UA_ActivateSessionResponse = record
     responseHeader: UA_ResponseHeader;
@@ -843,12 +829,12 @@ type
   PUA_ActivateSessionResponse = ^UA_ActivateSessionResponse;
 
 const
-  UA_TYPES_ACTIVATESESSIONRESPONSE = 66;
+  UA_TYPES_ACTIVATESESSIONRESPONSE = 65;
 
 (**
  * CloseSessionRequest
  * ^^^^^^^^^^^^^^^^^^^
- * Closes a session with the server. *)
+ *)
 type
   UA_CloseSessionRequest = record
     requestHeader: UA_RequestHeader;
@@ -857,12 +843,12 @@ type
   PUA_CloseSessionRequest = ^UA_CloseSessionRequest;
 
 const
-  UA_TYPES_CLOSESESSIONREQUEST = 67;
+  UA_TYPES_CLOSESESSIONREQUEST = 66;
 
 (**
  * CloseSessionResponse
  * ^^^^^^^^^^^^^^^^^^^^
- * Closes a session with the server. *)
+ *)
 type
   UA_CloseSessionResponse = record
     responseHeader: UA_ResponseHeader;
@@ -870,12 +856,12 @@ type
   PUA_CloseSessionResponse = ^UA_CloseSessionResponse;
 
 const
-  UA_TYPES_CLOSESESSIONRESPONSE = 68;
+  UA_TYPES_CLOSESESSIONRESPONSE = 67;
 
 (**
  * NodeAttributesMask
  * ^^^^^^^^^^^^^^^^^^
- * The bits used to specify default attributes for a new node. *)
+ *)
 type
   UA_NodeAttributesMask = (
     UA_NODEATTRIBUTESMASK_NONE = 0,
@@ -919,12 +905,12 @@ type
   {$IF sizeof(UA_NodeAttributesMask) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_NODEATTRIBUTESMASK = 69;
+  UA_TYPES_NODEATTRIBUTESMASK = 68;
 
 (**
  * NodeAttributes
  * ^^^^^^^^^^^^^^
- * The base attributes for all nodes. *)
+ *)
 type
   UA_NodeAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -936,12 +922,12 @@ type
   PUA_NodeAttributes = ^UA_NodeAttributes;
 
 const
-  UA_TYPES_NODEATTRIBUTES = 70;
+  UA_TYPES_NODEATTRIBUTES = 69;
 
 (**
  * ObjectAttributes
  * ^^^^^^^^^^^^^^^^
- * The attributes for an object node. *)
+ *)
 type
   UA_ObjectAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -954,12 +940,12 @@ type
   PUA_ObjectAttributes = ^UA_ObjectAttributes;
 
 const
-  UA_TYPES_OBJECTATTRIBUTES = 71;
+  UA_TYPES_OBJECTATTRIBUTES = 70;
 
 (**
  * VariableAttributes
  * ^^^^^^^^^^^^^^^^^^
- * The attributes for a variable node. *)
+ *)
 type
   UA_VariableAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -980,12 +966,12 @@ type
   PUA_VariableAttributes = ^UA_VariableAttributes;
 
 const
-  UA_TYPES_VARIABLEATTRIBUTES = 72;
+  UA_TYPES_VARIABLEATTRIBUTES = 71;
 
 (**
  * MethodAttributes
  * ^^^^^^^^^^^^^^^^
- * The attributes for a method node. *)
+ *)
 type
   UA_MethodAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -999,12 +985,12 @@ type
   PUA_MethodAttributes = ^UA_MethodAttributes;
 
 const
-  UA_TYPES_METHODATTRIBUTES = 73;
+  UA_TYPES_METHODATTRIBUTES = 72;
 
 (**
  * ObjectTypeAttributes
  * ^^^^^^^^^^^^^^^^^^^^
- * The attributes for an object type node. *)
+ *)
 type
   UA_ObjectTypeAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -1017,12 +1003,12 @@ type
   PUA_ObjectTypeAttributes = ^UA_ObjectTypeAttributes;
 
 const
-  UA_TYPES_OBJECTTYPEATTRIBUTES = 74;
+  UA_TYPES_OBJECTTYPEATTRIBUTES = 73;
 
 (**
  * VariableTypeAttributes
  * ^^^^^^^^^^^^^^^^^^^^^^
- * The attributes for a variable type node. *)
+ *)
 type
   UA_VariableTypeAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -1040,12 +1026,12 @@ type
   PUA_VariableTypeAttributes = ^UA_VariableTypeAttributes;
 
 const
-  UA_TYPES_VARIABLETYPEATTRIBUTES = 75;
+  UA_TYPES_VARIABLETYPEATTRIBUTES = 74;
 
 (**
  * ReferenceTypeAttributes
  * ^^^^^^^^^^^^^^^^^^^^^^^
- * The attributes for a reference type node. *)
+ *)
 type
   UA_ReferenceTypeAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -1060,12 +1046,12 @@ type
   PUA_ReferenceTypeAttributes = ^UA_ReferenceTypeAttributes;
 
 const
-  UA_TYPES_REFERENCETYPEATTRIBUTES = 76;
+  UA_TYPES_REFERENCETYPEATTRIBUTES = 75;
 
 (**
  * DataTypeAttributes
  * ^^^^^^^^^^^^^^^^^^
- * The attributes for a data type node. *)
+ *)
 type
   UA_DataTypeAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -1078,12 +1064,12 @@ type
   PUA_DataTypeAttributes = ^UA_DataTypeAttributes;
 
 const
-  UA_TYPES_DATATYPEATTRIBUTES = 77;
+  UA_TYPES_DATATYPEATTRIBUTES = 76;
 
 (**
  * ViewAttributes
  * ^^^^^^^^^^^^^^
- * The attributes for a view node. *)
+ *)
 type
   UA_ViewAttributes = record
     specifiedAttributes: UA_UInt32;
@@ -1097,12 +1083,12 @@ type
   PUA_ViewAttributes = ^UA_ViewAttributes;
 
 const
-  UA_TYPES_VIEWATTRIBUTES = 78;
+  UA_TYPES_VIEWATTRIBUTES = 77;
 
 (**
  * AddNodesItem
  * ^^^^^^^^^^^^
- * A request to add a node to the server address space. *)
+ *)
 type
   UA_AddNodesItem = record
     parentNodeId: UA_ExpandedNodeId;
@@ -1116,12 +1102,12 @@ type
   PUA_AddNodesItem = ^UA_AddNodesItem;
 
 const
-  UA_TYPES_ADDNODESITEM = 79;
+  UA_TYPES_ADDNODESITEM = 78;
 
 (**
  * AddNodesResult
  * ^^^^^^^^^^^^^^
- * A result of an add node operation. *)
+ *)
 type
   UA_AddNodesResult = record
     statusCode: UA_StatusCode;
@@ -1130,12 +1116,12 @@ type
   PUA_AddNodesResult = ^UA_AddNodesResult;
 
 const
-  UA_TYPES_ADDNODESRESULT = 80;
+  UA_TYPES_ADDNODESRESULT = 79;
 
 (**
  * AddNodesRequest
  * ^^^^^^^^^^^^^^^
- * Adds one or more nodes to the server address space. *)
+ *)
 type
   UA_AddNodesRequest = record
     requestHeader: UA_RequestHeader;
@@ -1145,12 +1131,12 @@ type
   PUA_AddNodesRequest = ^UA_AddNodesRequest;
 
 const
-  UA_TYPES_ADDNODESREQUEST = 81;
+  UA_TYPES_ADDNODESREQUEST = 80;
 
 (**
  * AddNodesResponse
  * ^^^^^^^^^^^^^^^^
- * Adds one or more nodes to the server address space. *)
+ *)
 type
   UA_AddNodesResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1162,12 +1148,12 @@ type
   PUA_AddNodesResponse = ^UA_AddNodesResponse;
 
 const
-  UA_TYPES_ADDNODESRESPONSE = 82;
+  UA_TYPES_ADDNODESRESPONSE = 81;
 
 (**
  * AddReferencesItem
  * ^^^^^^^^^^^^^^^^^
- * A request to add a reference to the server address space. *)
+ *)
 type
   UA_AddReferencesItem = record
     sourceNodeId: UA_NodeId;
@@ -1180,12 +1166,12 @@ type
   PUA_AddReferencesItem = ^UA_AddReferencesItem;
 
 const
-  UA_TYPES_ADDREFERENCESITEM = 83;
+  UA_TYPES_ADDREFERENCESITEM = 82;
 
 (**
  * AddReferencesRequest
  * ^^^^^^^^^^^^^^^^^^^^
- * Adds one or more references to the server address space. *)
+ *)
 type
   UA_AddReferencesRequest = record
     requestHeader: UA_RequestHeader;
@@ -1195,12 +1181,12 @@ type
   PUA_AddReferencesRequest = ^UA_AddReferencesRequest;
 
 const
-  UA_TYPES_ADDREFERENCESREQUEST = 84;
+  UA_TYPES_ADDREFERENCESREQUEST = 83;
 
 (**
  * AddReferencesResponse
  * ^^^^^^^^^^^^^^^^^^^^^
- * Adds one or more references to the server address space. *)
+ *)
 type
   UA_AddReferencesResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1212,12 +1198,12 @@ type
   PUA_AddReferencesResponse = ^UA_AddReferencesResponse;
 
 const
-  UA_TYPES_ADDREFERENCESRESPONSE = 85;
+  UA_TYPES_ADDREFERENCESRESPONSE = 84;
 
 (**
  * DeleteNodesItem
  * ^^^^^^^^^^^^^^^
- * A request to delete a node to the server address space. *)
+ *)
 type
   UA_DeleteNodesItem = record
     nodeId: UA_NodeId;
@@ -1226,12 +1212,12 @@ type
   PUA_DeleteNodesItem = ^UA_DeleteNodesItem;
 
 const
-  UA_TYPES_DELETENODESITEM = 86;
+  UA_TYPES_DELETENODESITEM = 85;
 
 (**
  * DeleteNodesRequest
  * ^^^^^^^^^^^^^^^^^^
- * Delete one or more nodes from the server address space. *)
+ *)
 type
   UA_DeleteNodesRequest = record
     requestHeader: UA_RequestHeader;
@@ -1241,12 +1227,12 @@ type
   PUA_DeleteNodesRequest = ^UA_DeleteNodesRequest;
 
 const
-  UA_TYPES_DELETENODESREQUEST = 87;
+  UA_TYPES_DELETENODESREQUEST = 86;
 
 (**
  * DeleteNodesResponse
  * ^^^^^^^^^^^^^^^^^^^
- * Delete one or more nodes from the server address space. *)
+ *)
 type
   UA_DeleteNodesResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1258,12 +1244,12 @@ type
   PUA_DeleteNodesResponse = ^UA_DeleteNodesResponse;
 
 const
-  UA_TYPES_DELETENODESRESPONSE = 88;
+  UA_TYPES_DELETENODESRESPONSE = 87;
 
 (**
  * DeleteReferencesItem
  * ^^^^^^^^^^^^^^^^^^^^
- * A request to delete a node from the server address space. *)
+ *)
 type
   UA_DeleteReferencesItem = record
     sourceNodeId: UA_NodeId;
@@ -1275,12 +1261,12 @@ type
   PUA_DeleteReferencesItem = ^UA_DeleteReferencesItem;
 
 const
-  UA_TYPES_DELETEREFERENCESITEM = 89;
+  UA_TYPES_DELETEREFERENCESITEM = 88;
 
 (**
  * DeleteReferencesRequest
  * ^^^^^^^^^^^^^^^^^^^^^^^
- * Delete one or more references from the server address space. *)
+ *)
 type
   UA_DeleteReferencesRequest = record
     requestHeader: UA_RequestHeader;
@@ -1290,12 +1276,12 @@ type
   PUA_DeleteReferencesRequest = ^UA_DeleteReferencesRequest;
 
 const
-  UA_TYPES_DELETEREFERENCESREQUEST = 90;
+  UA_TYPES_DELETEREFERENCESREQUEST = 89;
 
 (**
  * DeleteReferencesResponse
  * ^^^^^^^^^^^^^^^^^^^^^^^^
- * Delete one or more references from the server address space. *)
+ *)
 type
   UA_DeleteReferencesResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1307,12 +1293,12 @@ type
   PUA_DeleteReferencesResponse = ^UA_DeleteReferencesResponse;
 
 const
-  UA_TYPES_DELETEREFERENCESRESPONSE = 91;
+  UA_TYPES_DELETEREFERENCESRESPONSE = 90;
 
 (**
  * BrowseDirection
  * ^^^^^^^^^^^^^^^
- * The directions of the references to return. *)
+ *)
 type
   UA_BrowseDirection = (
     UA_BROWSEDIRECTION_FORWARD = 0,
@@ -1325,12 +1311,12 @@ type
   {$IF sizeof(UA_BrowseDirection) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_BROWSEDIRECTION = 92;
+  UA_TYPES_BROWSEDIRECTION = 91;
 
 (**
  * ViewDescription
  * ^^^^^^^^^^^^^^^
- * The view to browse. *)
+ *)
 type
   UA_ViewDescription = record
     viewId: UA_NodeId;
@@ -1340,12 +1326,12 @@ type
   PUA_ViewDescription = ^UA_ViewDescription;
 
 const
-  UA_TYPES_VIEWDESCRIPTION = 93;
+  UA_TYPES_VIEWDESCRIPTION = 92;
 
 (**
  * BrowseDescription
  * ^^^^^^^^^^^^^^^^^
- * A request to browse the the references from a node. *)
+ *)
 type
   UA_BrowseDescription = record
     nodeId: UA_NodeId;
@@ -1358,12 +1344,12 @@ type
   PUA_BrowseDescription = ^UA_BrowseDescription;
 
 const
-  UA_TYPES_BROWSEDESCRIPTION = 94;
+  UA_TYPES_BROWSEDESCRIPTION = 93;
 
 (**
  * BrowseResultMask
  * ^^^^^^^^^^^^^^^^
- * A bit mask which specifies what should be returned in a browse response. *)
+ *)
 type
   UA_BrowseResultMask = (
     UA_BROWSERESULTMASK_NONE = 0,
@@ -1382,12 +1368,12 @@ type
   {$IF sizeof(UA_BrowseResultMask) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_BROWSERESULTMASK = 95;
+  UA_TYPES_BROWSERESULTMASK = 94;
 
 (**
  * ReferenceDescription
  * ^^^^^^^^^^^^^^^^^^^^
- * The description of a reference. *)
+ *)
 type
   UA_ReferenceDescription = record
     referenceTypeId: UA_NodeId;
@@ -1401,12 +1387,12 @@ type
   PUA_ReferenceDescription = ^UA_ReferenceDescription;
 
 const
-  UA_TYPES_REFERENCEDESCRIPTION = 96;
+  UA_TYPES_REFERENCEDESCRIPTION = 95;
 
 (**
  * BrowseResult
  * ^^^^^^^^^^^^
- * The result of a browse operation. *)
+ *)
 type
   UA_BrowseResult = record
     statusCode: UA_StatusCode;
@@ -1417,12 +1403,12 @@ type
   PUA_BrowseResult = ^UA_BrowseResult;
 
 const
-  UA_TYPES_BROWSERESULT = 97;
+  UA_TYPES_BROWSERESULT = 96;
 
 (**
  * BrowseRequest
  * ^^^^^^^^^^^^^
- * Browse the references for one or more nodes from the server address space. *)
+ *)
 type
   UA_BrowseRequest = record
     requestHeader: UA_RequestHeader;
@@ -1434,12 +1420,12 @@ type
   PUA_BrowseRequest = ^UA_BrowseRequest;
 
 const
-  UA_TYPES_BROWSEREQUEST = 98;
+  UA_TYPES_BROWSEREQUEST = 97;
 
 (**
  * BrowseResponse
  * ^^^^^^^^^^^^^^
- * Browse the references for one or more nodes from the server address space. *)
+ *)
 type
   UA_BrowseResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1451,12 +1437,12 @@ type
   PUA_BrowseResponse = ^UA_BrowseResponse;
 
 const
-  UA_TYPES_BROWSERESPONSE = 99;
+  UA_TYPES_BROWSERESPONSE = 98;
 
 (**
  * BrowseNextRequest
  * ^^^^^^^^^^^^^^^^^
- * Continues one or more browse operations. *)
+ *)
 type
   UA_BrowseNextRequest = record
     requestHeader: UA_RequestHeader;
@@ -1467,12 +1453,12 @@ type
   PUA_BrowseNextRequest = ^UA_BrowseNextRequest;
 
 const
-  UA_TYPES_BROWSENEXTREQUEST = 100;
+  UA_TYPES_BROWSENEXTREQUEST = 99;
 
 (**
  * BrowseNextResponse
  * ^^^^^^^^^^^^^^^^^^
- * Continues one or more browse operations. *)
+ *)
 type
   UA_BrowseNextResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1484,12 +1470,12 @@ type
   PUA_BrowseNextResponse = ^UA_BrowseNextResponse;
 
 const
-  UA_TYPES_BROWSENEXTRESPONSE = 101;
+  UA_TYPES_BROWSENEXTRESPONSE = 100;
 
 (**
  * RelativePathElement
  * ^^^^^^^^^^^^^^^^^^^
- * An element in a relative path. *)
+ *)
 type
   UA_RelativePathElement = record
     referenceTypeId: UA_NodeId;
@@ -1500,12 +1486,12 @@ type
   PUA_RelativePathElement = ^UA_RelativePathElement;
 
 const
-  UA_TYPES_RELATIVEPATHELEMENT = 102;
+  UA_TYPES_RELATIVEPATHELEMENT = 101;
 
 (**
  * RelativePath
  * ^^^^^^^^^^^^
- * A relative path constructed from reference types and browse names. *)
+ *)
 type
   UA_RelativePath = record
     elementsSize: size_t;
@@ -1514,12 +1500,12 @@ type
   PUA_RelativePath = ^UA_RelativePath;
 
 const
-  UA_TYPES_RELATIVEPATH = 103;
+  UA_TYPES_RELATIVEPATH = 102;
 
 (**
  * BrowsePath
  * ^^^^^^^^^^
- * A request to translate a path into a node id. *)
+ *)
 type
   UA_BrowsePath = record
     startingNode: UA_NodeId;
@@ -1528,12 +1514,12 @@ type
   PUA_BrowsePath = ^UA_BrowsePath;
 
 const
-  UA_TYPES_BROWSEPATH = 104;
+  UA_TYPES_BROWSEPATH = 103;
 
 (**
  * BrowsePathTarget
  * ^^^^^^^^^^^^^^^^
- * The target of the translated path. *)
+ *)
 type
   UA_BrowsePathTarget = record
     targetId: UA_ExpandedNodeId;
@@ -1542,12 +1528,12 @@ type
   PUA_BrowsePathTarget = ^UA_BrowsePathTarget;
 
 const
-  UA_TYPES_BROWSEPATHTARGET = 105;
+  UA_TYPES_BROWSEPATHTARGET = 104;
 
 (**
  * BrowsePathResult
  * ^^^^^^^^^^^^^^^^
- * The result of a translate opearation. *)
+ *)
 type
   UA_BrowsePathResult = record
     statusCode: UA_StatusCode;
@@ -1557,12 +1543,12 @@ type
   PUA_BrowsePathResult = ^UA_BrowsePathResult;
 
 const
-  UA_TYPES_BROWSEPATHRESULT = 106;
+  UA_TYPES_BROWSEPATHRESULT = 105;
 
 (**
  * TranslateBrowsePathsToNodeIdsRequest
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- * Translates one or more paths in the server address space. *)
+ *)
 type
   UA_TranslateBrowsePathsToNodeIdsRequest = record
     requestHeader: UA_RequestHeader;
@@ -1572,12 +1558,12 @@ type
   PUA_TranslateBrowsePathsToNodeIdsRequest = ^UA_TranslateBrowsePathsToNodeIdsRequest;
 
 const
-  UA_TYPES_TRANSLATEBROWSEPATHSTONODEIDSREQUEST = 107;
+  UA_TYPES_TRANSLATEBROWSEPATHSTONODEIDSREQUEST = 106;
 
 (**
  * TranslateBrowsePathsToNodeIdsResponse
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- * Translates one or more paths in the server address space. *)
+ *)
 type
   UA_TranslateBrowsePathsToNodeIdsResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1589,12 +1575,12 @@ type
   PUA_TranslateBrowsePathsToNodeIdsResponse = ^UA_TranslateBrowsePathsToNodeIdsResponse;
 
 const
-  UA_TYPES_TRANSLATEBROWSEPATHSTONODEIDSRESPONSE = 108;
+  UA_TYPES_TRANSLATEBROWSEPATHSTONODEIDSRESPONSE = 107;
 
 (**
  * RegisterNodesRequest
  * ^^^^^^^^^^^^^^^^^^^^
- * Registers one or more nodes for repeated use within a session. *)
+ *)
 type
   UA_RegisterNodesRequest = record
     requestHeader: UA_RequestHeader;
@@ -1604,12 +1590,12 @@ type
   PUA_RegisterNodesRequest = ^UA_RegisterNodesRequest;
 
 const
-  UA_TYPES_REGISTERNODESREQUEST = 109;
+  UA_TYPES_REGISTERNODESREQUEST = 108;
 
 (**
  * RegisterNodesResponse
  * ^^^^^^^^^^^^^^^^^^^^^
- * Registers one or more nodes for repeated use within a session. *)
+ *)
 type
   UA_RegisterNodesResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1619,12 +1605,12 @@ type
   PUA_RegisterNodesResponse = ^UA_RegisterNodesResponse;
 
 const
-  UA_TYPES_REGISTERNODESRESPONSE = 110;
+  UA_TYPES_REGISTERNODESRESPONSE = 109;
 
 (**
  * UnregisterNodesRequest
  * ^^^^^^^^^^^^^^^^^^^^^^
- * Unregisters one or more previously registered nodes. *)
+ *)
 type
   UA_UnregisterNodesRequest = record
     requestHeader: UA_RequestHeader;
@@ -1634,12 +1620,12 @@ type
   PUA_UnregisterNodesRequest = ^UA_UnregisterNodesRequest;
 
 const
-  UA_TYPES_UNREGISTERNODESREQUEST = 111;
+  UA_TYPES_UNREGISTERNODESREQUEST = 110;
 
 (**
  * UnregisterNodesResponse
  * ^^^^^^^^^^^^^^^^^^^^^^^
- * Unregisters one or more previously registered nodes. *)
+ *)
 type
   UA_UnregisterNodesResponse = record
     responseHeader: UA_ResponseHeader;
@@ -1647,7 +1633,7 @@ type
   PUA_UnregisterNodesResponse = ^UA_UnregisterNodesResponse;
 
 const
-  UA_TYPES_UNREGISTERNODESRESPONSE = 112;
+  UA_TYPES_UNREGISTERNODESRESPONSE = 111;
 
 (**
  * FilterOperator
@@ -1679,7 +1665,7 @@ type
   {$IF sizeof(UA_FilterOperator) <> sizeof(UA_Int32)}{$MESSAGE ERROR 'enum_must_be_32bit'}{$IFEND}
 
 const
-  UA_TYPES_FILTEROPERATOR = 113;
+  UA_TYPES_FILTEROPERATOR = 112;
 
 (**
  * ContentFilterElement
@@ -1694,7 +1680,7 @@ type
   PUA_ContentFilterElement = ^UA_ContentFilterElement;
 
 const
-  UA_TYPES_CONTENTFILTERELEMENT = 114;
+  UA_TYPES_CONTENTFILTERELEMENT = 113;
 
 (**
  * ContentFilter
@@ -1708,10 +1694,9 @@ type
   PUA_ContentFilter = ^UA_ContentFilter;
 
 const
-  UA_TYPES_CONTENTFILTER = 115;
+  UA_TYPES_CONTENTFILTER = 114;
 
-
-{(**
+(**
  * FilterOperand
  * ^^^^^^^^^^^^^
  *)
@@ -1719,7 +1704,7 @@ type
   UA_FilterOperand = pointer;
 
 const
-  UA_TYPES_FILTEROPERAND = 114;}
+  UA_TYPES_FILTEROPERAND = 115;
 
 (**
  * ElementOperand

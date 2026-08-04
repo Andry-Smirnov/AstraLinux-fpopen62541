@@ -1,3 +1,4 @@
+
 {$CODEPAGE UTF8}
 (*
   open62541 is licensed under the Mozilla Public License v2.0 (MPLv2).

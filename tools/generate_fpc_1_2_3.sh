@@ -35,11 +35,5 @@ pushd "${opdir}"
                             --selected-types=schema/datatypes_typedescription.txt \
                             --type-bsd=schema/Opc.Ua.Types.bsd \
                             --type-csv=schema/NodeIds.csv \
-                            --type-xml=schema/Opc.Ua.NodeSet2.DiagnosticsMinimal.xml \
-                            --type-xml=schema/Opc.Ua.NodeSet2.EventsMinimal.xml \
-                            --type-xml=schema/Opc.Ua.NodeSet2.HistorizingMinimal.xml \
-                            --type-xml=schema/Opc.Ua.NodeSet2.Part8_Subset.xml \
-                            --type-xml=schema/Opc.Ua.NodeSet2.PubSubMinimal.xml \
-                            --type-xml=schema/Opc.Ua.NodeSet2.Reduced.xml \
                             "${dstdir}/types"
 popd                                                   
